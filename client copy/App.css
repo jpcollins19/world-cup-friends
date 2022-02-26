@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* background-color: #0b1426;
+  color: aliceblue; */
+  /* background-color: #0b1426; */
+}
+
+.routes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b1426;
+}
