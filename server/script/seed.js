@@ -5,21 +5,16 @@ const {
 
 const users = [
   {
-    email: "joe@gmail.com",
-    password: "joe_pw",
+    email: "jpatcollins@gmail.com",
+    password: "nugget",
     name: "Joe",
-  },
-  {
-    email: "frank@gmail.com",
-    password: "frank_pw",
-    name: "Frank",
   },
 ];
 
 const syncAndSeed = async () => {
   await db.sync({ force: true });
   /////////////////////////////////////////////////////////////
-  const [Joe, Frank] = await Promise.all(
+  const [Joe] = await Promise.all(
     users.map((user) =>
       User.create({
         email: user.email,
