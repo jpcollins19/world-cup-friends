@@ -1,8 +1,6 @@
 const app = require("express").Router();
 
-const {
-  models: { User },
-} = require("../db/index.js");
+const {User} = require("../db/index.js");
 
 app.get("/api/users", async (req, res, next) => {
   try {

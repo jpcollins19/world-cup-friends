@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { authenticate } from "../store";
+import { authenticate } from "../../store";
 import { useState } from "react";
 
-const Login_Page = () => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -47,4 +47,4 @@ const Login_Page = () => {
   );
 };
 
-export default Login_Page;
+export default SignIn;

@@ -85,4 +85,4 @@ User.authenticate = async ({ email, password }) => {
   }
 };
 
-module.exports = User;
+ module.exports = User;

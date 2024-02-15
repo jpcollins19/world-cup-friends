@@ -12,4 +12,4 @@ const store = createStore(reducer, middleware);
 export default store;
 export * from "./auth_store";
 export * from "./users_store";
-// export * from "./funcs";
+export * from "./utils/index";

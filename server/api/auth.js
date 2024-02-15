@@ -1,9 +1,5 @@
 const app = require("express").Router();
-const {
-  models: { User },
-} = require("../db/index.js");
-
-module.exports = app;
+const {User} = require("../db/index.js");
 
 app.post("/api/authorize", async (req, res, next) => {
   try {
@@ -25,3 +21,5 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500).send({ error: err.message });
 });
+
+module.exports = app;

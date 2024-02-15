@@ -1,7 +1,4 @@
-const {
-  db,
-  models: { User },
-} = require("../db/index.js");
+const {db, User} = require("../db/index.js");
 
 const users = [
   {
