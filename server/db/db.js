@@ -20,8 +20,3 @@ module.exports = db;
 // redux-logger
 // mocha
 // chai
-
-
-//npm i
-// style-loader
-// css-loader

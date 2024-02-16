@@ -25,8 +25,8 @@ const SignIn = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Login</h1>
+    <form onSubmit={onSubmit} >
+      <h1 >login</h1>
 
       <input
         placeholder="email"
