@@ -1,15 +1,27 @@
+// import * as React from "react";
 // import { getScreenWidth } from "../../store";
 import TextField from "@mui/material/TextField";
 import { colors } from "../../store";
 
-const Text_Field = ({ input, type, onChange }) => {
+// type TextFieldInputProps = {
+//   label: string;
+//   type: string;
+// };
+//
+// type TextFieldProps = {
+//   input: TextFieldInputProps;
+// };
+const Text_Field = ({ input }) => {
+  // const Text_Field = ({ ...props }) => {
+
+  //const Text_Field: React.FunctionComponent<TextFieldProps> = ({ input }) => {
   // const isMobile = getScreenWidth("max", 65);
 
   const black = `${colors.black}`;
 
   return (
     <TextField
-      onChange={onChange}
+      // onChange={onChange}
       required
       label={input.label}
       type={input.type}
@@ -28,8 +40,6 @@ const Text_Field = ({ input, type, onChange }) => {
       ///text of what is typed////////////////
       inputProps={{
         style: {
-          // alignItems: 'center',
-
           textAlign: "center",
           color: "black",
           // fontWeight: !isMobile ? "bold" : "",

@@ -3,7 +3,7 @@ import { withRouter, Route, Switch } from "react-router-dom";
 import { me, routes } from "./store";
 import { useSelector, useDispatch } from "react-redux";
 import SignIn from "./components/signIn/SignIn";
-import Home_Page from "./components/Home_Page";
+// import Home_Page from "./components/Home_Page";
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,8 @@ const Routes = () => {
   return (
     <Switch>
       {auth.id ? (
-        <Route exact path="/home" component={Home_Page} />
+        // <Route exact path="/home" component={Home_Page} />
+        <div>home page byah!</div>
       ) : (
         <Route exact path={routes.home} component={SignIn} />
       )}

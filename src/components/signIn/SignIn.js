@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import * as React from "react";
+import { useState } from "react";
+// import { useDispatch } from "react-redux";
 // import {Link} from "react-router-dom";
 import {
-  routes,
+  // routes,
   // authenticate,
   // getScreenWidth,
   // findJoe,
@@ -16,25 +17,26 @@ import TextField from "../buffet/TextField";
 // import toast, {Toaster} from "react-hot-toast";
 // import Error from "@mui/icons-material/ErrorOutline";
 
+//const SignIn = () => {
 const SignIn = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   // const [showPW, setShowPW] = useState(false);
   const [type, setType] = useState("text");
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  //const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   // const isMobileView = getScreenWidth("max", 65);
 
-  const showPwClick = () => {
-    const typeMapper = {
-      text: "password",
-      password: "text",
-    };
-
-    setType(typeMapper[type]);
-  };
+  // const showPwClick = () => {
+  //   const typeMapper = {
+  //     text: "password",
+  //     password: "text",
+  //   };
+  //
+  //   setType(typeMapper[type]);
+  // };
 
   // useEffect(() => {
   //     setInvalidCredentials(false);
@@ -85,35 +87,35 @@ const SignIn = () => {
   //         ( option ) => option.route !== routes.createAccount);
   // }
 
-  const onChange = (ev) => {
-    const set = eval(`set${ev.target.name}`);
+  // const onChange = (ev) => {
+  //   const set = eval(`set${ev.target.name}`);
+  //
+  //   // ev.target.name === "Email"
+  //   //     ? set(formatEmail(ev.target.value))
+  //   //     : set(ev.target.value);
+  // };
 
-    // ev.target.name === "Email"
-    //     ? set(formatEmail(ev.target.value))
-    //     : set(ev.target.value);
-  };
-
-  const onSubmit = async (ev) => {
-    ev.preventDefault();
-    try {
-      dispatch(authenticate(email, password));
-
-      setTimeout(() => {
-        if (window.localStorage.token) {
-          location.hash = routes.leaderboard;
-        } else {
-          setInvalidCredentials(true);
-        }
-      }, 200);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
+  // const onSubmit = async (ev) => {
+  //   ev.preventDefault();
+  //   try {
+  //     // dispatch(authenticate(email, password));
+  //
+  //     setTimeout(() => {
+  //       if (window.localStorage.token) {
+  //         location.hash = routes.leaderboard;
+  //       } else {
+  //         setInvalidCredentials(true);
+  //       }
+  //     }, 200);
+  //   } catch (err) {
+  //     console.log(err.response);
+  //   }
+  // };
 
   // const argentinaFlag = './messi'
 
-  const argentinaFlag =
-    "https://cdn.britannica.com/18/147118-050-7F820ED5/flag-Argentina-2010.jpg";
+  // const argentinaFlag =
+  //   "https://cdn.britannica.com/18/147118-050-7F820ED5/flag-Argentina-2010.jpg";
 
   return (
     <div data-testId="signIn-page" className={`${tw.bRed} ${tw.disAll} h-full`}>
@@ -134,12 +136,12 @@ const SignIn = () => {
         <h1 className={`text-4xl text-center mt-10`}>Sign In</h1>
 
         <form
-          onSubmit={onSubmit}
+          // onSubmit={onSubmit}
           id="sign-in"
           className={`${tw.bPurple} ${tw.disA} h-5/6 pt-10 flex-col`}
         >
           {inputs.map((input, idx) => (
-            <TextField key={idx} input={input} onChange={onChange} />
+            <TextField key={idx} input={input} />
           ))}
 
           {/*<div className="view-pw"*/}
