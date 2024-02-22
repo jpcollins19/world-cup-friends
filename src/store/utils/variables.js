@@ -1,7 +1,7 @@
 export const routes = {
   home: "/",
   signIn: "/sign-in",
-  leaderboard: "leaderboard",
+  leaderboard: "/leaderboard",
 };
 
 export const colors = {
@@ -10,9 +10,9 @@ export const colors = {
 };
 
 export const tw = {
-  disAll: "flex justify-center items-center",
-  disA: "flex items-center",
-  disJ: "flex justify-center",
+  flexBoth: "flex justify-center items-center",
+  flexA: "flex items-center",
+  flexJ: "flex justify-center",
   bDodger: "border-solid border-4 border-blue-500",
   bPurple: "border-solid border-4 border-purple-700",
   bRed: "border-solid border-4 border-red-700",

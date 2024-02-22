@@ -118,7 +118,10 @@ const SignIn = () => {
   //   "https://cdn.britannica.com/18/147118-050-7F820ED5/flag-Argentina-2010.jpg";
 
   return (
-    <div data-testId="signIn-page" className={`${tw.bRed} ${tw.disAll} h-full`}>
+    <div
+      data-testId="signIn-page"
+      className={`${tw.bRed} ${tw.flexBoth} h-full`}
+    >
       {/*{invalidCredentials && (*/}
       {/*    <Toaster*/}
       {/*        toastOptions={{*/}
@@ -137,8 +140,8 @@ const SignIn = () => {
 
         <form
           // onSubmit={onSubmit}
-          id="sign-in"
-          className={`${tw.bPurple} ${tw.disA} h-5/6 pt-10 flex-col`}
+          // id="sign-in"
+          className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
         >
           {inputs.map((input, idx) => (
             <TextField key={idx} input={input} />
