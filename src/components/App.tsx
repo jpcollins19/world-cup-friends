@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./Routes";
-import {loadUsers, me} from "./store";
+import { loadUsers, me } from "../store";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(loadUsers());
-    dispatch(me())
+    dispatch(me());
   }, []);
 
   return (

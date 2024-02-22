@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
-import { me, routes } from "./store";
+import { me, routes } from "../store";
 import { useSelector, useDispatch } from "react-redux";
-import SignIn from "./components/signIn/SignIn";
+import SignIn from "./signIn/SignIn";
 // import Home_Page from "./components/Home_Page";
 
 const Routes = () => {

@@ -31,7 +31,7 @@ const Text_Field = ({ input }) => {
       // fullWidth
       sx={{
         margin: 1,
-        width: "280px",
+        width: "17vw",
         background: "rgb(237, 239, 245)",
         borderRadius: "9px",
         border: `solid 2px ${black}`,

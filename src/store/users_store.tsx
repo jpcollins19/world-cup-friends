@@ -6,7 +6,7 @@ const _loadUsers = (users) => {
   return { type: LOAD_USERS, users };
 };
 
-export const loadUsers = () => {
+export const loadUsers = (): any => {
   return async (dispatch) => {
     const users = (await axios.get("/api/users")).data;
     dispatch(_loadUsers(users));

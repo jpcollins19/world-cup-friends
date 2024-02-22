@@ -1,7 +1,5 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
-
 module.exports = {
-  content: ["./src/*.{html,js}", "./src/**/*.{html,js}"],
+  content: ["./src/*.{html,js, tsx}", "./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
       // keyframes: {
@@ -50,7 +48,7 @@ module.exports = {
       //   grey4: "#939DA8",
       // },
       fontFamily: {
-        'sans': 'Helvetica, Arial, sans-serif',
+        sans: "Helvetica, Arial, sans-serif",
         // sans: ["Craftworkgrotesk", ...defaultTheme.fontFamily.sans],
         // serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
       },
@@ -60,7 +58,3 @@ module.exports = {
     },
   },
 };
-
-
-
-

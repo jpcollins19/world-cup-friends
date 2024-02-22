@@ -10,6 +10,7 @@ import {
   // formatEmail,
   // routes,
   tw,
+  geti18n,
 } from "../../store";
 import TextField from "../buffet/TextField";
 // import Sign_In_Options from "../Sign_In_Options";
@@ -70,10 +71,12 @@ const SignIn = () => {
 
   // const joe = findJoe(useSelector(( state ) => state.users));
 
+  const pwString = geti18n("password");
+
   const inputs = [
-    { label: "email", type },
+    { label: "email" },
     // { label: "password", type: showPW ? "text" : "password" },
-    { label: "password", type },
+    { label: pwString, type: pwString },
   ];
 
   // let options = [

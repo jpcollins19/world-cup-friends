@@ -1,11 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 // import logger from "redux-logger";
-import {thunk} from "redux-thunk";
+import { thunk } from "redux-thunk";
 import auth from "./auth_store";
 
 const { users } = require("./users_store");
 
-const reducer = combineReducers({ auth, users });
+export const reducer = combineReducers({ auth, users });
 const middleware = applyMiddleware(thunk);
 const store = createStore(reducer, middleware);
 
