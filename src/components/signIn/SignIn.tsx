@@ -1,4 +1,4 @@
-// import * as React from "react";
+import * as React from "react";
 import { useState } from "react";
 // import { useDispatch } from "react-redux";
 // import {Link} from "react-router-dom";
@@ -13,17 +13,19 @@ import {
   geti18n,
 } from "../../store";
 import TextField from "../buffet/TextField";
+import Button from "../buffet/Button";
 // import Sign_In_Options from "../Sign_In_Options";
 // import Button from "../../Misc/Button";
 // import toast, {Toaster} from "react-hot-toast";
 // import Error from "@mui/icons-material/ErrorOutline";
 
 //const SignIn = () => {
-const SignIn = () => {
+export const SignIn: React.FunctionComponent = () => {
+  // const SignIn = () => {
   // const dispatch = useDispatch();
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const [showPW, setShowPW] = useState(false);
   const [type, setType] = useState("text");
   //const [invalidCredentials, setInvalidCredentials] = useState(false);
@@ -74,7 +76,7 @@ const SignIn = () => {
   const pwString = geti18n("password");
 
   const inputs = [
-    { label: "email" },
+    { label: geti18n("email") },
     // { label: "password", type: showPW ? "text" : "password" },
     { label: pwString, type: pwString },
   ];
@@ -122,7 +124,7 @@ const SignIn = () => {
 
   return (
     <div
-      data-testId="signIn-page"
+      data-testid="signIn-page"
       className={`${tw.bRed} ${tw.flexBoth} h-full`}
     >
       {/*{invalidCredentials && (*/}
@@ -139,7 +141,7 @@ const SignIn = () => {
         {/*>*/}
 
         {/*<div className="sign-in-text-cont">*/}
-        <h1 className={`text-4xl text-center mt-10`}>Sign In</h1>
+        <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
 
         <form
           // onSubmit={onSubmit}
@@ -156,12 +158,19 @@ const SignIn = () => {
           {/*</div>*/}
 
           {/*<div className="sign-in-button">*/}
-          {/*    <Button*/}
-          {/*        text="Sign In"*/}
-          {/*        disabled={!email || !password}*/}
-          {/*        form="sign-in"*/}
-          {/*    />*/}
+          {/*  <Button*/}
+          {/*    text="Sign In"*/}
+          {/*    disabled={!email || !password}*/}
+          {/*    form="sign-in"*/}
+          {/*  />*/}
           {/*</div>*/}
+
+          <Button
+            dataTestId="signIn-button"
+            text={geti18n("submit")}
+            disabled={!email || !password}
+            form="sign-in"
+          />
 
           {/*{options.map(( option, idx ) => (*/}
           {/*    <Sign_In_Options key={idx} option={option}/>*/}

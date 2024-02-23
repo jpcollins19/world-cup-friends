@@ -4,9 +4,9 @@ const TOKEN = "token";
 
 const SET_AUTH = "SET_AUTH";
 
-export const setAuth = (auth) => ({ type: SET_AUTH, auth });
+export const setAuth = (auth: any) => ({ type: SET_AUTH, auth });
 
-export const me = (): any => async (dispatch: any) => {
+export const me = () => async (dispatch: any) => {
   const token = window.localStorage.getItem(TOKEN);
 
   if (token) {
@@ -59,20 +59,21 @@ export const me = (): any => async (dispatch: any) => {
 //   };
 // };
 
-export const authenticate = (email, password) => async (dispatch) => {
-  try {
-    const response = await axios.post("api/authorize", { email, password });
-    const { token } = response.data;
-    window.localStorage.setItem(TOKEN, token);
-    dispatch(me());
-  } catch (authError) {
-    return dispatch(
-      setAuth({
-        error: `the error is happening in the authenticate thunk in the store: ${authError}`,
-      }),
-    );
-  }
-};
+export const authenticate =
+  (email: string, password: string) => async (dispatch: any) => {
+    try {
+      const response = await axios.post("api/authorize", { email, password });
+      const { token } = response.data;
+      window.localStorage.setItem(TOKEN, token);
+      dispatch(me());
+    } catch (authError) {
+      return dispatch(
+        setAuth({
+          error: `the error is happening in the authenticate thunk in the store: ${authError}`,
+        }),
+      );
+    }
+  };
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
@@ -82,7 +83,9 @@ export const logout = () => {
   };
 };
 
-export default function (state = {}, action) {
+export interface AuthState {}
+
+export default function (state: AuthState = {}, action: any) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth;
