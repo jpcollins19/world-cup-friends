@@ -12,15 +12,18 @@
 // export * from "./auth_store";
 // export * from "./users_store";
 // export * from "./utils/index";
-
+import { configureStore, Tuple } from "@reduxjs/toolkit";
+import { composeWithDevTools } from "@redux-devtools/extension";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import {
   createStore,
   combineReducers,
   applyMiddleware,
   Store,
   Reducer,
+  AnyAction,
 } from "redux";
-import { thunk } from "redux-thunk";
+import { thunk, ThunkDispatch, ThunkAction } from "redux-thunk";
 import auth, { AuthState } from "./auth_store";
 import users, { UsersState } from "./users_store";
 
@@ -35,10 +38,38 @@ const reducer: Reducer<RootState> = combineReducers({
   users,
 });
 
-const middleware = applyMiddleware(thunk);
+//const middleware = applyMiddleware(thunk);
 
 // Use RootState as the preloadedState type
-const store: Store<RootState> = createStore(reducer, middleware);
+
+//export type TypedDispatch = typeof store.dispatch;
+// export type TypedThunk<R = void> = ThunkAction<R, ReduxState, unknown, Action>;
+
+//export const useTypedDispatch = () => useDispatch<TypedDispatch>();
+// export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
+
+//const middleware: Middleware[] = [...getDefaultMiddleware<ReduxState>()];
+
+// const middleware: Middleware<{}, any, Dispatch<AnyAction>>[];
+
+export const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
+
+export type AppDispatch = typeof store.dispatch;
+export type ReduxState = ReturnType<typeof reducer>;
+export type TypedDispatch = ThunkDispatch<ReduxState, any, AnyAction>;
+export type TypedThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  ReduxState,
+  unknown,
+  AnyAction
+>;
+export const useTypedDispatch = () => useDispatch<TypedDispatch>();
+//export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
+
+//const store: Store<RootState> = createStore(reducer, middleware);
 
 export default store;
 export * from "./auth_store";

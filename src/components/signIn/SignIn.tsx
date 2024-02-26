@@ -1,16 +1,18 @@
 import * as React from "react";
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 // import {Link} from "react-router-dom";
+// import { useAppDispatch } from "../hooks";
 import {
-  // routes,
-  // authenticate,
+  routes,
+  authenticate,
   // getScreenWidth,
   // findJoe,
   // formatEmail,
   // routes,
   tw,
   geti18n,
+  useTypedDispatch,
 } from "../../store";
 import TextField from "../buffet/TextField";
 import Button from "../buffet/Button";
@@ -22,12 +24,13 @@ import Button from "../buffet/Button";
 //const SignIn = () => {
 export const SignIn: React.FunctionComponent = () => {
   // const SignIn = () => {
-  // const dispatch = useDispatch();
+  //const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   // const [showPW, setShowPW] = useState(false);
-  const [type, setType] = useState("text");
+  // const [type, setType] = useState("text");
   //const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   // const isMobileView = getScreenWidth("max", 65);
@@ -92,30 +95,38 @@ export const SignIn: React.FunctionComponent = () => {
   //         ( option ) => option.route !== routes.createAccount);
   // }
 
-  // const onChange = (ev) => {
-  //   const set = eval(`set${ev.target.name}`);
-  //
-  //   // ev.target.name === "Email"
-  //   //     ? set(formatEmail(ev.target.value))
-  //   //     : set(ev.target.value);
-  // };
+  const onChange = (ev: any) => {
+    const email = ev.target.name === "email";
 
-  // const onSubmit = async (ev) => {
-  //   ev.preventDefault();
-  //   try {
-  //     // dispatch(authenticate(email, password));
-  //
-  //     setTimeout(() => {
-  //       if (window.localStorage.token) {
-  //         location.hash = routes.leaderboard;
-  //       } else {
-  //         setInvalidCredentials(true);
-  //       }
-  //     }, 200);
-  //   } catch (err) {
-  //     console.log(err.response);
-  //   }
-  // };
+    const set = email ? setEmail : setPassword;
+
+    // const set = eval(`set${ev.target.name}`);
+
+    // ev.target.name === "email"
+    //   ? set(formatEmail(ev.target.value))
+    //   : set(ev.target.value);
+
+    set(ev.target.value);
+  };
+
+  const onSubmit = async (ev: any) => {
+    ev.preventDefault();
+    try {
+      // dispatch(authenticate(email, password));
+
+      await dispatch(authenticate(email, password));
+
+      setTimeout(() => {
+        if (window.localStorage.token) {
+          location.hash = routes.leaderboard;
+        } else {
+          // setInvalidCredentials(true);
+        }
+      }, 200);
+    } catch (err: any) {
+      console.log(err.response);
+    }
+  };
 
   // const argentinaFlag = './messi'
 
@@ -144,12 +155,12 @@ export const SignIn: React.FunctionComponent = () => {
         <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
 
         <form
-          // onSubmit={onSubmit}
-          // id="sign-in"
+          onSubmit={onSubmit}
+          id="sign-in"
           className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
         >
           {inputs.map((input, idx) => (
-            <TextField key={idx} input={input} />
+            <TextField key={idx} input={input} onChange={onChange} />
           ))}
 
           {/*<div className="view-pw"*/}

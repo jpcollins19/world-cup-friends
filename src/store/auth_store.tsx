@@ -6,19 +6,44 @@ const SET_AUTH = "SET_AUTH";
 
 export const setAuth = (auth: any) => ({ type: SET_AUTH, auth });
 
+// export const me = () => async (dispatch: any) => {
+//   const token = window.localStorage.getItem(TOKEN);
+//
+//   if (token) {
+//     const response = await axios.get("/api/me", {
+//       headers: {
+//         authorization: token,
+//       },
+//     });
+//
+//     return dispatch(setAuth(response.data));
+//   }
+// };
+
 export const me = () => async (dispatch: any) => {
   const token = window.localStorage.getItem(TOKEN);
 
   if (token) {
-    const response = await axios.get("/api/me", {
+    const config: { headers: { authorization: string } } = {
       headers: {
         authorization: token,
       },
-    });
+    };
 
-    return dispatch(setAuth(response.data));
+    try {
+      const response = await axios.get("/api/me", config as any);
+
+      return dispatch(setAuth(response.data));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }
 };
+
+// interface AuthAction {
+//   type: string; // Replace with your actual action type
+//   payload?: any; // Replace with your actual payload type
+// }
 
 // import { Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";
@@ -59,13 +84,35 @@ export const me = () => async (dispatch: any) => {
 //   };
 // };
 
+// export const authenticate =
+//   (email: string, password: string) => async (dispatch: any) => {
+//     try {
+//       const response = await axios.post("api/authorize", { email, password });
+//
+//       const { token } = response.data;
+//
+//       window.localStorage.setItem(TOKEN, token);
+//
+//       dispatch(me());
+//     } catch (authError) {
+//       return dispatch(
+//         setAuth({
+//           error: `the error is happening in the authenticate thunk in the store: ${authError}`,
+//         }),
+//       );
+//     }
+//   };
+
 export const authenticate =
-  (email: string, password: string) => async (dispatch: any) => {
+  (email: string | null, password: string | null) => async (dispatch: any) => {
     try {
       const response = await axios.post("api/authorize", { email, password });
+
       const { token } = response.data;
+
       window.localStorage.setItem(TOKEN, token);
-      dispatch(me());
+
+      await dispatch(me());
     } catch (authError) {
       return dispatch(
         setAuth({

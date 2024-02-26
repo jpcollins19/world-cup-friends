@@ -8,7 +8,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(loadUsers());
+    // dispatch(loadUsers());
     dispatch(me());
   }, []);
 

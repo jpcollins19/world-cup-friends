@@ -8,8 +8,11 @@ import Text_Field from "../buffet/TextField";
 describe("<Text_Field/>", () => {
   const email = geti18n("email");
   const pw = geti18n("password");
+
+  const onChange = (ev: any) => "test";
+
   it("should render the component", async () => {
-    render(<Text_Field input={{ label: email }} />);
+    render(<Text_Field input={{ label: email }} onChange={onChange} />);
 
     const pageTestId = await getTestIdTag("text-field");
 
@@ -17,7 +20,7 @@ describe("<Text_Field/>", () => {
   });
 
   it("the default type is 'text'", async () => {
-    render(<Text_Field input={{ label: email }} />);
+    render(<Text_Field input={{ label: email }} onChange={onChange} />);
 
     const input = await getTestIdTag("text-field-input");
 
@@ -25,7 +28,7 @@ describe("<Text_Field/>", () => {
   });
 
   it("the default is required", async () => {
-    render(<Text_Field input={{ label: email }} />);
+    render(<Text_Field input={{ label: email }} onChange={onChange} />);
 
     const input = await getTestIdTag("text-field-input");
     const requiredSymbol = await getTestIdTag("text-field-input-required");
@@ -35,7 +38,7 @@ describe("<Text_Field/>", () => {
   });
 
   it("input type is password when passed in", async () => {
-    render(<Text_Field input={{ label: pw, type: pw }} />);
+    render(<Text_Field input={{ label: pw, type: pw }} onChange={onChange} />);
 
     const input = await getTestIdTag("text-field-input");
 
