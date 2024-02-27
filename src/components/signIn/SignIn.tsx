@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Form, FormikProvider, useFormik } from "formik";
 // import {Link} from "react-router-dom";
 // import { useAppDispatch } from "../hooks";
 import {
@@ -12,10 +11,11 @@ import {
   // routes,
   tw,
   geti18n,
-  useTypedDispatch,
+  tDispatch,
 } from "../../store";
 import TextField from "../buffet/TextField";
 import Button from "../buffet/Button";
+import { SignInSchema } from "./SignInSchema";
 // import Sign_In_Options from "../Sign_In_Options";
 // import Button from "../../Misc/Button";
 // import toast, {Toaster} from "react-hot-toast";
@@ -25,10 +25,10 @@ import Button from "../buffet/Button";
 export const SignIn: React.FunctionComponent = () => {
   // const SignIn = () => {
   //const dispatch = useDispatch();
-  const dispatch = useTypedDispatch();
+  const dispatch = tDispatch();
 
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  // const [email, setEmail] = React.useState(null);
+  // const [password, setPassword] = React.useState(null);
   // const [showPW, setShowPW] = useState(false);
   // const [type, setType] = useState("text");
   //const [invalidCredentials, setInvalidCredentials] = useState(false);
@@ -77,9 +77,10 @@ export const SignIn: React.FunctionComponent = () => {
   // const joe = findJoe(useSelector(( state ) => state.users));
 
   const pwString = geti18n("password");
+  const emailString = geti18n("email");
 
   const inputs = [
-    { label: geti18n("email") },
+    { label: emailString },
     // { label: "password", type: showPW ? "text" : "password" },
     { label: pwString, type: pwString },
   ];
@@ -95,26 +96,40 @@ export const SignIn: React.FunctionComponent = () => {
   //         ( option ) => option.route !== routes.createAccount);
   // }
 
-  const onChange = (ev: any) => {
-    const email = ev.target.name === "email";
+  // const onChange = (ev: any) => {
+  //   const email = ev.target.name === "email";
+  //
+  //   const set = email ? setEmail : setPassword;
+  //
+  //   // const set = eval(`set${ev.target.name}`);
+  //
+  //   // ev.target.name === "email"
+  //   //   ? set(formatEmail(ev.target.value))
+  //   //   : set(ev.target.value);
+  //
+  //   set(ev.target.value);
+  // };
 
-    const set = email ? setEmail : setPassword;
+  // const onSubmit = async (ev: any) => {
+  //   ev.preventDefault();
+  //   try {
+  //     await dispatch(authenticate(values.email, values.password));
+  //
+  //     setTimeout(() => {
+  //       if (window.localStorage.token) {
+  //         location.hash = routes.leaderboard;
+  //       } else {
+  //         // setInvalidCredentials(true);
+  //       }
+  //     }, 200);
+  //   } catch (err: any) {
+  //     console.log(err.response);
+  //   }
+  // };
 
-    // const set = eval(`set${ev.target.name}`);
-
-    // ev.target.name === "email"
-    //   ? set(formatEmail(ev.target.value))
-    //   : set(ev.target.value);
-
-    set(ev.target.value);
-  };
-
-  const onSubmit = async (ev: any) => {
-    ev.preventDefault();
+  const onSubmit = async () => {
     try {
-      // dispatch(authenticate(email, password));
-
-      await dispatch(authenticate(email, password));
+      await dispatch(authenticate(values.email, values.password));
 
       setTimeout(() => {
         if (window.localStorage.token) {
@@ -125,6 +140,28 @@ export const SignIn: React.FunctionComponent = () => {
       }, 200);
     } catch (err: any) {
       console.log(err.response);
+    }
+  };
+
+  const formik = useFormik<SignInSchema>({
+    initialValues: {
+      email: null,
+      password: null,
+    },
+    onSubmit: onSubmit,
+  });
+
+  const { handleSubmit, values, setFieldValue } = formik;
+
+  const onChange = (ev: any) => {
+    const isEmail = ev.target.name === emailString;
+
+    const value = ev.target.value;
+
+    if (isEmail) {
+      setFieldValue(emailString, value);
+    } else {
+      setFieldValue(pwString, value);
     }
   };
 
@@ -154,39 +191,79 @@ export const SignIn: React.FunctionComponent = () => {
         {/*<div className="sign-in-text-cont">*/}
         <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
 
-        <form
-          onSubmit={onSubmit}
-          id="sign-in"
-          className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
-        >
-          {inputs.map((input, idx) => (
-            <TextField key={idx} input={input} onChange={onChange} />
-          ))}
+        <FormikProvider value={formik}>
+          <Form
+            onSubmit={handleSubmit}
+            id="sign-in"
+            className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
+          >
+            {inputs.map((input, idx) => (
+              <TextField key={idx} input={input} onChange={onChange} />
+            ))}
 
-          {/*<div className="view-pw"*/}
-          {/*     onClick={() => showPwClick()}>*/}
-          {/*    View Password*/}
-          {/*</div>*/}
+            {/*{inputs.map((input, idx) => (*/}
+            {/*  <TextField key={idx} input={input} />*/}
+            {/*))}*/}
 
-          {/*<div className="sign-in-button">*/}
-          {/*  <Button*/}
-          {/*    text="Sign In"*/}
-          {/*    disabled={!email || !password}*/}
-          {/*    form="sign-in"*/}
-          {/*  />*/}
-          {/*</div>*/}
+            {/*<div className="view-pw"*/}
+            {/*     onClick={() => showPwClick()}>*/}
+            {/*    View Password*/}
+            {/*</div>*/}
 
-          <Button
-            dataTestId="signIn-button"
-            text={geti18n("submit")}
-            disabled={!email || !password}
-            form="sign-in"
-          />
+            {/*<div className="sign-in-button">*/}
+            {/*  <Button*/}
+            {/*    text="Sign In"*/}
+            {/*    disabled={!email || !password}*/}
+            {/*    form="sign-in"*/}
+            {/*  />*/}
+            {/*</div>*/}
 
-          {/*{options.map(( option, idx ) => (*/}
-          {/*    <Sign_In_Options key={idx} option={option}/>*/}
-          {/*))}*/}
-        </form>
+            <Button
+              dataTestId="signIn-button"
+              text={geti18n("submit")}
+              // disabled={!email || !password}
+              form="sign-in"
+            />
+
+            {/*{options.map(( option, idx ) => (*/}
+            {/*    <Sign_In_Options key={idx} option={option}/>*/}
+            {/*))}*/}
+          </Form>
+        </FormikProvider>
+
+        {/*<form*/}
+        {/*  onSubmit={handleSubmit}*/}
+        {/*  id="sign-in"*/}
+        {/*  className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}*/}
+        {/*>*/}
+        {/*  {inputs.map((input, idx) => (*/}
+        {/*    <TextField key={idx} input={input} onChange={onChange} />*/}
+        {/*  ))}*/}
+
+        {/*  /!*<div className="view-pw"*!/*/}
+        {/*  /!*     onClick={() => showPwClick()}>*!/*/}
+        {/*  /!*    View Password*!/*/}
+        {/*  /!*</div>*!/*/}
+
+        {/*  /!*<div className="sign-in-button">*!/*/}
+        {/*  /!*  <Button*!/*/}
+        {/*  /!*    text="Sign In"*!/*/}
+        {/*  /!*    disabled={!email || !password}*!/*/}
+        {/*  /!*    form="sign-in"*!/*/}
+        {/*  /!*  />*!/*/}
+        {/*  /!*</div>*!/*/}
+
+        {/*  <Button*/}
+        {/*    dataTestId="signIn-button"*/}
+        {/*    text={geti18n("submit")}*/}
+        {/*    disabled={!email || !password}*/}
+        {/*    form="sign-in"*/}
+        {/*  />*/}
+
+        {/*  /!*{options.map(( option, idx ) => (*!/*/}
+        {/*  /!*    <Sign_In_Options key={idx} option={option}/>*!/*/}
+        {/*  /!*))}*!/*/}
+        {/*</form>*/}
       </div>
 
       {/*</div>*/}

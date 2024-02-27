@@ -8,13 +8,14 @@ type TextFieldInputProps = {
 
 type TextFieldProps = {
   input: TextFieldInputProps;
-  onChange: (ev: any) => any;
+  onChange: (ev: any) => void | string;
 };
 
 export const Text_Field: React.FunctionComponent<TextFieldProps> = ({
   ...props
 }) => {
   const { input, onChange } = props;
+
   return (
     <div data-testid="text-field" className="w-8/12 relative">
       <input

@@ -1,15 +1,17 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { withRouter, Route, Switch } from "react-router-dom";
-import { me, routes } from "../store";
-import { useSelector, useDispatch } from "react-redux";
+import { me, routes, tDispatch } from "../store";
 import SignIn from "./signIn/SignIn";
 // import Home_Page from "./components/Home_Page";
 
 const Routes = () => {
-  const dispatch = useDispatch();
+  const dispatch = tDispatch();
 
   useEffect(() => {
-    dispatch(me());
+    (async () => {
+      await dispatch(me());
+    })();
   }, []);
 
   const auth = useSelector((state) => state.auth);

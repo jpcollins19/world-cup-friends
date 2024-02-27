@@ -1,15 +1,16 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { loadUsers, me, tDispatch } from "../store";
 import Routes from "./Routes";
-import { loadUsers, me } from "../store";
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = tDispatch();
 
   React.useEffect(() => {
-    // dispatch(loadUsers());
-    dispatch(me());
+    (async () => {
+      await dispatch(me());
+      // dispatch(loadUsers());
+    })();
   }, []);
 
   return (

@@ -12,14 +12,12 @@
 // export * from "./auth_store";
 // export * from "./users_store";
 // export * from "./utils/index";
-import { configureStore, Tuple } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import {
   createStore,
   combineReducers,
   applyMiddleware,
-  Store,
   Reducer,
   AnyAction,
 } from "redux";
@@ -66,8 +64,8 @@ export type TypedThunk<ReturnType = void> = ThunkAction<
   unknown,
   AnyAction
 >;
-export const useTypedDispatch = () => useDispatch<TypedDispatch>();
-//export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
+export const tDispatch = () => useDispatch<TypedDispatch>();
+export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
 
 //const store: Store<RootState> = createStore(reducer, middleware);
 
