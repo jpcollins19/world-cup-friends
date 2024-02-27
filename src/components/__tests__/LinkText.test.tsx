@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { getTestIdTag } from "../testingUtils";
 import { geti18n, routes } from "../../store";
-import LinkText from "../buffet/LinkText";
+import { LinkText } from "../buffet";
 
 describe("<LinkText/>", () => {
   const onChange = (ev: any) => "test";
@@ -16,7 +16,7 @@ describe("<LinkText/>", () => {
     );
 
     const pageTestId = await getTestIdTag("linkText-component");
-    const linkTestId = await getTestIdTag("linkText-link");
+    const linkTestId = await getTestIdTag("linkText-link-forgot-password");
 
     expect(pageTestId).toBeInTheDocument();
     expect(linkTestId).toHaveAttribute("href", "/create-account");

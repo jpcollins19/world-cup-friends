@@ -2,29 +2,14 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { getTestIdTag } from "../testingUtils";
-import SignIn from "../signIn/SignIn";
-import { Provider } from "react-redux";
-import store, { geti18n, routes } from "../../store";
-import LinkText from "../buffet/LinkText";
+import { ToasterContainer } from "../buffet";
 
-describe("<Error/>", () => {
-  it("should render the component with accurate text ", async () => {
-    render(
-      <LinkText
-        input={{ route: routes.createAccount, text: geti18n("forgotPassword") }}
-      />,
-    );
+describe("<ToasterContainer/>", () => {
+  it("should render the component", async () => {
+    render(<ToasterContainer className="test" />);
 
-    const pageTestId = await getTestIdTag("linkText-component");
-    const linkTestId = await getTestIdTag("linkText-link");
+    const pageTestId = await getTestIdTag("toaster-cont");
 
     expect(pageTestId).toBeInTheDocument();
-    expect(linkTestId).toHaveAttribute("href", "/create-account");
-    expect(linkTestId).toHaveTextContent("Forgot Password");
   });
-
-  it.todo("toastOptionsClass has accurate values");
-  it.todo("error message has accurate errorClass data");
-  // it.todo("error === true relays an error message");
-  // it.todo("text is accurate");
 });

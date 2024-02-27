@@ -1,27 +1,17 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../testingUtils";
-import SignIn from "../signIn/SignIn";
-import { Provider } from "react-redux";
-import store, { geti18n, routes } from "../../store";
-import LinkText from "../buffet/LinkText";
+import { getTestIdTag, invalidEmailAndOrPw } from "../testingUtils";
+import { geti18n } from "../../store";
+import { ErrorMessage } from "../buffet";
 
 describe("<Error/>", () => {
-  it("should render the component with accurate text ", async () => {
-    render(
-      <LinkText
-        input={{ route: routes.createAccount, text: geti18n("forgotPassword") }}
-      />,
-    );
+  it("should render the component with accurate text", async () => {
+    render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 
-    const pageTestId = await getTestIdTag("linkText-component");
-    const linkTestId = await getTestIdTag("linkText-link");
+    const pageTestId = await getTestIdTag("error-message");
 
     expect(pageTestId).toBeInTheDocument();
-    expect(linkTestId).toHaveAttribute("href", "/create-account");
-    expect(linkTestId).toHaveTextContent("Forgot Password");
+    expect(pageTestId).toHaveTextContent(invalidEmailAndOrPw);
   });
-
-  it.todo("text is accurate");
 });

@@ -24,7 +24,7 @@ export const SignIn: React.FunctionComponent = () => {
   // const isMobileView = getScreenWidth("max", 65);
 
   const showPwClick = () => {
-    const typeNeeded = type === emailString ? pwString : emailString;
+    const typeNeeded = type === emailString ? pwString : "text";
 
     setType(typeNeeded);
   };
@@ -43,8 +43,8 @@ export const SignIn: React.FunctionComponent = () => {
 
       setTimeout(() => {
         setInvalidCredentials(false);
-        toast.dismiss();
-      }, 5000);
+        // toast.dismiss();
+      }, 4000);
     }
   }, [invalidCredentials]);
 
@@ -129,14 +129,16 @@ export const SignIn: React.FunctionComponent = () => {
             {textFieldInputs.map((input, idx) => (
               <TextField key={idx} input={input} onChange={onChange} />
             ))}
+
             <div
+              data-testid="view-pw"
               className="mt-10 text-base text-center cursor-pointer"
               onClick={() => showPwClick()}
             >
               {geti18n("viewPw")}
             </div>
+
             <Button
-              dataTestId="signIn-button"
               text={geti18n("submit")}
               disabled={!values.email || !values.password}
               form="sign-in"

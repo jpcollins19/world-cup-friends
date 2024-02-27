@@ -12,6 +12,14 @@ export const changeInputText = async (input: any, text: string) => {
   fireEvent.change(input, { target: { value: text } });
 };
 
+export const click = async (input: any) => {
+  fireEvent.click(input);
+};
+
+export const submit = async (input: any) => {
+  fireEvent.submit(input);
+};
+
 export const matchMediaWorkAround = () => {
   return Object.defineProperty(window, "matchMedia", {
     writable: true,
@@ -26,4 +34,14 @@ export const matchMediaWorkAround = () => {
       dispatchEvent: jest.fn(),
     })),
   });
+};
+
+export const getButtonTestId = (str: string) => {
+  return getTestIdTag(`button-${str}`);
+};
+
+export const getButton = async (str: string) => {
+  const testId = await getButtonTestId(str);
+
+  return testId.querySelector("button");
 };

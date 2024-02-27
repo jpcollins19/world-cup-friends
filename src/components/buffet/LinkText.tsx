@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { colors, tw } from "../../store";
+import { colors, createUrlFromText, tw } from "../../store";
 
 type LinkTextInputProps = {
   route: string;
@@ -16,6 +16,10 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({
 }) => {
   const { input } = props;
 
+  const text = input.text;
+
+  const linkTestId = `linkText-link-${createUrlFromText(text)}`;
+
   return (
     <div
       data-testid="linkText-component"
@@ -28,11 +32,11 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({
 
       <Router>
         <Link
-          data-testid="linkText-link"
+          data-testid={linkTestId}
           to={input.route}
           className={`font-bold text-${colors.linkBlue}`}
         >
-          {input.text}
+          {text}
         </Link>
       </Router>
     </div>

@@ -1,9 +1,14 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { changeInputText, getTestIdTag } from "../testingUtils";
+import {
+  changeInputText,
+  getTestIdTag,
+  emailInputTestId,
+  pwInputTestId,
+} from "../testingUtils";
 import { geti18n } from "../../store";
-import Text_Field from "../buffet/TextField";
+import { TextField } from "../buffet";
 
 describe("<TextField/>", () => {
   const email = geti18n("email");
@@ -12,7 +17,7 @@ describe("<TextField/>", () => {
   const onChange = (ev: any) => "test";
 
   it("should render the component", async () => {
-    render(<Text_Field input={{ label: email }} onChange={onChange} />);
+    render(<TextField input={{ label: email }} onChange={onChange} />);
 
     const pageTestId = await getTestIdTag("text-field");
 
@@ -20,17 +25,17 @@ describe("<TextField/>", () => {
   });
 
   it("the default type is 'text'", async () => {
-    render(<Text_Field input={{ label: email }} onChange={onChange} />);
+    render(<TextField input={{ label: email }} onChange={onChange} />);
 
-    const input = await getTestIdTag("text-field-input");
+    const input = await getTestIdTag(emailInputTestId);
 
     expect(input).toHaveAttribute("type", "text");
   });
 
   it("the default is required", async () => {
-    render(<Text_Field input={{ label: email }} onChange={onChange} />);
+    render(<TextField input={{ label: email }} onChange={onChange} />);
 
-    const input = await getTestIdTag("text-field-input");
+    const input = await getTestIdTag(emailInputTestId);
     const requiredSymbol = await getTestIdTag("text-field-input-required");
 
     expect(input).toHaveAttribute("required");
@@ -38,17 +43,17 @@ describe("<TextField/>", () => {
   });
 
   it("input type is password when passed in", async () => {
-    render(<Text_Field input={{ label: pw, type: pw }} onChange={onChange} />);
+    render(<TextField input={{ label: pw, type: pw }} onChange={onChange} />);
 
-    const input = await getTestIdTag("text-field-input");
+    const input = await getTestIdTag(pwInputTestId);
 
     expect(input).toHaveAttribute("type", pw);
   });
 
   it("onChange changes the input value", async () => {
-    render(<Text_Field input={{ label: pw, type: pw }} onChange={onChange} />);
+    render(<TextField input={{ label: pw, type: pw }} onChange={onChange} />);
 
-    const input = await getTestIdTag("text-field-input");
+    const input = await getTestIdTag(pwInputTestId);
 
     await changeInputText(input, email);
 

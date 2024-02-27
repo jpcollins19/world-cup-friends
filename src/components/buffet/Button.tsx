@@ -1,15 +1,16 @@
 import * as React from "react";
-import { tw } from "../../store";
+import { createUrlFromText, tw } from "../../store";
 
 type ButtonProps = {
-  dataTestId: string;
   form?: string;
   disabled?: boolean;
   text: string;
 };
 
 export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
-  const { dataTestId, form, disabled, text } = props;
+  const { form, disabled, text } = props;
+
+  const testId = `button-${createUrlFromText(text)}`;
 
   const buttonBackground = disabled ? "bg-zinc-200" : "bg-zinc-300";
   const buttonColor = disabled ? "text-gray-500" : "text-black";
@@ -17,7 +18,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
 
   return (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.flexBoth} ${buttonBackground} my-5 rounded-lg`}
     >
       <button

@@ -10,7 +10,7 @@ export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
   text,
 }) => {
   return (
-    <div className={`${tw.flexBoth} my-4`}>
+    <div data-testid="error-message" className={`${tw.flexBoth} my-4`}>
       <Error
         // fontSize={`${isMobileView ? "large" : "medium"}`}
         fontSize="medium"

@@ -8,7 +8,11 @@ type ToasterContainerProps = {
 export const ToasterContainer: React.FunctionComponent<
   ToasterContainerProps
 > = ({ className }) => {
-  return <Toaster toastOptions={{ className }} />;
+  return (
+    <div data-testid="toaster-cont">
+      <Toaster toastOptions={{ className }} />
+    </div>
+  );
 };
 
 export default ToasterContainer;
