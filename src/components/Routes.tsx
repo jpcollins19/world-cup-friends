@@ -5,7 +5,7 @@ import { withRouter, useLocation, Route, Switch } from "react-router-dom";
 import { me, routes, tDispatch } from "../store";
 import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
-import Loading from "./buffet/Loading";
+import { Loading } from "./buffet";
 
 const Routes = () => {
   const dispatch = tDispatch();

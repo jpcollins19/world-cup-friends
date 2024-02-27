@@ -3,6 +3,7 @@ export const en = {
   createAccount: "Create Account",
   email: "email",
   forgotPassword: "Forgot Password",
+  invalidEmailOrPw: "Invalid Email Address and/or Password",
   password: "password",
   signIn: "Sign In",
   submit: "Submit",
@@ -14,6 +15,7 @@ export type i18nOptionsTypes =
   | "createAccount"
   | "email"
   | "forgotPassword"
+  | "invalidEmailOrPw"
   | "password"
   | "signIn"
   | "submit"

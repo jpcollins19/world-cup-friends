@@ -1,41 +1,25 @@
 import * as React from "react";
 import { Form, FormikProvider, useFormik } from "formik";
-// import {Link} from "react-router-dom";
-// import { useAppDispatch } from "../hooks";
+import { authenticate, geti18n, tDispatch, routes, tw } from "../../store";
 import {
-  routes,
-  authenticate,
-  // getScreenWidth,
-  // findJoe,
-  // formatEmail,
-  // routes,
-  tw,
-  geti18n,
-  tDispatch,
-} from "../../store";
-import TextField from "../buffet/TextField";
-import Button from "../buffet/Button";
+  Button,
+  ErrorMessage,
+  LinkText,
+  TextField,
+  ToasterContainer,
+  ToasterMessage,
+} from "../buffet";
 import { SignInSchema } from "./SignInSchema";
-import LinkText from "../buffet/LinkText";
-// import Sign_In_Options from "../Sign_In_Options";
-// import Button from "../../Misc/Button";
-// import toast, {Toaster} from "react-hot-toast";
-// import Error from "@mui/icons-material/ErrorOutline";
+import toast from "react-hot-toast";
 
-//const SignIn = () => {
 export const SignIn: React.FunctionComponent = () => {
-  // const SignIn = () => {
-  //const dispatch = useDispatch();
   const dispatch = tDispatch();
 
   const pwString = geti18n("password");
   const emailString = geti18n("email");
 
-  // const [email, setEmail] = React.useState(null);
-  // const [password, setPassword] = React.useState(null);
-  // const [showPW, setShowPW] = useState(false);
   const [type, setType] = React.useState(pwString);
-  //const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = React.useState(false);
 
   // const isMobileView = getScreenWidth("max", 65);
 
@@ -45,45 +29,30 @@ export const SignIn: React.FunctionComponent = () => {
     setType(typeNeeded);
   };
 
-  // useEffect(() => {
-  //     setInvalidCredentials(false);
-  //     toast.dismiss();
-  // }, []);
+  React.useEffect(() => {
+    toast.dismiss();
+  }, []);
 
-  // useEffect(() => {
-  //     if (invalidCredentials) {
-  //         toast(
-  //             <div>
-  //                 <Error
-  //                     color="red"
-  //                     // fontSize={`${isMobileView ? "large" : "medium"}`}
-  //                     fontSize="medium"
-  //                 />
-  //                 <div className="invalid-credentials-text">
-  //                     Invalid Email Address and/or Password
-  //                 </div>
-  //             </div>,
-  //             {
-  //                 duration: 5000,
-  //             }
-  //         );
-  //
-  //         setTimeout(() => {
-  //             setInvalidCredentials(false);
-  //             toast.dismiss();
-  //         }, 5500);
-  //     }
-  // }, [invalidCredentials]);
+  const errorMessageComponent = (
+    <ErrorMessage text={geti18n("invalidEmailOrPw")} />
+  );
+
+  React.useEffect(() => {
+    if (invalidCredentials) {
+      ToasterMessage({ component: errorMessageComponent });
+
+      setTimeout(() => {
+        setInvalidCredentials(false);
+        toast.dismiss();
+      }, 5000);
+    }
+  }, [invalidCredentials]);
 
   // const joe = findJoe(useSelector(( state ) => state.users));
 
-  const textFieldInputs = [
-    { label: emailString },
-    // { label: "password", type: showPW ? "text" : "password" },
-    { label: pwString, type },
-  ];
+  const textFieldInputs = [{ label: emailString }, { label: pwString, type }];
 
-  const linkTextInputs = [
+  let linkTextInputs = [
     { route: routes.forgotPassword, text: geti18n("forgotPassword") },
     { route: routes.createAccount, text: geti18n("createAccount") },
     { route: routes.home, text: geti18n("cancel") },
@@ -94,37 +63,6 @@ export const SignIn: React.FunctionComponent = () => {
   //         ( option ) => option.route !== routes.createAccount);
   // }
 
-  // const onChange = (ev: any) => {
-  //   const email = ev.target.name === "email";
-  //
-  //   const set = email ? setEmail : setPassword;
-  //
-  //   // const set = eval(`set${ev.target.name}`);
-  //
-  //   // ev.target.name === "email"
-  //   //   ? set(formatEmail(ev.target.value))
-  //   //   : set(ev.target.value);
-  //
-  //   set(ev.target.value);
-  // };
-
-  // const onSubmit = async (ev: any) => {
-  //   ev.preventDefault();
-  //   try {
-  //     await dispatch(authenticate(values.email, values.password));
-  //
-  //     setTimeout(() => {
-  //       if (window.localStorage.token) {
-  //         location.hash = routes.leaderboard;
-  //       } else {
-  //         // setInvalidCredentials(true);
-  //       }
-  //     }, 200);
-  //   } catch (err: any) {
-  //     console.log(err.response);
-  //   }
-  // };
-
   const onSubmit = async () => {
     try {
       await dispatch(authenticate(values.email, values.password));
@@ -133,7 +71,7 @@ export const SignIn: React.FunctionComponent = () => {
         if (window.localStorage.token) {
           window.location.href = routes.leaderboard;
         } else {
-          // setInvalidCredentials(true);
+          setInvalidCredentials(true);
         }
       }, 200);
     } catch (err: any) {
@@ -173,20 +111,13 @@ export const SignIn: React.FunctionComponent = () => {
       data-testid="signIn-page"
       className={`${tw.bRed} ${tw.flexBoth} h-full`}
     >
-      {/*{invalidCredentials && (*/}
-      {/*    <Toaster*/}
-      {/*        toastOptions={{*/}
-      {/*            className: "toaster-invalid-credentials",*/}
-      {/*        }}*/}
-      {/*    />*/}
-      {/*)}*/}
+      <ToasterContainer className="bg-rose-200 text-rose-700 flex p-0 mt-7" />
 
       <div className="border-solid border-4 border-black rounded-2xl h-4/6 w-3/12">
         {/*<div className="bg-cover h-96"*/}
         {/*     style={{backgroundImage: `url("${argentinaFlag}")`}}*/}
         {/*>*/}
 
-        {/*<div className="sign-in-text-cont">*/}
         <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
 
         <FormikProvider value={formik}>

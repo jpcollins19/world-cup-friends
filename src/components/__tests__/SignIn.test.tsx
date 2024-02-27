@@ -1,13 +1,15 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../testingUtils";
+import { getTestIdTag, matchMediaWorkAround } from "../testingUtils";
 import SignIn from "../signIn/SignIn";
 import { Provider } from "react-redux";
 import store from "../../store";
 
 describe("<SignIn/>", () => {
   it("should render the SignIn page", async () => {
+    matchMediaWorkAround();
+
     render(
       <Provider store={store}>
         <SignIn />
@@ -24,4 +26,5 @@ describe("<SignIn/>", () => {
   it.todo("user logs in successfully");
   it.todo("view pw button works");
   it.todo("3 links at bottom of page take you to accurate urls");
+  it.todo("toaster renders?");
 });

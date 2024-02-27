@@ -1,7 +1,8 @@
+import * as React from "react";
 import { SpinnerCircularFixed } from "spinners-react";
 import { tw } from "../../store";
 
-const Loading = () => {
+export const Loading: React.FunctionComponent = () => {
   return (
     <div
       className={`${tw.flexBoth} w-screen h-screen overflow-auto flex flex-col bg-gradient-to-br from-gray-600 via-gray-800 to-gray-600`}
