@@ -1,11 +1,14 @@
 export const routes = {
   home: "/",
-  signIn: "/sign-in",
+  createAccount: "/create-account",
+  forgotPassword: "/forgot-password",
   leaderboard: "/leaderboard",
+  signIn: "/sign-in",
 };
 
 export const colors = {
   black: "#020617",
+  linkBlue: "blue-600",
   red: "#b91c1c",
 };
 

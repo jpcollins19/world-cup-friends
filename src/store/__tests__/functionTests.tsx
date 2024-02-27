@@ -2,7 +2,7 @@ import * as funcs from "../utils";
 
 describe("geti18n", () => {
   const testsToRun = [
-    { str: "testStr", result: "this is a test" },
+    { str: "viewPw", result: "View password" },
     { str: "password", result: "password" },
   ];
 

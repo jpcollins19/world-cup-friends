@@ -16,6 +16,7 @@ import {
 import TextField from "../buffet/TextField";
 import Button from "../buffet/Button";
 import { SignInSchema } from "./SignInSchema";
+import LinkText from "../buffet/LinkText";
 // import Sign_In_Options from "../Sign_In_Options";
 // import Button from "../../Misc/Button";
 // import toast, {Toaster} from "react-hot-toast";
@@ -27,22 +28,22 @@ export const SignIn: React.FunctionComponent = () => {
   //const dispatch = useDispatch();
   const dispatch = tDispatch();
 
+  const pwString = geti18n("password");
+  const emailString = geti18n("email");
+
   // const [email, setEmail] = React.useState(null);
   // const [password, setPassword] = React.useState(null);
   // const [showPW, setShowPW] = useState(false);
-  // const [type, setType] = useState("text");
+  const [type, setType] = React.useState(pwString);
   //const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   // const isMobileView = getScreenWidth("max", 65);
 
-  // const showPwClick = () => {
-  //   const typeMapper = {
-  //     text: "password",
-  //     password: "text",
-  //   };
-  //
-  //   setType(typeMapper[type]);
-  // };
+  const showPwClick = () => {
+    const typeNeeded = type === emailString ? pwString : emailString;
+
+    setType(typeNeeded);
+  };
 
   // useEffect(() => {
   //     setInvalidCredentials(false);
@@ -76,20 +77,17 @@ export const SignIn: React.FunctionComponent = () => {
 
   // const joe = findJoe(useSelector(( state ) => state.users));
 
-  const pwString = geti18n("password");
-  const emailString = geti18n("email");
-
-  const inputs = [
+  const textFieldInputs = [
     { label: emailString },
     // { label: "password", type: showPW ? "text" : "password" },
-    { label: pwString, type: pwString },
+    { label: pwString, type },
   ];
 
-  // let options = [
-  //     {route: routes.forgotPassword, text: "Forgot Password"},
-  //     {route: routes.createAccount, text: "Create Account"},
-  //     {route: routes.home, text: "Cancel"},
-  // ];
+  const linkTextInputs = [
+    { route: routes.forgotPassword, text: geti18n("forgotPassword") },
+    { route: routes.createAccount, text: geti18n("createAccount") },
+    { route: routes.home, text: geti18n("cancel") },
+  ];
 
   // if (joe?.tourneyStage > 1) {
   //     options = options.filter(
@@ -133,7 +131,7 @@ export const SignIn: React.FunctionComponent = () => {
 
       setTimeout(() => {
         if (window.localStorage.token) {
-          location.hash = routes.leaderboard;
+          window.location.href = routes.leaderboard;
         } else {
           // setInvalidCredentials(true);
         }
@@ -183,7 +181,7 @@ export const SignIn: React.FunctionComponent = () => {
       {/*    />*/}
       {/*)}*/}
 
-      <div className="border-solid border-4 border-black rounded-2xl h-3/5 w-3/12">
+      <div className="border-solid border-4 border-black rounded-2xl h-4/6 w-3/12">
         {/*<div className="bg-cover h-96"*/}
         {/*     style={{backgroundImage: `url("${argentinaFlag}")`}}*/}
         {/*>*/}
@@ -197,87 +195,30 @@ export const SignIn: React.FunctionComponent = () => {
             id="sign-in"
             className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
           >
-            {inputs.map((input, idx) => (
+            {textFieldInputs.map((input, idx) => (
               <TextField key={idx} input={input} onChange={onChange} />
             ))}
-
-            {/*{inputs.map((input, idx) => (*/}
-            {/*  <TextField key={idx} input={input} />*/}
-            {/*))}*/}
-
-            {/*<div className="view-pw"*/}
-            {/*     onClick={() => showPwClick()}>*/}
-            {/*    View Password*/}
-            {/*</div>*/}
-
-            {/*<div className="sign-in-button">*/}
-            {/*  <Button*/}
-            {/*    text="Sign In"*/}
-            {/*    disabled={!email || !password}*/}
-            {/*    form="sign-in"*/}
-            {/*  />*/}
-            {/*</div>*/}
-
+            <div
+              className="mt-10 text-base text-center cursor-pointer"
+              onClick={() => showPwClick()}
+            >
+              {geti18n("viewPw")}
+            </div>
             <Button
               dataTestId="signIn-button"
               text={geti18n("submit")}
-              // disabled={!email || !password}
+              disabled={!values.email || !values.password}
               form="sign-in"
             />
 
-            {/*{options.map(( option, idx ) => (*/}
-            {/*    <Sign_In_Options key={idx} option={option}/>*/}
-            {/*))}*/}
+            {linkTextInputs.map((input, idx) => (
+              <LinkText key={idx} input={input} />
+            ))}
           </Form>
         </FormikProvider>
-
-        {/*<form*/}
-        {/*  onSubmit={handleSubmit}*/}
-        {/*  id="sign-in"*/}
-        {/*  className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}*/}
-        {/*>*/}
-        {/*  {inputs.map((input, idx) => (*/}
-        {/*    <TextField key={idx} input={input} onChange={onChange} />*/}
-        {/*  ))}*/}
-
-        {/*  /!*<div className="view-pw"*!/*/}
-        {/*  /!*     onClick={() => showPwClick()}>*!/*/}
-        {/*  /!*    View Password*!/*/}
-        {/*  /!*</div>*!/*/}
-
-        {/*  /!*<div className="sign-in-button">*!/*/}
-        {/*  /!*  <Button*!/*/}
-        {/*  /!*    text="Sign In"*!/*/}
-        {/*  /!*    disabled={!email || !password}*!/*/}
-        {/*  /!*    form="sign-in"*!/*/}
-        {/*  /!*  />*!/*/}
-        {/*  /!*</div>*!/*/}
-
-        {/*  <Button*/}
-        {/*    dataTestId="signIn-button"*/}
-        {/*    text={geti18n("submit")}*/}
-        {/*    disabled={!email || !password}*/}
-        {/*    form="sign-in"*/}
-        {/*  />*/}
-
-        {/*  /!*{options.map(( option, idx ) => (*!/*/}
-        {/*  /!*    <Sign_In_Options key={idx} option={option}/>*!/*/}
-        {/*  /!*))}*!/*/}
-        {/*</form>*/}
       </div>
-
-      {/*</div>*/}
-
-      {/*</div>*/}
     </div>
   );
 };
 
 export default SignIn;
-
-//     .sign-in-cont-outside {
-//     padding: 1rem;
-//     background: linear-gradient(to bottom right, #232628 0%, #090909 100%);
-//     box-shadow: 0 1px 2px black, 0 2px 4px black, 0 4px 8px black,
-//     0 -1px 2px black, 0 -2px 4px black, 0 -4px 8px black;
-// }

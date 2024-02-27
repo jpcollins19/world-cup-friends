@@ -1,4 +1,5 @@
 import axios from "axios";
+import { routes } from "./utils";
 
 const TOKEN = "token";
 
@@ -45,7 +46,8 @@ export const authenticate =
     }
   };
 
-export const logout = () => {
+export const logout = (history: any) => {
+  history.push(routes.signIn);
   window.localStorage.removeItem(TOKEN);
   return {
     type: SET_AUTH,

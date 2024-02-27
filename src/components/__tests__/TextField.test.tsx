@@ -1,11 +1,11 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../testingUtils";
+import { changeInputText, getTestIdTag } from "../testingUtils";
 import { geti18n } from "../../store";
 import Text_Field from "../buffet/TextField";
 
-describe("<Text_Field/>", () => {
+describe("<TextField/>", () => {
   const email = geti18n("email");
   const pw = geti18n("password");
 
@@ -45,5 +45,13 @@ describe("<Text_Field/>", () => {
     expect(input).toHaveAttribute("type", pw);
   });
 
-  it.todo("onChange changes the input value");
+  it("onChange changes the input value", async () => {
+    render(<Text_Field input={{ label: pw, type: pw }} onChange={onChange} />);
+
+    const input = await getTestIdTag("text-field-input");
+
+    await changeInputText(input, email);
+
+    expect(input).toHaveValue(email);
+  });
 });

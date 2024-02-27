@@ -11,7 +11,7 @@ type TextFieldProps = {
   onChange: (ev: any) => void | string;
 };
 
-export const Text_Field: React.FunctionComponent<TextFieldProps> = ({
+export const TextField: React.FunctionComponent<TextFieldProps> = ({
   ...props
 }) => {
   const { input, onChange } = props;
@@ -36,4 +36,4 @@ export const Text_Field: React.FunctionComponent<TextFieldProps> = ({
   );
 };
 
-export default Text_Field;
+export default TextField;

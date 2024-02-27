@@ -5,7 +5,6 @@ import { getTestIdTag } from "../testingUtils";
 import SignIn from "../signIn/SignIn";
 import { Provider } from "react-redux";
 import store from "../../store";
-import App from "../App";
 
 describe("<SignIn/>", () => {
   it("should render the SignIn page", async () => {
@@ -22,4 +21,7 @@ describe("<SignIn/>", () => {
 
   it.todo("all textFields render");
   it.todo("submit button renders");
+  it.todo("user logs in successfully");
+  it.todo("view pw button works");
+  it.todo("3 links at bottom of page take you to accurate urls");
 });
