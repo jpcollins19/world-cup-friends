@@ -1,5 +1,4 @@
 import axios from "axios";
-import { AuthState } from "./auth_store";
 
 const LOAD_USERS = "LOAD_USERS";
 
@@ -12,6 +11,15 @@ export const loadUsers = () => {
     const users = (await axios.get("/api/users")).data;
     dispatch(_loadUsers(users));
   };
+};
+
+export type UserSchema = {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export interface UsersState {}

@@ -1,23 +1,31 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import { Formik } from "formik";
 import {
   changeInputText,
   getTestIdTag,
   emailInputTestId,
   pwInputTestId,
+  email,
+  pw,
 } from "../testingUtils";
-import { geti18n } from "../../store";
 import { TextField } from "../buffet";
 
 describe("<TextField/>", () => {
-  const email = geti18n("email");
-  const pw = geti18n("password");
+  const onSubmit = jest.fn();
+  const onChange = () => jest.fn();
 
-  const onChange = (ev: any) => "test";
+  const initialValues = {
+    email: "email",
+  };
 
   it("should render the component", async () => {
-    render(<TextField input={{ label: email }} onChange={onChange} />);
+    render(
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <TextField input={{ label: email }} onChange={onChange()} />
+      </Formik>,
+    );
 
     const pageTestId = await getTestIdTag("text-field");
 
@@ -25,7 +33,11 @@ describe("<TextField/>", () => {
   });
 
   it("the default type is 'text'", async () => {
-    render(<TextField input={{ label: email }} onChange={onChange} />);
+    render(
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <TextField input={{ label: email }} onChange={onChange()} />
+      </Formik>,
+    );
 
     const input = await getTestIdTag(emailInputTestId);
 
@@ -33,7 +45,11 @@ describe("<TextField/>", () => {
   });
 
   it("the default is required", async () => {
-    render(<TextField input={{ label: email }} onChange={onChange} />);
+    render(
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <TextField input={{ label: email }} onChange={onChange()} />
+      </Formik>,
+    );
 
     const input = await getTestIdTag(emailInputTestId);
     const requiredSymbol = await getTestIdTag("text-field-input-required");
@@ -43,7 +59,11 @@ describe("<TextField/>", () => {
   });
 
   it("input type is password when passed in", async () => {
-    render(<TextField input={{ label: pw, type: pw }} onChange={onChange} />);
+    render(
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <TextField input={{ label: pw, type: pw }} onChange={onChange()} />
+      </Formik>,
+    );
 
     const input = await getTestIdTag(pwInputTestId);
 
@@ -51,7 +71,11 @@ describe("<TextField/>", () => {
   });
 
   it("onChange changes the input value", async () => {
-    render(<TextField input={{ label: pw, type: pw }} onChange={onChange} />);
+    render(
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <TextField input={{ label: pw, type: pw }} onChange={onChange()} />
+      </Formik>,
+    );
 
     const input = await getTestIdTag(pwInputTestId);
 

@@ -53,7 +53,7 @@ User.byToken = async (token) => {
     error.status = 401;
     throw error;
   } catch (err) {
-    console.log("REEEEED", err);
+    console.log("REEEEED - byah - User.byToken - catch", err);
     const error = Error("bad credentials - in byToken on catch");
     error.status = 401;
     throw error;
@@ -81,8 +81,8 @@ User.authenticate = async ({ email, password }) => {
     console.log("REEED", err);
     const error = Error("bad credentials - in authenticate - catch");
     error.status = 401;
-    throw error;
+    return error;
   }
 };
 
- module.exports = User;
+module.exports = User;

@@ -1,5 +1,7 @@
 import * as React from "react";
+import { useFormikContext } from "formik";
 import { createUrlFromText } from "../../store";
+import { SignInSchema } from "../signIn/SignInSchema";
 
 type TextFieldInputProps = {
   label: string;
@@ -21,6 +23,8 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
 
   const inputTestId = `text-field-input-${createUrlFromText(label)}`;
 
+  const { values } = useFormikContext<SignInSchema>();
+
   return (
     <div data-testid="text-field" className="w-8/12 relative">
       <input
@@ -28,6 +32,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
         required
         type={input?.type ?? "text"}
         name={label}
+        value={values[label as keyof SignInSchema]}
         onChange={onChange}
         className="m-1 pt-3 w-full h-14 bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center"
       />

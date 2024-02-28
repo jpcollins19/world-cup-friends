@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Form, FormikProvider, useFormik } from "formik";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router-dom";
 import { authenticate, geti18n, tDispatch, routes, tw } from "../../store";
 import {
   Button,
@@ -10,10 +12,10 @@ import {
   ToasterMessage,
 } from "../buffet";
 import { SignInSchema } from "./SignInSchema";
-import toast from "react-hot-toast";
 
 export const SignIn: React.FunctionComponent = () => {
   const dispatch = tDispatch();
+  const history = useHistory();
 
   const pwString = geti18n("password");
   const emailString = geti18n("email");
@@ -44,7 +46,7 @@ export const SignIn: React.FunctionComponent = () => {
       setTimeout(() => {
         setInvalidCredentials(false);
         // toast.dismiss();
-      }, 4000);
+      }, 5000);
     }
   }, [invalidCredentials]);
 
@@ -65,29 +67,22 @@ export const SignIn: React.FunctionComponent = () => {
 
   const onSubmit = async () => {
     try {
-      await dispatch(authenticate(values.email, values.password));
-
-      setTimeout(() => {
-        if (window.localStorage.token) {
-          window.location.href = routes.leaderboard;
-        } else {
-          setInvalidCredentials(true);
-        }
-      }, 200);
+      await dispatch(authenticate(values.email, values.password, history));
     } catch (err: any) {
-      console.log(err.response);
+      resetForm({ values: { email: "", password: "" } });
+      setInvalidCredentials(true);
     }
   };
 
   const formik = useFormik<SignInSchema>({
     initialValues: {
-      email: null,
-      password: null,
+      email: "",
+      password: "",
     },
     onSubmit: onSubmit,
   });
 
-  const { handleSubmit, values, setFieldValue } = formik;
+  const { handleSubmit, values, setFieldValue, resetForm } = formik;
 
   const onChange = (ev: any) => {
     const isEmail = ev.target.name === emailString;
