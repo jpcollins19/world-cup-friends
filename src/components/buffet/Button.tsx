@@ -15,6 +15,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   const buttonBackground = disabled ? "bg-zinc-200" : "bg-zinc-300";
   const buttonColor = disabled ? "text-gray-500" : "text-black";
   const buttonHover = !disabled ? "hover:bg-zinc-400" : "";
+  const buttonBorder = !disabled ? "border-solid border-2 border-black" : "";
 
   return (
     <div
@@ -27,7 +28,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
         type={form ? "submit" : undefined}
         disabled={disabled}
         // onClick={onClick}
-        className={`px-3 py-2 min-w-[10rem] cursor-pointer rounded-lg font-bold ${buttonHover} ${buttonColor}`}
+        className={`px-3 py-2 min-w-[10rem] cursor-pointer rounded-lg font-bold ${buttonHover} ${buttonColor} ${buttonBorder}`}
       >
         {text}
       </button>

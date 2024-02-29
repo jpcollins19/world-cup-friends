@@ -2,11 +2,19 @@ import * as React from "react";
 import { Form, FormikProvider, useFormik } from "formik";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import { authenticate, geti18n, tDispatch, routes, tw } from "../../store";
+import {
+  authenticate,
+  geti18n,
+  tDispatch,
+  loadingDefault,
+  routes,
+  tw,
+} from "../../store";
 import {
   Button,
   ErrorMessage,
   LinkText,
+  Loading,
   TextField,
   ToasterContainer,
   ToasterMessage,
@@ -96,30 +104,23 @@ export const SignIn: React.FunctionComponent = () => {
     }
   };
 
-  // const argentinaFlag = './messi'
-
-  // const argentinaFlag =
-  //   "https://cdn.britannica.com/18/147118-050-7F820ED5/flag-Argentina-2010.jpg";
-
-  return (
+  return loadingDefault() ? (
+    <Loading />
+  ) : (
     <div
       data-testid="signIn-page"
       className={`${tw.bRed} ${tw.flexBoth} h-full`}
     >
       <ToasterContainer className="bg-rose-200 text-rose-700 flex p-0 mt-7" />
 
-      <div className="border-solid border-4 border-black rounded-2xl h-4/6 w-3/12">
-        {/*<div className="bg-cover h-96"*/}
-        {/*     style={{backgroundImage: `url("${argentinaFlag}")`}}*/}
-        {/*>*/}
-
+      <div className="border-solid border-4 border-black rounded-2xl h-4/6 w-3/12 bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200">
         <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
 
         <FormikProvider value={formik}>
           <Form
             onSubmit={handleSubmit}
             id="sign-in"
-            className={`${tw.bPurple} ${tw.flexA} h-5/6 pt-10 flex-col`}
+            className={`${tw.flexA} h-5/6 pt-10 flex-col`}
           >
             {textFieldInputs.map((input, idx) => (
               <TextField key={idx} input={input} onChange={onChange} />
@@ -127,17 +128,19 @@ export const SignIn: React.FunctionComponent = () => {
 
             <div
               data-testid="view-pw"
-              className="mt-10 text-base text-center cursor-pointer"
+              className="mt-5 text-base text-center cursor-pointer"
               onClick={() => showPwClick()}
             >
               {geti18n("viewPw")}
             </div>
 
-            <Button
-              text={geti18n("submit")}
-              disabled={!values.email || !values.password}
-              form="sign-in"
-            />
+            <div className="h-24">
+              <Button
+                text={geti18n("submit")}
+                disabled={!values.email || !values.password}
+                form="sign-in"
+              />
+            </div>
 
             {linkTextInputs.map((input, idx) => (
               <LinkText key={idx} input={input} />
