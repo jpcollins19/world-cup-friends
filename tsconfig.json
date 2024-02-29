@@ -8,6 +8,7 @@
     "removeComments": true,
     "noEmit": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true
   },
 //  "include": [
 //    "src/index.tsx"

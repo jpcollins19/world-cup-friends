@@ -1,8 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import {
-  changeInputText,
   click,
   getButton,
   getButtonTestId,
@@ -11,7 +10,6 @@ import {
   matchMediaWorkAround,
   submit,
   emailInputTestId,
-  invalidEmailAndOrPw,
   pwInputTestId,
   submitLowerCase,
   submitUpperCase,
@@ -121,43 +119,4 @@ describe("<SignIn/>", () => {
     expect(cancelLinkTestId).toHaveAttribute("href", "/");
     expect(cancelLinkTestId).toHaveTextContent("Cancel");
   });
-
-  // it("errorMessage renders when invalid credentials are submitted", async () => {
-  //   // jest.mock("../../store", () => ({
-  //   //   ...jest.requireActual("../../store"),
-  //   //   authenticate: jest
-  //   //     .fn()
-  //   //     .mockRejectedValueOnce(new Error("Authentication failed")),
-  //   // }));
-  //
-  //   // jest.mock("xmlhttprequest", () => {
-  //   //   const MockXMLHttpRequest = jest.fn();
-  //   //   return MockXMLHttpRequest;
-  //   // });
-  //
-  //   render(
-  //     <Provider store={store}>
-  //       <SignIn />
-  //     </Provider>,
-  //   );
-  //
-  //   const emailInput = await getTestIdTag(emailInputTestId);
-  //   const pwInput = await getTestIdTag(pwInputTestId);
-  //
-  //   await changeInputText(emailInput, "joe@gmail.com");
-  //   await changeInputText(pwInput, "pw");
-  //
-  //   const submitButton = await getTestIdTag("button-submit");
-  //
-  //   await submit(submitButton);
-  //
-  //   await waitFor(async () => {
-  //     const errorMessageTestId = await getTestIdTag("error-message");
-  //
-  //     expect(errorMessageTestId).toBeInTheDocument();
-  //     expect(errorMessageTestId).toHaveTextContent(invalidEmailAndOrPw);
-  //   });
-  // });
-
-  it.todo("user logs in successfully");
 });

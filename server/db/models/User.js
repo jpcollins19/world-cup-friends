@@ -49,9 +49,9 @@ User.byToken = async (token) => {
     if (user) {
       return user;
     }
-    const error = Error("bad credentials - in byToken - on try");
-    error.status = 401;
-    throw error;
+    // const error = Error("bad credentials - in byToken - on try");
+    // error.status = 401;
+    // throw error;
   } catch (err) {
     console.log("REEEEED - byah - User.byToken - catch", err);
     const error = Error("bad credentials - in byToken on catch");

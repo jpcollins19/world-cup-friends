@@ -32,6 +32,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
         required
         type={input?.type ?? "text"}
         name={label}
+        autoComplete="on"
         value={values[label as keyof SignInSchema]}
         onChange={onChange}
         className="m-1 pt-3 w-full h-14 bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center"

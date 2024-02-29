@@ -20,8 +20,8 @@ export const SignIn: React.FunctionComponent = () => {
   const pwString = geti18n("password");
   const emailString = geti18n("email");
 
-  const [type, setType] = React.useState(pwString);
   const [invalidCredentials, setInvalidCredentials] = React.useState(false);
+  const [type, setType] = React.useState(pwString);
 
   // const isMobileView = getScreenWidth("max", 65);
 

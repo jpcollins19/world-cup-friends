@@ -43,7 +43,7 @@ export const Leaderboard: React.FunctionComponent = () => {
   const history = useHistory();
 
   return (
-    <div className="pb-10">
+    <div data-testid="leaderboard-page" className="pb-10">
       leaderboard page
       {/*{!isMobile && showPayout && <Payout />}*/}
       {/*{joe?.tourneyStage === 1 ? (*/}

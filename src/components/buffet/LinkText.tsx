@@ -34,7 +34,7 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({
         <Link
           data-testid={linkTestId}
           to={input.route}
-          className={`font-bold text-${colors.linkBlue}`}
+          className="font-bold text-blue-700"
         >
           {text}
         </Link>

@@ -8,7 +8,6 @@ export const routes = {
 
 export const colors = {
   black: "#020617",
-  linkBlue: "blue-600",
   red: "#b91c1c",
 };
 
