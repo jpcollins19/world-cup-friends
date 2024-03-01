@@ -1,21 +1,29 @@
 import * as React from "react";
-import { createUrlFromText, tw } from "../../store";
+import { createUrlFromText, getMobileTestId, tw } from "../../store";
 
 type ButtonProps = {
   form?: string;
   disabled?: boolean;
   text: string;
+  isMobile?: boolean;
 };
 
 export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
-  const { form, disabled, text } = props;
+  const { form, disabled, text, isMobile } = props;
 
-  const testId = `button-${createUrlFromText(text)}`;
+  const mobileTestId = getMobileTestId(isMobile);
+
+  const testId = `button-cont-${createUrlFromText(text)}${mobileTestId}`;
+  const buttonTestId = `button-${createUrlFromText(text)}${mobileTestId}`;
 
   const buttonBackground = disabled ? "bg-zinc-200" : "bg-zinc-300";
   const buttonColor = disabled ? "text-gray-500" : "text-black";
   const buttonHover = !disabled ? "hover:bg-zinc-400" : "";
   const buttonBorder = !disabled ? "border-solid border-2 border-black" : "";
+
+  const buttonClass = isMobile
+    ? "min-w-[15rem] text-2xl py-4"
+    : "min-w-[10rem] py-2";
 
   return (
     <div
@@ -24,11 +32,12 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
     >
       <button
         // form={form ? form : ""}
+        data-testid={buttonTestId}
         form={form}
         type={form ? "submit" : undefined}
         disabled={disabled}
         // onClick={onClick}
-        className={`px-3 py-2 min-w-[10rem] cursor-pointer rounded-lg font-bold ${buttonHover} ${buttonColor} ${buttonBorder}`}
+        className={`${buttonClass} ${buttonHover} ${buttonColor} ${buttonBorder} px-3 cursor-pointer rounded-lg font-bold`}
       >
         {text}
       </button>

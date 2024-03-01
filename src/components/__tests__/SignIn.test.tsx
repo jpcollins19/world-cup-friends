@@ -8,6 +8,7 @@ import {
   getTestIdTag,
   getText,
   matchMediaWorkAround,
+  mockIsMobile,
   submit,
   emailInputTestId,
   pwInputTestId,
@@ -17,6 +18,8 @@ import {
 import SignIn from "../signIn/SignIn";
 import { Provider } from "react-redux";
 import store from "../../store";
+
+jest.mock("react-responsive");
 
 describe("<SignIn/>", () => {
   beforeEach(() => {
@@ -88,7 +91,7 @@ describe("<SignIn/>", () => {
       </Provider>,
     );
 
-    const viewPw = await getTestIdTag("view-pw");
+    const viewPw = await getTestIdTag("signIn-view-pw");
 
     await click(viewPw);
 
@@ -118,5 +121,115 @@ describe("<SignIn/>", () => {
 
     expect(cancelLinkTestId).toHaveAttribute("href", "/");
     expect(cancelLinkTestId).toHaveTextContent("Cancel");
+  });
+
+  describe("mobile vs. comp testing", () => {
+    it("renders the mobile page", async () => {
+      render(
+        <Provider store={store}>
+          <SignIn />
+        </Provider>,
+      );
+
+      mockIsMobile(true);
+
+      const pageTestId = await getTestIdTag("signIn-page-mobile");
+
+      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toHaveTextContent("Sign In");
+    });
+
+    describe("classTesting", () => {
+      const singInBase = "signIn-";
+
+      const signInContainerClass = `${singInBase}cont`;
+      const headerClass = `${singInBase}header`;
+      const viewPwClass = `${singInBase}view-pw`;
+      const linkTextClass = `${singInBase}linkText`;
+
+      const signInContainerClassBaseInfo =
+        "border-solid border-4 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
+
+      const headerClassBaseInfo = "text-center";
+
+      const viewPwClassBaseInfo = "text-center cursor-pointer";
+
+      const testsToRun = {
+        comp: [
+          {
+            testId: signInContainerClass,
+            result: `${signInContainerClassBaseInfo} h-4/6 w-3/12`,
+          },
+          {
+            testId: headerClass,
+            result: `${headerClassBaseInfo} text-4xl mt-10`,
+          },
+          {
+            testId: viewPwClass,
+            result: `${viewPwClassBaseInfo} text-base`,
+          },
+          {
+            testId: viewPwClass,
+            result: `${viewPwClassBaseInfo} text-base`,
+          },
+        ],
+        mobile: [
+          {
+            testId: signInContainerClass,
+            result: `${signInContainerClassBaseInfo} h-3/6 w-8/12`,
+          },
+          {
+            testId: headerClass,
+            result: `${headerClassBaseInfo} text-6xl mt-20`,
+          },
+          {
+            testId: viewPwClass,
+            result: `${viewPwClassBaseInfo} text-2xl`,
+          },
+          {
+            testId: linkTextClass,
+            result: `mt-20`,
+          },
+        ],
+      };
+
+      describe("comp view", () => {
+        testsToRun.comp.forEach((test) => {
+          beforeEach(() => {
+            mockIsMobile(false);
+          });
+
+          it(`${test.testId}`, async () => {
+            render(
+              <Provider store={store}>
+                <SignIn />
+              </Provider>,
+            );
+
+            const testId = await getTestIdTag(test.testId);
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+
+      describe("mobile view", () => {
+        testsToRun.mobile.forEach((test) => {
+          beforeEach(() => {
+            mockIsMobile(true);
+          });
+
+          it(`${test.testId}`, async () => {
+            render(
+              <Provider store={store}>
+                <SignIn />
+              </Provider>,
+            );
+
+            const testId = await getTestIdTag(test.testId);
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+    });
   });
 });

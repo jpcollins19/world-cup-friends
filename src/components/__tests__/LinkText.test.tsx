@@ -6,8 +6,6 @@ import { geti18n, routes } from "../../store";
 import { LinkText } from "../buffet";
 
 describe("<LinkText/>", () => {
-  const onChange = (ev: any) => "test";
-
   it("should render the component with accurate routing and text data", async () => {
     render(
       <LinkText
@@ -21,5 +19,88 @@ describe("<LinkText/>", () => {
     expect(pageTestId).toBeInTheDocument();
     expect(linkTestId).toHaveAttribute("href", "/create-account");
     expect(linkTestId).toHaveTextContent("Forgot Password");
+  });
+
+  describe("mobile vs. comp testing", () => {
+    it("renders the mobile page", async () => {
+      render(
+        <LinkText
+          input={{
+            route: routes.createAccount,
+            text: geti18n("forgotPassword"),
+          }}
+          isMobile={true}
+        />,
+      );
+
+      const pageTestId = await getTestIdTag("linkText-component-mobile");
+      const linkTestId = await getTestIdTag(
+        "linkText-link-forgot-password-mobile",
+      );
+
+      expect(pageTestId).toBeInTheDocument();
+      expect(linkTestId).toHaveAttribute("href", "/create-account");
+      expect(linkTestId).toHaveTextContent("Forgot Password");
+    });
+
+    describe("classTesting", () => {
+      const linkClass = "linkText-link-forgot-password";
+
+      const linkClassBaseInfo = "font-bold text-blue-700";
+
+      const testsToRun = {
+        comp: [
+          {
+            testId: linkClass,
+            result: `${linkClassBaseInfo}`,
+          },
+        ],
+        mobile: [
+          {
+            testId: `${linkClass}-mobile`,
+            result: `${linkClassBaseInfo} text-2xl`,
+          },
+        ],
+      };
+
+      describe("comp view", () => {
+        testsToRun.comp.forEach((test) => {
+          it(`${test.testId}`, async () => {
+            render(
+              <LinkText
+                input={{
+                  route: routes.createAccount,
+                  text: geti18n("forgotPassword"),
+                }}
+              />,
+            );
+
+            const testId = await getTestIdTag(test.testId);
+
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+
+      describe("mobile view", () => {
+        testsToRun.mobile.forEach((test) => {
+          it(`${test.testId}`, async () => {
+            render(
+              <LinkText
+                input={{
+                  route: routes.createAccount,
+                  text: geti18n("forgotPassword"),
+                }}
+                isMobile={true}
+              />,
+            );
+
+            const testId = await getTestIdTag(test.testId);
+
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+    });
   });
 });

@@ -10,8 +10,75 @@ describe("<Error/>", () => {
     render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 
     const pageTestId = await getTestIdTag("error-message");
+    const textTestId = await getTestIdTag("error-message-text");
 
     expect(pageTestId).toBeInTheDocument();
-    expect(pageTestId).toHaveTextContent(invalidEmailAndOrPw);
+    expect(textTestId).toBeInTheDocument();
+    expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
+  });
+
+  describe("mobile vs. comp testing", () => {
+    it("renders the mobile page", async () => {
+      render(
+        <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={true} />,
+      );
+
+      const pageTestId = await getTestIdTag("error-message-mobile");
+      const textTestId = await getTestIdTag("error-message-text-mobile");
+
+      expect(pageTestId).toBeInTheDocument();
+      expect(textTestId).toBeInTheDocument();
+      expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
+    });
+
+    describe("classTesting", () => {
+      const textSizeClass = "error-message-text";
+
+      const textSizeClassBaseInfo = "ml-2";
+
+      const testsToRun = {
+        comp: [
+          {
+            testId: textSizeClass,
+            result: `${textSizeClassBaseInfo}`,
+          },
+        ],
+        mobile: [
+          {
+            testId: `${textSizeClass}-mobile`,
+            result: `${textSizeClassBaseInfo} text-2xl`,
+          },
+        ],
+      };
+
+      describe("comp view", () => {
+        testsToRun.comp.forEach((test) => {
+          it(`${test.testId}`, async () => {
+            render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
+
+            const testId = await getTestIdTag(test.testId);
+
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+
+      describe("mobile view", () => {
+        testsToRun.mobile.forEach((test) => {
+          it(`${test.testId}`, async () => {
+            render(
+              <ErrorMessage
+                text={geti18n("invalidEmailOrPw")}
+                isMobile={true}
+              />,
+            );
+
+            const testId = await getTestIdTag(test.testId);
+
+            expect(testId).toHaveClass(test.result);
+          });
+        });
+      });
+    });
   });
 });

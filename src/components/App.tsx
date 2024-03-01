@@ -14,9 +14,11 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <Routes />
-    </Router>
+    <div className="bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200 h-full">
+      <Router>
+        <Routes />
+      </Router>
+    </div>
   );
 };
 

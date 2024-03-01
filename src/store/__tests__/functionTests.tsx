@@ -30,3 +30,18 @@ describe("createUrlFromText ", () => {
     });
   });
 });
+
+describe("getMobileTestId ", () => {
+  const testsToRun = [
+    { boolean: true, result: "-mobile" },
+    { boolean: false, result: "" },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(`${test.boolean}`, () => {
+      const result = funcs.getMobileTestId(test.boolean);
+
+      expect(result).toBe(test.result);
+    });
+  });
+});

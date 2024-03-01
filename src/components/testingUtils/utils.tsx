@@ -36,12 +36,18 @@ export const matchMediaWorkAround = () => {
   });
 };
 
-export const getButtonTestId = (str: string) => {
-  return getTestIdTag(`button-${str}`);
+export const getButtonTestId = (str: string, isMobile?: boolean) => {
+  const mobileAppendage = isMobile ? "-mobile" : "";
+
+  return getTestIdTag(`button-cont-${str}${mobileAppendage}`);
 };
 
-export const getButton = async (str: string) => {
-  const testId = await getButtonTestId(str);
+export const getButton = async (str: string, isMobile?: boolean) => {
+  const testId = await getButtonTestId(str, isMobile);
 
   return testId.querySelector("button");
+};
+
+export const mockIsMobile = (boolean: boolean) => {
+  return require("react-responsive").useMediaQuery.mockReturnValue(boolean);
 };

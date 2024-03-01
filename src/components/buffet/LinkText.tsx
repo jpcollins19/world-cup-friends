@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { colors, createUrlFromText, tw } from "../../store";
+import { colors, createUrlFromText, getMobileTestId, tw } from "../../store";
 
 type LinkTextInputProps = {
   route: string;
@@ -9,22 +9,25 @@ type LinkTextInputProps = {
 
 type LinkTextProps = {
   input: LinkTextInputProps;
+  isMobile?: boolean;
 };
 
 export const LinkText: React.FunctionComponent<LinkTextProps> = ({
   ...props
 }) => {
-  const { input } = props;
+  const { input, isMobile } = props;
+
+  const mobileTestId = getMobileTestId(isMobile);
 
   const text = input.text;
 
-  const linkTestId = `linkText-link-${createUrlFromText(text)}`;
+  const testId = `linkText-component${mobileTestId}`;
+  const linkTestId = `linkText-link-${createUrlFromText(text)}${mobileTestId}`;
+
+  const linkClass = isMobile ? "text-2xl" : "";
 
   return (
-    <div
-      data-testid="linkText-component"
-      className={`${tw.flexBoth} mt-4 w-full`}
-    >
+    <div data-testid={testId} className={`${tw.flexBoth} mt-4 w-full`}>
       {/*{option.route === routes.signIn && (*/}
       {/*    <h4 className="create-account-sign-in">Already have an*/}
       {/*      account? </h4>*/}
@@ -34,7 +37,7 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({
         <Link
           data-testid={linkTestId}
           to={input.route}
-          className="font-bold text-blue-700"
+          className={`${linkClass} font-bold text-blue-700`}
         >
           {text}
         </Link>

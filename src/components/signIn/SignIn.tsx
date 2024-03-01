@@ -7,8 +7,10 @@ import {
   geti18n,
   tDispatch,
   loadingDefault,
+  useIsMobile,
   routes,
   tw,
+  getMobileTestId,
 } from "../../store";
 import {
   Button,
@@ -31,8 +33,6 @@ export const SignIn: React.FunctionComponent = () => {
   const [invalidCredentials, setInvalidCredentials] = React.useState(false);
   const [type, setType] = React.useState(pwString);
 
-  // const isMobileView = getScreenWidth("max", 65);
-
   const showPwClick = () => {
     const typeNeeded = type === emailString ? pwString : "text";
 
@@ -43,8 +43,10 @@ export const SignIn: React.FunctionComponent = () => {
     toast.dismiss();
   }, []);
 
+  const isMobile = useIsMobile();
+
   const errorMessageComponent = (
-    <ErrorMessage text={geti18n("invalidEmailOrPw")} />
+    <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={isMobile} />
   );
 
   React.useEffect(() => {
@@ -104,17 +106,35 @@ export const SignIn: React.FunctionComponent = () => {
     }
   };
 
+  const baseTestId = "signIn-page";
+  const mobileTestId = getMobileTestId(isMobile);
+
+  const dataTestId = `${baseTestId}${mobileTestId}`;
+
+  const toasterContainerClass = isMobile ? "mt-36" : "mt-7";
+  const signInContainerClass = isMobile ? "h-3/6 w-8/12" : "h-4/6 w-3/12";
+  const headerClass = isMobile ? "text-6xl mt-20" : "text-4xl mt-10";
+  const viewPwClass = isMobile ? "text-2xl" : "text-base";
+  const linkTextClass = isMobile ? "mt-20" : "";
+
   return loadingDefault() ? (
     <Loading />
   ) : (
-    <div
-      data-testid="signIn-page"
-      className={`${tw.bRed} ${tw.flexBoth} h-full`}
-    >
-      <ToasterContainer className="bg-rose-200 text-rose-700 flex p-0 mt-7" />
+    <div data-testid={dataTestId} className={`${tw.flexBoth} h-full`}>
+      <ToasterContainer
+        className={`${toasterContainerClass} bg-rose-200 text-rose-700 flex p-0`}
+      />
 
-      <div className="border-solid border-4 border-black rounded-2xl h-4/6 w-3/12 bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200">
-        <h1 className={`text-4xl text-center mt-10`}>{geti18n("signIn")}</h1>
+      <div
+        data-testid="signIn-cont"
+        className={`${signInContainerClass} border-solid border-4 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300`}
+      >
+        <h1
+          data-testid="signIn-header"
+          className={`${headerClass} text-center`}
+        >
+          {geti18n("signIn")}
+        </h1>
 
         <FormikProvider value={formik}>
           <Form
@@ -123,12 +143,17 @@ export const SignIn: React.FunctionComponent = () => {
             className={`${tw.flexA} h-5/6 pt-10 flex-col`}
           >
             {textFieldInputs.map((input, idx) => (
-              <TextField key={idx} input={input} onChange={onChange} />
+              <TextField
+                key={idx}
+                input={input}
+                onChange={onChange}
+                isMobile={isMobile}
+              />
             ))}
 
             <div
-              data-testid="view-pw"
-              className="mt-5 text-base text-center cursor-pointer"
+              data-testid="signIn-view-pw"
+              className={`${viewPwClass} text-center cursor-pointer mt-5`}
               onClick={() => showPwClick()}
             >
               {geti18n("viewPw")}
@@ -139,12 +164,15 @@ export const SignIn: React.FunctionComponent = () => {
                 text={geti18n("submit")}
                 disabled={!values.email || !values.password}
                 form="sign-in"
+                isMobile={isMobile}
               />
             </div>
 
-            {linkTextInputs.map((input, idx) => (
-              <LinkText key={idx} input={input} />
-            ))}
+            <div data-testid="signIn-linkText" className={linkTextClass}>
+              {linkTextInputs.map((input, idx) => (
+                <LinkText key={idx} input={input} isMobile={isMobile} />
+              ))}
+            </div>
           </Form>
         </FormikProvider>
       </div>

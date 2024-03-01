@@ -10,7 +10,14 @@ export const ToasterContainer: React.FunctionComponent<
 > = ({ className }) => {
   return (
     <div data-testid="toaster-cont">
-      <Toaster toastOptions={{ className }} />
+      <Toaster
+        toastOptions={{
+          className,
+          style: {
+            maxWidth: 500,
+          },
+        }}
+      />
     </div>
   );
 };
