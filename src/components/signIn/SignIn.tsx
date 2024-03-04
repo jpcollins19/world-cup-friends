@@ -11,6 +11,7 @@ import {
   routes,
   tw,
   getMobileTestId,
+  getPageTestId,
 } from "../../store";
 import {
   Button,
@@ -106,13 +107,10 @@ export const SignIn: React.FunctionComponent = () => {
     }
   };
 
-  const baseTestId = "signIn-page";
-  const mobileTestId = getMobileTestId(isMobile);
-
-  const dataTestId = `${baseTestId}${mobileTestId}`;
+  const dataTestId = getPageTestId("signIn-page");
 
   const toasterContainerClass = isMobile ? "mt-36" : "mt-7";
-  const signInContainerClass = isMobile ? "h-3/6 w-8/12" : "h-4/6 w-3/12";
+  const signInContainerClass = isMobile ? "h-3/6 w-8/12" : "h-4/6 w-4/12";
   const headerClass = isMobile ? "text-6xl mt-20" : "text-4xl mt-10";
   const viewPwClass = isMobile ? "text-2xl" : "text-base";
   const linkTextClass = isMobile ? "mt-20" : "";
@@ -120,9 +118,9 @@ export const SignIn: React.FunctionComponent = () => {
   return loadingDefault() ? (
     <Loading />
   ) : (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} h-full`}>
+    <div data-testid={dataTestId} className={`${tw.flexBoth} h-screen`}>
       <ToasterContainer
-        className={`${toasterContainerClass} bg-rose-200 text-rose-700 flex p-0`}
+        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-72`}
       />
 
       <div

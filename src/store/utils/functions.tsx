@@ -36,3 +36,11 @@ export const useIsMobile = (): boolean => {
 export const getMobileTestId = (isMobile?: boolean): string => {
   return isMobile ? "-mobile" : "";
 };
+
+export const getPageTestId = (str: string): string => {
+  const isMobile = useIsMobile();
+
+  const mobileTestId = getMobileTestId(isMobile);
+
+  return `${str}${mobileTestId}`;
+};

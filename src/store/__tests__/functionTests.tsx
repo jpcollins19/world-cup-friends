@@ -1,4 +1,6 @@
 import * as funcs from "../utils";
+import { getPageTestId } from "../utils";
+import { mockIsMobile } from "../../components/testingUtils";
 
 describe("geti18n", () => {
   const testsToRun = [
@@ -31,15 +33,37 @@ describe("createUrlFromText ", () => {
   });
 });
 
-describe("getMobileTestId ", () => {
+// describe("getMobileTestId ", () => {
+//   const testsToRun = [
+//     { boolean: true, result: "-mobile" },
+//     { boolean: false, result: "" },
+//   ];
+//
+//   testsToRun.forEach((test) => {
+//     it(`${test.boolean}`, () => {
+//       const result = funcs.getMobileTestId(test.boolean);
+//
+//       expect(result).toBe(test.result);
+//     });
+//   });
+// });
+
+describe("getPageTestId ", () => {
+  const signInPage = "signIn-page";
+  const navbar = "navbar";
+
   const testsToRun = [
-    { boolean: true, result: "-mobile" },
-    { boolean: false, result: "" },
+    { str: signInPage, isMobile: false, result: signInPage },
+    { str: signInPage, isMobile: true, result: `${signInPage}-mobile` },
+    { str: navbar, isMobile: false, result: navbar },
+    { str: navbar, isMobile: true, result: `${navbar}-mobile` },
   ];
 
   testsToRun.forEach((test) => {
-    it(`${test.boolean}`, () => {
-      const result = funcs.getMobileTestId(test.boolean);
+    it(`${test.str}`, () => {
+      mockIsMobile(test.isMobile);
+
+      const result = funcs.getPageTestId(test.str);
 
       expect(result).toBe(test.result);
     });

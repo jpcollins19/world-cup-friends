@@ -8,8 +8,7 @@ type ToasterMessageProps = {
 export const ToasterMessage: React.FunctionComponent<ToasterMessageProps> = ({
   component,
 }) => {
-  // return toast(component, { duration: 5000 });
-  return toast(component, { duration: 500000 });
+  return toast(component, { duration: 5000 });
 };
 
 export default ToasterMessage;

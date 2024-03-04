@@ -158,7 +158,7 @@ describe("<SignIn/>", () => {
         comp: [
           {
             testId: signInContainerClass,
-            result: `${signInContainerClassBaseInfo} h-4/6 w-3/12`,
+            result: `${signInContainerClassBaseInfo} h-4/6 w-4/12`,
           },
           {
             testId: headerClass,

@@ -1,18 +1,19 @@
 import * as React from "react";
 import { Form, FormikProvider, useFormik } from "formik";
-// import {
-//   geti18n,
-//   getPageTestId,
-//   getMobileTestId,
-//   tDispatch,
-//   loadingDefault,
-//   useIsMobile,
-//   routes,
-//   tw,
-// } from "../../store";
-// import { Loading } from "../buffet";
+import {
+  geti18n,
+  getMobileTestId,
+  tDispatch,
+  loadingDefault,
+  useIsMobile,
+  routes,
+  tw,
+  getPageTestId,
+} from "../../store";
+import { Loading } from "../buffet";
+import Logo from "./Logo";
 
-export const TEMPLATE: React.FunctionComponent = () => {
+export const Navbar: React.FunctionComponent = () => {
   // const dispatch = tDispatch();
 
   // const onSubmit = async () => {
@@ -46,21 +47,13 @@ export const TEMPLATE: React.FunctionComponent = () => {
   //   }
   // };
 
-  const dataTestId = getPageTestId("signIn-page");
+  const dataTestId = getPageTestId("navbar");
 
-  return loadingDefault() ? (
-    <Loading />
-  ) : (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} h-full`}>
-      {/*<FormikProvider value={formik}>*/}
-      {/*  <Form*/}
-      {/*    onSubmit={handleSubmit}*/}
-      {/*    // id="sign-in"*/}
-      {/*    className={`${tw.flexA} h-5/6 pt-10 flex-col`}*/}
-      {/*  ></Form>*/}
-      {/*</FormikProvider>*/}
+  return (
+    <div data-testid={dataTestId} className={`${tw.flexBoth}`}>
+      <Logo />
     </div>
   );
 };
 
-export default TEMPLATE;
+export default Navbar;

@@ -1,7 +1,8 @@
 import * as React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { loadUsers, me, tDispatch } from "../store";
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
+import { loadUsers, me, routes, tDispatch, tw } from "../store";
 import Routes from "./Routes";
+import Navbar from "./navbar/Navbar";
 
 const App = () => {
   const dispatch = tDispatch();
@@ -14,9 +15,15 @@ const App = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200 h-full">
+    <div className="flex bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200 h-screen w-screen">
       <Router>
-        <Routes />
+        <div className={`${tw.bPurple} h-screen w-1/5`}>
+          <Route path={routes.home} component={Navbar} />
+        </div>
+
+        <div className="h-screen w-screen overflow-auto">
+          <Routes />
+        </div>
       </Router>
     </div>
   );
