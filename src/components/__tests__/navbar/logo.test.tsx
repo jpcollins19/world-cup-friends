@@ -1,7 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../../testingUtils";
+import { elevateClass, getTestIdTag } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
 import Logo from "../../navbar/Logo";
 
@@ -13,16 +13,28 @@ describe("<Logo/>", () => {
     render(<Logo />);
 
     const testId = await getTestIdTag("logo");
+    const imageTestId = await getTestIdTag("logo-image");
 
     expect(testId).toBeInTheDocument();
-    expect(testId).toHaveAttribute("src", logoImage);
-    expect(testId).toHaveAttribute("alt", "World Cup Logo");
+    expect(imageTestId).toBeInTheDocument();
+    expect(imageTestId).toHaveAttribute("src", logoImage);
+    expect(imageTestId).toHaveAttribute("alt", "World Cup Logo");
+  });
+
+  it("logo link takes you to the home page", async () => {
+    render(<Logo />);
+
+    const testId = await getTestIdTag("logo");
+
+    expect(testId).toHaveAttribute("href", "/");
   });
 
   describe("classTesting", () => {
     const logoClass = "logo";
+    const logoImageClass = "logo-image";
 
-    const logoClassBaseInfo = "w-full h-auto py-5";
+    const logoClassBaseInfo = "w-full h-1/5";
+    const logoImageClassBaseInfo = "w-full h-full";
 
     const testsToRun = {
       comp: [
@@ -30,11 +42,19 @@ describe("<Logo/>", () => {
           testId: logoClass,
           result: logoClassBaseInfo,
         },
+        {
+          testId: logoImageClass,
+          result: logoImageClassBaseInfo,
+        },
       ],
       mobile: [
         {
           testId: `${logoClass}-mobile`,
           result: logoClassBaseInfo,
+        },
+        {
+          testId: `${logoImageClass}-mobile`,
+          result: logoImageClassBaseInfo,
         },
       ],
     };
@@ -67,10 +87,12 @@ describe("<Logo/>", () => {
       render(<Logo isMobile={true} />);
 
       const testId = await getTestIdTag("logo-mobile");
+      const imageTestId = await getTestIdTag("logo-image-mobile");
 
       expect(testId).toBeInTheDocument();
-      expect(testId).toHaveAttribute("src", logoImage);
-      expect(testId).toHaveAttribute("alt", "World Cup Logo");
+      expect(imageTestId).toBeInTheDocument();
+      expect(imageTestId).toHaveAttribute("src", logoImage);
+      expect(imageTestId).toHaveAttribute("alt", "World Cup Logo");
     });
   });
 });

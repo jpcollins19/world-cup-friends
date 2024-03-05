@@ -1,6 +1,7 @@
 import * as React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isMobileProps } from "../buffet/isMobileProps";
-import { getMobileTestId } from "../../store";
+import { getMobileTestId, routes, tw } from "../../store";
 
 const worldCupImage =
   "https://1000logos.net/wp-content/uploads/2023/05/World-Cup-2026-Logo.png";
@@ -13,14 +14,19 @@ export const Logo: React.FunctionComponent<isMobileProps> = ({ ...props }) => {
   const mobileTestId = getMobileTestId(isMobile);
 
   const dataTestId = `logo${mobileTestId}`;
+  const imageTestId = `logo-image${mobileTestId}`;
 
   return (
-    <img
-      data-testid={dataTestId}
-      src={worldCupImage}
-      className="w-full h-auto py-5"
-      alt="World Cup Logo"
-    ></img>
+    <Router>
+      <Link data-testid={dataTestId} to={routes.home} className="w-full h-1/5">
+        <img
+          data-testid={imageTestId}
+          src={worldCupImage}
+          className="w-full h-full"
+          alt="World Cup Logo"
+        ></img>
+      </Link>
+    </Router>
   );
 };
 

@@ -9,62 +9,47 @@ describe("<Navbar/>", () => {
     render(<Navbar />);
 
     const testId = await getTestIdTag("navbar");
+    const navbarTestId = await getTestIdTag("navbar-comp");
 
     expect(testId).toBeInTheDocument();
+    expect(navbarTestId).toBeInTheDocument();
   });
 
   it.todo("lists all routes");
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    // const buttonClass = "button-submit";
+    //
+    // const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
+
+    const testsToRun = [
+      {
+        testId: "navbar-comp",
+        result: "w-full h-4/5",
+      },
+    ];
+
+    describe("comp view", () => {
+      testsToRun.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Navbar />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(<Navbar isMobile={true} />);
 
       const testId = await getTestIdTag("navbar-mobile");
+      //const navbarTestId = await getTestIdTag("navbar-comp");
 
       expect(testId).toBeInTheDocument();
+      // expect(navbarTestId).toBeInTheDocument();
     });
-
-    // describe("classTesting", () => {
-    //   const buttonClass = "button-submit";
-    //
-    //   const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
-    //
-    //   const testsToRun = {
-    //     comp: [
-    //       {
-    //         testId: buttonClass,
-    //         result: `${buttonClassBaseInfo} min-w-[10rem] py-2`,
-    //       },
-    //     ],
-    //     mobile: [
-    //       {
-    //         testId: `${buttonClass}-mobile`,
-    //         result: `${buttonClassBaseInfo} min-w-[15rem] text-2xl py-4`,
-    //       },
-    //     ],
-    //   };
-    //
-    //   describe("comp view", () => {
-    //     testsToRun.comp.forEach((test) => {
-    //       it(`${test.testId}`, async () => {
-    //         render(<Button text={submitUpperCase} />);
-    //
-    //         const testId = await getTestIdTag(test.testId);
-    //         expect(testId).toHaveClass(test.result);
-    //       });
-    //     });
-    //   });
-    //
-    //   describe("mobile view", () => {
-    //     testsToRun.mobile.forEach((test) => {
-    //       it(`${test.testId}`, async () => {
-    //         render(<Button text={submitUpperCase} isMobile={true} />);
-    //
-    //         const testId = await getTestIdTag(test.testId);
-    //         expect(testId).toHaveClass(test.result);
-    //       });
-    //     });
-    //   });
-    // });
   });
 });

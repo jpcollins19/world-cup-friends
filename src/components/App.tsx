@@ -24,7 +24,7 @@ const App = () => {
   return (
     <div
       // data-testid={dataTestId}
-      className="flex bg-gradient-to-br from-gray-200 via-neutral-400 to-gray-200 h-screen w-screen"
+      className="flex bg-gradient-to-bl from-gray-200 via-neutral-400 to-gray-200 h-screen w-screen"
     >
       <Router>
         <div className={`${navbarClass} ${tw.elevate} h-screen w-1/5`}>

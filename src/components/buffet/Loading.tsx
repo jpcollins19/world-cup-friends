@@ -24,7 +24,7 @@ export const Loading: React.FunctionComponent<isMobileProps> = ({
   return (
     <div
       data-testid={dataTestId}
-      className={`${tw.flexBoth} h-screen overflow-auto flex flex-col bg-gradient-to-br from-gray-600 via-gray-800 to-gray-600`}
+      className={`${tw.flexBoth} h-screen overflow-auto flex flex-col bg-gradient-to-bl from-gray-500 via-gray-600 to-gray-500`}
     >
       <RingLoader
         color="white"

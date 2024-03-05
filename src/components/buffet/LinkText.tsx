@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { colors, createUrlFromText, getMobileTestId, tw } from "../../store";
+import { createUrlFromText, getMobileTestId, tw } from "../../store";
 
 type LinkTextInputProps = {
   route: string;
