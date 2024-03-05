@@ -54,7 +54,121 @@ describe("<Button/>", () => {
     expect(button).toHaveAttribute("type", "submit");
   });
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    const buttonContClass = "button-cont-submit";
+    const buttonClass = "button-submit";
+
+    const buttonContClassBaseInfo = `${flexBothClass} ${elevateClass} my-5 rounded-lg`;
+
+    const notDisabledButtonContClassInfo = "bg-zinc-300";
+    const disabledButtonContClassInfo = "bg-zinc-200";
+
+    const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
+
+    const notDisabledButtonColor = "text-black";
+    const disabledButtonColor = "text-gray-500";
+
+    const notDisabledButtonHover = "hover:bg-zinc-400";
+
+    const notDisabledButtonBorder = "border-solid border-1 border-black";
+
+    const buttonClassComp = "min-w-[10rem] py-2";
+    const buttonClassMobile = "min-w-[15rem] py-4 text-2xl";
+
+    const notDisabled = {
+      comp: [
+        {
+          testId: buttonContClass,
+          result: `${buttonContClassBaseInfo} ${notDisabledButtonContClassInfo}`,
+        },
+        {
+          testId: buttonClass,
+          result: `${buttonClassBaseInfo} ${notDisabledButtonColor} ${notDisabledButtonHover} ${notDisabledButtonBorder} ${buttonClassComp}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${buttonContClass}-mobile`,
+          result: `${buttonContClassBaseInfo} ${notDisabledButtonContClassInfo}`,
+        },
+        {
+          testId: `${buttonClass}-mobile`,
+          result: `${buttonClassBaseInfo} ${notDisabledButtonColor} ${notDisabledButtonHover} ${notDisabledButtonBorder} ${buttonClassMobile}`,
+        },
+      ],
+    };
+
+    const disabled = {
+      comp: [
+        {
+          testId: buttonContClass,
+          result: `${buttonContClassBaseInfo} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: buttonClass,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassComp}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${buttonContClass}-mobile`,
+          result: `${buttonContClassBaseInfo} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: `${buttonClass}-mobile`,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassMobile}`,
+        },
+      ],
+    };
+
+    describe("notDisabled - comp", () => {
+      notDisabled.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Button text={submitUpperCase} />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("notDisabled - mobile", () => {
+      notDisabled.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Button text={submitUpperCase} isMobile={true} />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("disabled - comp", () => {
+      disabled.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Button text={submitUpperCase} disabled={true} />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("disabled - mobile", () => {
+      disabled.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(
+            <Button text={submitUpperCase} disabled={true} isMobile={true} />,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(<Button text={submitUpperCase} isMobile={true} />);
 
@@ -66,61 +180,6 @@ describe("<Button/>", () => {
       expect(await getText(submitUpperCase)).toBeInTheDocument();
       expect(button).not.toHaveAttribute("form");
       expect(button).not.toHaveAttribute("type");
-    });
-
-    describe("classTesting", () => {
-      const buttonContClass = "button-cont-submit";
-
-      const buttonContClassBaseInfo = "my-5 rounded-lg";
-
-      const buttonClass = "button-submit";
-
-      const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
-
-      const testsToRun = {
-        comp: [
-          {
-            testId: buttonContClass,
-            result: `${buttonContClassBaseInfo} ${flexBothClass} ${elevateClass}`,
-          },
-          {
-            testId: buttonClass,
-            result: `${buttonClassBaseInfo} min-w-[10rem] py-2`,
-          },
-        ],
-        mobile: [
-          {
-            testId: `${buttonContClass}-mobile`,
-            result: `${buttonContClassBaseInfo} ${flexBothClass} ${elevateClass}`,
-          },
-          {
-            testId: `${buttonClass}-mobile`,
-            result: `min-w-[15rem] text-2xl py-4 hover:bg-zinc-400 text-black border-solid border-1 border-black ${buttonClassBaseInfo}`,
-          },
-        ],
-      };
-
-      describe("comp view", () => {
-        testsToRun.comp.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(<Button text={submitUpperCase} />);
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
-
-      describe("mobile view", () => {
-        testsToRun.mobile.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(<Button text={submitUpperCase} isMobile={true} />);
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
     });
   });
 });

@@ -16,19 +16,19 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   const testId = `button-cont-${createUrlFromText(text)}${mobileTestId}`;
   const buttonTestId = `button-${createUrlFromText(text)}${mobileTestId}`;
 
-  const buttonBackground = disabled ? "bg-zinc-200" : "bg-zinc-300";
-  const buttonColor = disabled ? "text-gray-500" : "text-black";
+  const buttonBackground = !disabled ? "bg-zinc-300" : "bg-zinc-200";
+  const buttonColor = !disabled ? "text-black" : "text-gray-500";
   const buttonHover = !disabled ? "hover:bg-zinc-400" : "";
   const buttonBorder = !disabled ? "border-solid border-1 border-black" : "";
 
   const buttonClass = isMobile
-    ? "min-w-[15rem] text-2xl py-4"
+    ? "min-w-[15rem] py-4 text-2xl"
     : "min-w-[10rem] py-2";
 
   return (
     <div
       data-testid={testId}
-      className={`${tw.flexBoth} ${tw.elevate} ${buttonBackground} my-5 rounded-lg`}
+      className={`${tw.flexBoth} ${tw.elevate} my-5 rounded-lg ${buttonBackground}`}
     >
       <button
         // form={form ? form : ""}
@@ -37,7 +37,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
         type={form ? "submit" : undefined}
         disabled={disabled}
         // onClick={onClick}
-        className={`${buttonClass} ${buttonHover} ${buttonColor} ${buttonBorder} px-3 cursor-pointer rounded-lg font-bold`}
+        className={`px-3 cursor-pointer rounded-lg font-bold ${buttonColor} ${buttonHover} ${buttonBorder} ${buttonClass}`}
       >
         {text}
       </button>

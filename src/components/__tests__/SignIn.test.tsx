@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import {
   click,
+  changeInputText,
   getButton,
   getButtonTestId,
   getTestIdTag,
@@ -67,7 +68,7 @@ describe("<SignIn/>", () => {
     expect(pwInput).toHaveAttribute("type", "password");
   });
 
-  it("submit button renders", async () => {
+  it("submit button renders as disabled", async () => {
     render(
       <Provider store={store}>
         <SignIn />
@@ -82,6 +83,25 @@ describe("<SignIn/>", () => {
     expect(await getText(submitUpperCase)).toBeInTheDocument();
     expect(button).toHaveAttribute("form", "sign-in");
     expect(button).toHaveAttribute("type", "submit");
+    expect(button).toBeDisabled();
+  });
+
+  it("submit button being enabled", async () => {
+    render(
+      <Provider store={store}>
+        <SignIn />
+      </Provider>,
+    );
+
+    const emailInput = await getTestIdTag(emailInputTestId);
+    const pwInput = await getTestIdTag(pwInputTestId);
+
+    await changeInputText(emailInput, "joe@gmail.com");
+    await changeInputText(pwInput, "fakePassword");
+
+    const button = await getButton(submitLowerCase);
+
+    expect(button).not.toBeDisabled();
   });
 
   it("view pw button works", async () => {
@@ -123,7 +143,100 @@ describe("<SignIn/>", () => {
     expect(cancelLinkTestId).toHaveTextContent("Cancel");
   });
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    const singInBase = "signIn-";
+
+    const signInContainerClass = `${singInBase}cont`;
+    const headerClass = `${singInBase}header`;
+    const viewPwClass = `${singInBase}view-pw`;
+    const linkTextClass = `${singInBase}linkText`;
+
+    const signInContainerClassBaseInfo =
+      "border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
+
+    const headerClassBaseInfo = "text-center";
+
+    const viewPwClassBaseInfo = "text-center cursor-pointer";
+
+    const testsToRun = {
+      comp: [
+        {
+          testId: signInContainerClass,
+          result: `${signInContainerClassBaseInfo} h-4/6 w-4/12`,
+        },
+        {
+          testId: headerClass,
+          result: `${headerClassBaseInfo} text-4xl mt-10`,
+        },
+        {
+          testId: viewPwClass,
+          result: `${viewPwClassBaseInfo} text-base`,
+        },
+        {
+          testId: viewPwClass,
+          result: `${viewPwClassBaseInfo} text-base`,
+        },
+      ],
+      mobile: [
+        {
+          testId: signInContainerClass,
+          result: `${signInContainerClassBaseInfo} h-3/6 w-8/12`,
+        },
+        {
+          testId: headerClass,
+          result: `${headerClassBaseInfo} text-6xl mt-20`,
+        },
+        {
+          testId: viewPwClass,
+          result: `${viewPwClassBaseInfo} text-2xl`,
+        },
+        {
+          testId: linkTextClass,
+          result: `mt-20`,
+        },
+      ],
+    };
+
+    describe("comp", () => {
+      testsToRun.comp.forEach((test) => {
+        beforeEach(() => {
+          mockIsMobile(false);
+        });
+
+        it(`${test.testId}`, async () => {
+          render(
+            <Provider store={store}>
+              <SignIn />
+            </Provider>,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("mobile", () => {
+      testsToRun.mobile.forEach((test) => {
+        beforeEach(() => {
+          mockIsMobile(true);
+        });
+
+        it(`${test.testId}`, async () => {
+          render(
+            <Provider store={store}>
+              <SignIn />
+            </Provider>,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(
         <Provider store={store}>
@@ -137,99 +250,6 @@ describe("<SignIn/>", () => {
 
       expect(pageTestId).toBeInTheDocument();
       expect(pageTestId).toHaveTextContent("Sign In");
-    });
-
-    describe("classTesting", () => {
-      const singInBase = "signIn-";
-
-      const signInContainerClass = `${singInBase}cont`;
-      const headerClass = `${singInBase}header`;
-      const viewPwClass = `${singInBase}view-pw`;
-      const linkTextClass = `${singInBase}linkText`;
-
-      const signInContainerClassBaseInfo =
-        "border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
-
-      const headerClassBaseInfo = "text-center";
-
-      const viewPwClassBaseInfo = "text-center cursor-pointer";
-
-      const testsToRun = {
-        comp: [
-          {
-            testId: signInContainerClass,
-            result: `${signInContainerClassBaseInfo} h-4/6 w-4/12`,
-          },
-          {
-            testId: headerClass,
-            result: `${headerClassBaseInfo} text-4xl mt-10`,
-          },
-          {
-            testId: viewPwClass,
-            result: `${viewPwClassBaseInfo} text-base`,
-          },
-          {
-            testId: viewPwClass,
-            result: `${viewPwClassBaseInfo} text-base`,
-          },
-        ],
-        mobile: [
-          {
-            testId: signInContainerClass,
-            result: `${signInContainerClassBaseInfo} h-3/6 w-8/12`,
-          },
-          {
-            testId: headerClass,
-            result: `${headerClassBaseInfo} text-6xl mt-20`,
-          },
-          {
-            testId: viewPwClass,
-            result: `${viewPwClassBaseInfo} text-2xl`,
-          },
-          {
-            testId: linkTextClass,
-            result: `mt-20`,
-          },
-        ],
-      };
-
-      describe("comp view", () => {
-        testsToRun.comp.forEach((test) => {
-          beforeEach(() => {
-            mockIsMobile(false);
-          });
-
-          it(`${test.testId}`, async () => {
-            render(
-              <Provider store={store}>
-                <SignIn />
-              </Provider>,
-            );
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
-
-      describe("mobile view", () => {
-        testsToRun.mobile.forEach((test) => {
-          beforeEach(() => {
-            mockIsMobile(true);
-          });
-
-          it(`${test.testId}`, async () => {
-            render(
-              <Provider store={store}>
-                <SignIn />
-              </Provider>,
-            );
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
     });
   });
 });

@@ -19,7 +19,50 @@ describe("<Logo/>", () => {
     expect(testId).toHaveAttribute("alt", "World Cup Logo");
   });
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    const logoClass = "logo";
+
+    const logoClassBaseInfo = "w-full h-auto py-5";
+
+    const testsToRun = {
+      comp: [
+        {
+          testId: logoClass,
+          result: logoClassBaseInfo,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${logoClass}-mobile`,
+          result: logoClassBaseInfo,
+        },
+      ],
+    };
+
+    describe("comp", () => {
+      testsToRun.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Logo />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("mobile", () => {
+      testsToRun.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<Logo isMobile={true} />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(<Logo isMobile={true} />);
 
@@ -28,49 +71,6 @@ describe("<Logo/>", () => {
       expect(testId).toBeInTheDocument();
       expect(testId).toHaveAttribute("src", logoImage);
       expect(testId).toHaveAttribute("alt", "World Cup Logo");
-    });
-
-    describe("classTesting", () => {
-      const logoClass = "logo";
-
-      const logoClassBaseInfo = "w-full h-auto py-5";
-
-      const testsToRun = {
-        comp: [
-          {
-            testId: logoClass,
-            result: logoClassBaseInfo,
-          },
-        ],
-        mobile: [
-          {
-            testId: `${logoClass}-mobile`,
-            result: logoClassBaseInfo,
-          },
-        ],
-      };
-
-      describe("comp view", () => {
-        testsToRun.comp.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(<Logo />);
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
-
-      describe("mobile view", () => {
-        testsToRun.mobile.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(<Logo isMobile={true} />);
-
-            const testId = await getTestIdTag(test.testId);
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
     });
   });
 });

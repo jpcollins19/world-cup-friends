@@ -47,6 +47,9 @@ module.exports = {
       //   grey3: "#DDDFE5",
       //   grey4: "#939DA8",
       // },
+      margin: {
+        "17vw": "17vw",
+      },
       fontFamily: {
         sans: "Helvetica, Arial, sans-serif",
         // sans: ["Craftworkgrotesk", ...defaultTheme.fontFamily.sans],

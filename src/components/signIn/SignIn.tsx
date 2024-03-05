@@ -5,13 +5,12 @@ import { useHistory } from "react-router-dom";
 import {
   authenticate,
   geti18n,
+  getPageTestId,
   tDispatch,
   loadingDefault,
   useIsMobile,
   routes,
   tw,
-  getMobileTestId,
-  getPageTestId,
 } from "../../store";
 import {
   Button,
@@ -22,7 +21,7 @@ import {
   ToasterContainer,
   ToasterMessage,
 } from "../buffet";
-import { SignInSchema } from "./SignInSchema";
+import { SignInSchema, useSignInSchema } from "./SignInSchema";
 
 export const SignIn: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -91,9 +90,11 @@ export const SignIn: React.FunctionComponent = () => {
       password: "",
     },
     onSubmit: onSubmit,
+    validationSchema: useSignInSchema(),
   });
 
-  const { handleSubmit, values, setFieldValue, resetForm } = formik;
+  const { handleSubmit, values, setFieldValue, resetForm, isValid, dirty } =
+    formik;
 
   const onChange = (ev: any) => {
     const isEmail = ev.target.name === emailString;
@@ -120,7 +121,7 @@ export const SignIn: React.FunctionComponent = () => {
   ) : (
     <div data-testid={dataTestId} className={`${tw.flexBoth} h-screen`}>
       <ToasterContainer
-        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-72`}
+        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-17vw`}
       />
 
       <div
@@ -159,9 +160,9 @@ export const SignIn: React.FunctionComponent = () => {
 
             <div className="h-24">
               <Button
-                text={geti18n("submit")}
-                disabled={!values.email || !values.password}
                 form="sign-in"
+                text={geti18n("submit")}
+                disabled={!isValid || !dirty}
                 isMobile={isMobile}
               />
             </div>

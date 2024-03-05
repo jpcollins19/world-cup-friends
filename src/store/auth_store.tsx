@@ -44,6 +44,8 @@ export const me = () => async (dispatch: any) => {
 
 export const authenticate =
   (email: string, password: string, history: any) => async (dispatch: any) => {
+    //(email: string | null, password: string | null, history: any) =>
+    // async (dispatch: any) => {
     try {
       const response = await axios.post("api/authorize", { email, password });
 

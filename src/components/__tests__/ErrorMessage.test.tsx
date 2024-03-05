@@ -17,7 +17,54 @@ describe("<Error/>", () => {
     expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
   });
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    const textSizeClass = "error-message-text";
+
+    const textSizeClassBaseInfo = "ml-2";
+
+    const testsToRun = {
+      comp: [
+        {
+          testId: textSizeClass,
+          result: `${textSizeClassBaseInfo}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${textSizeClass}-mobile`,
+          result: `${textSizeClassBaseInfo} text-2xl`,
+        },
+      ],
+    };
+
+    describe("comp", () => {
+      testsToRun.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("mobile", () => {
+      testsToRun.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(
+            <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={true} />,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(
         <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={true} />,
@@ -29,56 +76,6 @@ describe("<Error/>", () => {
       expect(pageTestId).toBeInTheDocument();
       expect(textTestId).toBeInTheDocument();
       expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
-    });
-
-    describe("classTesting", () => {
-      const textSizeClass = "error-message-text";
-
-      const textSizeClassBaseInfo = "ml-2";
-
-      const testsToRun = {
-        comp: [
-          {
-            testId: textSizeClass,
-            result: `${textSizeClassBaseInfo}`,
-          },
-        ],
-        mobile: [
-          {
-            testId: `${textSizeClass}-mobile`,
-            result: `${textSizeClassBaseInfo} text-2xl`,
-          },
-        ],
-      };
-
-      describe("comp view", () => {
-        testsToRun.comp.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
-
-            const testId = await getTestIdTag(test.testId);
-
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
-
-      describe("mobile view", () => {
-        testsToRun.mobile.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(
-              <ErrorMessage
-                text={geti18n("invalidEmailOrPw")}
-                isMobile={true}
-              />,
-            );
-
-            const testId = await getTestIdTag(test.testId);
-
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
     });
   });
 });

@@ -21,7 +21,67 @@ describe("<LinkText/>", () => {
     expect(linkTestId).toHaveTextContent("Forgot Password");
   });
 
-  describe("mobile vs. comp testing", () => {
+  describe("classTesting", () => {
+    const linkClass = "linkText-link-forgot-password";
+
+    const linkClassBaseInfo = "font-bold text-blue-700";
+
+    const testsToRun = {
+      comp: [
+        {
+          testId: linkClass,
+          result: `${linkClassBaseInfo}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${linkClass}-mobile`,
+          result: `${linkClassBaseInfo} text-2xl`,
+        },
+      ],
+    };
+
+    describe("comp", () => {
+      testsToRun.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(
+            <LinkText
+              input={{
+                route: routes.createAccount,
+                text: geti18n("forgotPassword"),
+              }}
+            />,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("mobile", () => {
+      testsToRun.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          render(
+            <LinkText
+              input={{
+                route: routes.createAccount,
+                text: geti18n("forgotPassword"),
+              }}
+              isMobile={true}
+            />,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+  });
+
+  describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(
         <LinkText
@@ -41,66 +101,6 @@ describe("<LinkText/>", () => {
       expect(pageTestId).toBeInTheDocument();
       expect(linkTestId).toHaveAttribute("href", "/create-account");
       expect(linkTestId).toHaveTextContent("Forgot Password");
-    });
-
-    describe("classTesting", () => {
-      const linkClass = "linkText-link-forgot-password";
-
-      const linkClassBaseInfo = "font-bold text-blue-700";
-
-      const testsToRun = {
-        comp: [
-          {
-            testId: linkClass,
-            result: `${linkClassBaseInfo}`,
-          },
-        ],
-        mobile: [
-          {
-            testId: `${linkClass}-mobile`,
-            result: `${linkClassBaseInfo} text-2xl`,
-          },
-        ],
-      };
-
-      describe("comp view", () => {
-        testsToRun.comp.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(
-              <LinkText
-                input={{
-                  route: routes.createAccount,
-                  text: geti18n("forgotPassword"),
-                }}
-              />,
-            );
-
-            const testId = await getTestIdTag(test.testId);
-
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
-
-      describe("mobile view", () => {
-        testsToRun.mobile.forEach((test) => {
-          it(`${test.testId}`, async () => {
-            render(
-              <LinkText
-                input={{
-                  route: routes.createAccount,
-                  text: geti18n("forgotPassword"),
-                }}
-                isMobile={true}
-              />,
-            );
-
-            const testId = await getTestIdTag(test.testId);
-
-            expect(testId).toHaveClass(test.result);
-          });
-        });
-      });
     });
   });
 });
