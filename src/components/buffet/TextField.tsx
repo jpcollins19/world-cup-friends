@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useFormikContext } from "formik";
-import { createUrlFromText, getMobileTestId } from "../../store";
+import { createUrlFromText, getMobileTestId, tw } from "../../store";
 import { SignInSchema } from "../signIn/SignInSchema";
 
 type TextFieldInputProps = {
@@ -42,7 +42,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
         autoComplete="on"
         value={values[label as keyof SignInSchema]}
         onChange={onChange}
-        className={`${inputClass} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`}
+        className={`${inputClass} ${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`}
       />
       <span
         data-testid={`input-text-span1${mobileTestId}`}

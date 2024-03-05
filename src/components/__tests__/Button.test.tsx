@@ -8,6 +8,8 @@ import {
   submitUpperCase,
   submitLowerCase,
   getTestIdTag,
+  flexBothClass,
+  elevateClass,
 } from "../testingUtils";
 import { Button } from "../buffet";
 
@@ -67,6 +69,10 @@ describe("<Button/>", () => {
     });
 
     describe("classTesting", () => {
+      const buttonContClass = "button-cont-submit";
+
+      const buttonContClassBaseInfo = "my-5 rounded-lg";
+
       const buttonClass = "button-submit";
 
       const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
@@ -74,14 +80,22 @@ describe("<Button/>", () => {
       const testsToRun = {
         comp: [
           {
+            testId: buttonContClass,
+            result: `${buttonContClassBaseInfo} ${flexBothClass} ${elevateClass}`,
+          },
+          {
             testId: buttonClass,
             result: `${buttonClassBaseInfo} min-w-[10rem] py-2`,
           },
         ],
         mobile: [
           {
+            testId: `${buttonContClass}-mobile`,
+            result: `${buttonContClassBaseInfo} ${flexBothClass} ${elevateClass}`,
+          },
+          {
             testId: `${buttonClass}-mobile`,
-            result: `${buttonClassBaseInfo} min-w-[15rem] text-2xl py-4`,
+            result: `min-w-[15rem] text-2xl py-4 hover:bg-zinc-400 text-black border-solid border-1 border-black ${buttonClassBaseInfo}`,
           },
         ],
       };

@@ -125,7 +125,7 @@ export const SignIn: React.FunctionComponent = () => {
 
       <div
         data-testid="signIn-cont"
-        className={`${signInContainerClass} border-solid border-4 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300`}
+        className={`${signInContainerClass} ${tw.elevate} border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300`}
       >
         <h1
           data-testid="signIn-header"

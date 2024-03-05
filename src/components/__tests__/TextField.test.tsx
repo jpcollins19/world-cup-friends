@@ -9,6 +9,7 @@ import {
   pwInputTestId,
   email,
   pw,
+  elevateClass,
 } from "../testingUtils";
 import { TextField } from "../buffet";
 
@@ -113,8 +114,7 @@ describe("<TextField/>", () => {
       const inputClass = "text-field-input-password";
       const spanClass = "input-text-span1";
 
-      const inputClassBaseInfo =
-        "m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center";
+      const inputClassBaseInfo = `${elevateClass} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`;
 
       const spanClassBaseInfo =
         "w-full absolute pointer-events-none top-2 text-gray-700 text-center";

@@ -8,3 +8,8 @@ export const submitLowerCase = "submit";
 
 export const email = "email";
 export const pw = "password";
+
+export const elevateClass =
+  "shadow-md hover:shadow-xlg transition duration-300 ease-in-out";
+
+export const flexBothClass = "flex justify-center items-center";

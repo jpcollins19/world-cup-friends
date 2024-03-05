@@ -19,7 +19,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   const buttonBackground = disabled ? "bg-zinc-200" : "bg-zinc-300";
   const buttonColor = disabled ? "text-gray-500" : "text-black";
   const buttonHover = !disabled ? "hover:bg-zinc-400" : "";
-  const buttonBorder = !disabled ? "border-solid border-2 border-black" : "";
+  const buttonBorder = !disabled ? "border-solid border-1 border-black" : "";
 
   const buttonClass = isMobile
     ? "min-w-[15rem] text-2xl py-4"
@@ -28,7 +28,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   return (
     <div
       data-testid={testId}
-      className={`${tw.flexBoth} ${buttonBackground} my-5 rounded-lg`}
+      className={`${tw.flexBoth} ${tw.elevate} ${buttonBackground} my-5 rounded-lg`}
     >
       <button
         // form={form ? form : ""}

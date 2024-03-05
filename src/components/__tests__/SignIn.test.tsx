@@ -148,7 +148,7 @@ describe("<SignIn/>", () => {
       const linkTextClass = `${singInBase}linkText`;
 
       const signInContainerClassBaseInfo =
-        "border-solid border-4 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
+        "border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
 
       const headerClassBaseInfo = "text-center";
 

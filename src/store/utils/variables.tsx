@@ -12,6 +12,7 @@ export const colors = {
 };
 
 export const tw = {
+  elevate: "shadow-md hover:shadow-xlg transition duration-300 ease-in-out",
   flexBoth: "flex justify-center items-center",
   flexA: "flex items-center",
   flexJ: "flex justify-center",

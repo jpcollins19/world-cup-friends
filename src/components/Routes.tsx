@@ -24,7 +24,7 @@ const Routes = () => {
 
     setTimeout(() => {
       setLoading(false);
-    }, 700);
+    }, 2000);
   }, [pathname]);
 
   const auth = useSelector((state) => state.auth);
