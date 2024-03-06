@@ -70,7 +70,7 @@ describe("<Button/>", () => {
 
     const notDisabledButtonHover = "hover:bg-zinc-400";
 
-    const notDisabledButtonBorder = "border-solid border-1 border-black";
+    const notDisabledButtonBorder = "border border-solid border-black";
 
     const buttonClassComp = "min-w-[10rem] py-2";
     const buttonClassMobile = "min-w-[15rem] py-4 text-2xl";

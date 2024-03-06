@@ -1,8 +1,8 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { elevateClass, getTestIdTag } from "../../testingUtils";
-import Navbar from "../../navbar/Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
+import { getTestIdTag } from "../../testingUtils";
 import Logo from "../../navbar/Logo";
 
 describe("<Logo/>", () => {
@@ -10,7 +10,11 @@ describe("<Logo/>", () => {
     "https://1000logos.net/wp-content/uploads/2023/05/World-Cup-2026-Logo.png";
 
   it("should render the component", async () => {
-    render(<Logo />);
+    render(
+      <Router>
+        <Logo />
+      </Router>,
+    );
 
     const testId = await getTestIdTag("logo");
     const imageTestId = await getTestIdTag("logo-image");
@@ -22,11 +26,15 @@ describe("<Logo/>", () => {
   });
 
   it("logo link takes you to the home page", async () => {
-    render(<Logo />);
+    render(
+      <Router>
+        <Logo />
+      </Router>,
+    );
 
     const testId = await getTestIdTag("logo");
 
-    expect(testId).toHaveAttribute("href", "/");
+    expect(testId).toHaveAttribute("href", "/leaderboard");
   });
 
   describe("classTesting", () => {
@@ -62,7 +70,11 @@ describe("<Logo/>", () => {
     describe("comp", () => {
       testsToRun.comp.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(<Logo />);
+          render(
+            <Router>
+              <Logo />
+            </Router>,
+          );
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -73,7 +85,11 @@ describe("<Logo/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(<Logo isMobile={true} />);
+          render(
+            <Router>
+              <Logo isMobile={true} />
+            </Router>,
+          );
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -84,7 +100,11 @@ describe("<Logo/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      render(<Logo isMobile={true} />);
+      render(
+        <Router>
+          <Logo isMobile={true} />
+        </Router>,
+      );
 
       const testId = await getTestIdTag("logo-mobile");
       const imageTestId = await getTestIdTag("logo-image-mobile");

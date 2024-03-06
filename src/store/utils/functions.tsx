@@ -19,6 +19,42 @@ export const createUrlFromText = (str: string): string => {
     .join("");
 };
 
+export const getTextFromUrl = (url: string | undefined): string => {
+  const string = url && url.split("/").pop();
+
+  const words = string && string.split("-");
+
+  if (words) {
+    return words.reduce((a, word, idx) => {
+      // if (word === "in" && userIsLoggedIn) {
+      //   a += "Out";
+      //
+      //   return a;
+      // }
+
+      a += cap1stLetter(word);
+
+      // if (word === "rules") {
+      //   a += 'password: "password",';
+      //
+      //   return a;
+      // }
+
+      if (word === "rules") {
+        a += "/General Info";
+
+        return a;
+      }
+
+      a += addSpace(words, idx);
+
+      return a;
+    }, "");
+  }
+
+  return "unknown string: function error";
+};
+
 export const loadingDefault = (): any => {
   const [loading, setLoading] = React.useState(true);
 
@@ -43,4 +79,25 @@ export const getPageTestId = (str: string): string => {
   const mobileTestId = getMobileTestId(isMobile);
 
   return `${str}${mobileTestId}`;
+};
+
+export const cap1stLetter = (str: string): string => {
+  return str
+    .split("")
+    .map((letter, idx) => {
+      if (idx === 0) {
+        letter = letter.toUpperCase();
+      }
+
+      return letter;
+    })
+    .join("");
+};
+
+const isLastIdx = (arr: string[], idx: number) => {
+  return idx !== arr.length - 1;
+};
+
+const addSpace = (arr: string[], idx: number) => {
+  return isLastIdx(arr, idx) ? " " : "";
 };

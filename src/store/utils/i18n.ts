@@ -5,6 +5,7 @@ export const en = {
   forgotPassword: "Forgot Password",
   invalidEmailOrPw: "Invalid Email Address and/or Password",
   password: "password",
+  rules: "Rules/General Info",
   signIn: "Sign In",
   submit: "Submit",
   viewPw: "View password",
@@ -17,6 +18,7 @@ export type i18nOptionsTypes =
   | "forgotPassword"
   | "invalidEmailOrPw"
   | "password"
+  | "rules"
   | "signIn"
   | "submit"
   | "viewPw";

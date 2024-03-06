@@ -9,7 +9,10 @@ describe("<LinkText/>", () => {
   it("should render the component with accurate routing and text data", async () => {
     render(
       <LinkText
-        input={{ route: routes.createAccount, text: geti18n("forgotPassword") }}
+        input={{
+          route: routes.createAccount,
+          text: geti18n("forgotPassword"),
+        }}
       />,
     );
 
@@ -24,7 +27,7 @@ describe("<LinkText/>", () => {
   describe("classTesting", () => {
     const linkClass = "linkText-link-forgot-password";
 
-    const linkClassBaseInfo = "font-bold text-blue-700";
+    const linkClassBaseInfo = "text-shadow-smWhite font-bold text-blue-700";
 
     const testsToRun = {
       comp: [

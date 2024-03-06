@@ -1,5 +1,5 @@
 import * as funcs from "../utils";
-import { getPageTestId } from "../utils";
+import { getPageTestId, getTextFromUrl, routes } from "../utils";
 import { mockIsMobile } from "../../components/testingUtils";
 
 describe("geti18n", () => {
@@ -64,6 +64,41 @@ describe("getPageTestId ", () => {
       mockIsMobile(test.isMobile);
 
       const result = funcs.getPageTestId(test.str);
+
+      expect(result).toBe(test.result);
+    });
+  });
+});
+
+describe("cap1stLetter", () => {
+  const testsToRun = [
+    { str: "name", result: "Name" },
+    { str: "odds", result: "Odds" },
+    { str: "frank", result: "Frank" },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(`${test.str}`, () => {
+      const result = funcs.cap1stLetter(test.str);
+
+      expect(result).toBe(test.result);
+    });
+  });
+});
+
+describe("getTextFromUrl ", () => {
+  const testsToRun = [
+    { url: routes.admin, result: "Admin" },
+    { url: routes.leaderboard, result: "Leaderboard" },
+    { url: routes.myPicks, result: "My Picks" },
+    { url: routes.poolPicks, result: "Pool Picks" },
+    { url: routes.groupDetails, result: "Group Details" },
+    { url: routes.rules, result: "Rules/General Info" },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(`${test.url}`, () => {
+      const result = funcs.getTextFromUrl(test.url);
 
       expect(result).toBe(test.result);
     });

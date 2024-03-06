@@ -130,7 +130,7 @@ export const SignIn: React.FunctionComponent = () => {
       >
         <h1
           data-testid="signIn-header"
-          className={`${headerClass} text-center`}
+          className={`${headerClass} ${tw.whiteTextMed} text-center`}
         >
           {geti18n("signIn")}
         </h1>

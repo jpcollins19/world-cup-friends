@@ -1,8 +1,7 @@
 import * as React from "react";
-
-import { getMobileTestId, useIsMobile, tw } from "../../store";
+import { getMobileTestId, useIsMobile, tw, routes } from "../../store";
 import Logo from "./Logo";
-import { isMobileProps } from "../buffet/isMobileProps";
+import { isMobileProps } from "../buffet";
 import NavbarComp from "./comp/NavbarComp";
 
 export const Navbar: React.FunctionComponent<isMobileProps> = ({
@@ -17,11 +16,6 @@ export const Navbar: React.FunctionComponent<isMobileProps> = ({
   const mobileTestId = getMobileTestId(isMobileResult);
 
   const dataTestId = `navbar${mobileTestId}`;
-
-  //const dataTestId = getPageTestId("loading");
-
-  // const classN =
-  //   "max-w-sm mx-auto bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 ease-in-out";
 
   return (
     <div

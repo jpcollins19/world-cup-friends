@@ -1,7 +1,15 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: ["./src/*.{html,js, tsx}", "./src/**/*.{html,js,tsx}"],
   theme: {
+    boxShadow: {
+      routesNotSelected: "0 0 6px 0 #e5e7eb",
+      routesSelected: "0 0 6px 0 #0369a1",
+      routesHover: "0 0 6px 0 #0ea5e9",
+    },
     extend: {
+      boxShadow: ["active"],
       // keyframes: {
       //   enter: {
       //     "0%": { transform: "scale(0.9)", opacity: 0 },
@@ -47,17 +55,35 @@ module.exports = {
       //   grey3: "#DDDFE5",
       //   grey4: "#939DA8",
       // },
+
       margin: {
         "17vw": "17vw",
+      },
+      textShadow: {
+        sm: "0 1.5px 1.5px #020617",
+        smWhite: "0 1.5px 1.5px #fff",
+        med: "3px 3px 3px #020617",
       },
       fontFamily: {
         sans: "Helvetica, Arial, sans-serif",
         // sans: ["Craftworkgrotesk", ...defaultTheme.fontFamily.sans],
-        // serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
+        //serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
       },
     },
     container: {
       center: true,
     },
   },
+  plugins: [
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") },
+      );
+    }),
+  ],
 };

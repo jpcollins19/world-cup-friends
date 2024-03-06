@@ -19,7 +19,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   const buttonBackground = !disabled ? "bg-zinc-300" : "bg-zinc-200";
   const buttonColor = !disabled ? "text-black" : "text-gray-500";
   const buttonHover = !disabled ? "hover:bg-zinc-400" : "";
-  const buttonBorder = !disabled ? "border-solid border-1 border-black" : "";
+  const buttonBorder = !disabled ? "border border-solid border-black" : "";
 
   const buttonClass = isMobile
     ? "min-w-[15rem] py-4 text-2xl"

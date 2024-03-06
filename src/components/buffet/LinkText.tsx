@@ -32,12 +32,11 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({
       {/*    <h4 className="create-account-sign-in">Already have an*/}
       {/*      account? </h4>*/}
       {/*)}*/}
-
       <Router>
         <Link
           data-testid={linkTestId}
           to={input.route}
-          className={`${linkClass} font-bold text-blue-700`}
+          className={`${tw.textShadowSmWhite} font-bold text-blue-700 ${linkClass} `}
         >
           {text}
         </Link>
