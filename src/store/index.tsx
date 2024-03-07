@@ -31,7 +31,7 @@ export interface RootState {
   users: UsersState;
 }
 
-const reducer: Reducer<RootState> = combineReducers({
+export const reducer: Reducer<RootState> = combineReducers({
   auth,
   users,
 });
@@ -65,7 +65,7 @@ export type TypedThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 export const tDispatch = () => useDispatch<TypedDispatch>();
-export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
+//export const useTypedSelector: TypedUseSelectorHook<ReduxState> = useSelector;
 
 //const store: Store<RootState> = createStore(reducer, middleware);
 

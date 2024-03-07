@@ -1,5 +1,6 @@
 import * as React from "react";
-import { getMobileTestId, useIsMobile, tw, routes } from "../../store";
+import { useIsMobile } from "../../hooks";
+import { getMobileTestId, tw } from "../../store";
 import Logo from "./Logo";
 import { isMobileProps } from "../buffet";
 import NavbarComp from "./comp/NavbarComp";

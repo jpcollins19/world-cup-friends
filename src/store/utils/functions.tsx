@@ -1,6 +1,6 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useMediaQuery } from "react-responsive";
+import { useIsMobile } from "../../hooks";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -63,10 +63,6 @@ export const loadingDefault = (): any => {
   }, 10);
 
   return loading;
-};
-
-export const useIsMobile = (): boolean => {
-  return useMediaQuery({ query: "(max-width: 65em)" });
 };
 
 export const getMobileTestId = (isMobile?: boolean): string => {

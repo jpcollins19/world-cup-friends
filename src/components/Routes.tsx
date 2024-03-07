@@ -13,6 +13,7 @@ import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
 import { Loading } from "./buffet";
 import PreSignIn from "./preSignIn/PreSignIn";
+import { useIsUserLoggedIn } from "../hooks";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -34,15 +35,17 @@ const Routes = () => {
     }, 2000);
   }, [pathname]);
 
-  const auth = useSelector((state) => state.auth);
+  //const auth = useSelector((state) => state.auth);
 
   //const redirectHome = <Redirect to={routes.home} />;
+
+  const userIsLoggedIn = useIsUserLoggedIn();
 
   return loading ? (
     <Loading />
   ) : (
     <Switch>
-      {auth.id ? (
+      {userIsLoggedIn ? (
         <Route exact path={routes.leaderboard} component={Leaderboard} />
       ) : (
         <Route exact path={routes.signIn} component={SignIn} />

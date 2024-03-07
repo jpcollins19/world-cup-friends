@@ -1,6 +1,7 @@
 import * as React from "react";
 import RingLoader from "react-spinners/RingLoader";
-import { getMobileTestId, getPageTestId, tw, useIsMobile } from "../../store";
+import { useIsMobile } from "../../hooks";
+import { getMobileTestId, getPageTestId, tw } from "../../store";
 import { isMobileProps } from "./";
 
 // export const Loading: React.FunctionComponent = ({ ...props }) => {

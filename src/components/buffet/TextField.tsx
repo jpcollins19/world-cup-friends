@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import { createUrlFromText, getMobileTestId, tw } from "../../store";
 import { SignInSchema } from "../signIn/SignInSchema";
 
-type TextFieldInputProps = {
+export type TextFieldInputProps = {
   label: string;
   type?: string;
   // extraProp: string;

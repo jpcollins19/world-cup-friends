@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getTextFromUrl, tw } from "../../../store";
 
-type RouteProps = {
+export type RouteProps = {
   path: string;
   icon: any;
 };
@@ -41,7 +41,7 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
     >
       <div className={`${tw.flexA} w-full`}>
         <div className="ml-5">{route.icon}</div>
-        <div className="w-full text-center">{routeText}</div>
+        <div className="w-full ml-6">{routeText}</div>
       </div>
     </Link>
   );

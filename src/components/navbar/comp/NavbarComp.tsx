@@ -6,41 +6,42 @@ import MyPicks from "@mui/icons-material/DnsRounded";
 import Admin from "@mui/icons-material/SettingsAccessibility";
 import GolferOdds from "@mui/icons-material/BarChart";
 import { routes, tw } from "../../../store";
-import RouteComp from "./RouteComp";
+import RouteComp, { RouteProps } from "./RouteComp";
 
 export const NavbarComp: React.FunctionComponent = () => {
   const color = "#cbd5e1";
+  const iconFontSize = "large";
 
-  const rules = {
+  const rules: RouteProps = {
     path: routes.rules,
-    icon: <Rules sx={{ color }} fontSize="large" />,
+    icon: <Rules sx={{ color }} fontSize={iconFontSize} />,
   };
 
-  const admin = {
+  const admin: RouteProps = {
     path: routes.admin,
-    icon: <Admin sx={{ color }} fontSize="large" />,
+    icon: <Admin sx={{ color }} fontSize={iconFontSize} />,
   };
 
-  const loggedInRoutes = [
+  const loggedInRoutes: RouteProps[] = [
     {
       path: routes.leaderboard,
-      icon: <Scorecard sx={{ color }} fontSize="large" />,
+      icon: <Scorecard sx={{ color }} fontSize={iconFontSize} />,
     },
     {
       path: routes.myPicks,
-      icon: <MyPicks sx={{ color }} fontSize="large" />,
+      icon: <MyPicks sx={{ color }} fontSize={iconFontSize} />,
     },
     {
       path: routes.poolPicks,
-      icon: <PoolPicks sx={{ color }} fontSize="large" />,
+      icon: <PoolPicks sx={{ color }} fontSize={iconFontSize} />,
     },
     {
       path: routes.groupDetails,
-      icon: <GolferOdds sx={{ color }} fontSize="large" />,
+      icon: <GolferOdds sx={{ color }} fontSize={iconFontSize} />,
     },
   ];
 
-  const routesToUse = [admin, ...loggedInRoutes, rules];
+  const routesToUse: RouteProps[] = [admin, ...loggedInRoutes, rules];
 
   return (
     <div

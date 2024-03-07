@@ -2,13 +2,13 @@ import * as React from "react";
 import { Form, FormikProvider, useFormik } from "formik";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
+import { useIsMobile } from "../../hooks";
 import {
   authenticate,
   geti18n,
   getPageTestId,
   tDispatch,
   loadingDefault,
-  useIsMobile,
   routes,
   tw,
 } from "../../store";
@@ -16,8 +16,10 @@ import {
   Button,
   ErrorMessage,
   LinkText,
+  LinkTextInputProps,
   Loading,
   TextField,
+  TextFieldInputProps,
   ToasterContainer,
   ToasterMessage,
 } from "../buffet";
@@ -62,9 +64,12 @@ export const SignIn: React.FunctionComponent = () => {
 
   // const joe = findJoe(useSelector(( state ) => state.users));
 
-  const textFieldInputs = [{ label: emailString }, { label: pwString, type }];
+  const textFieldInputs: TextFieldInputProps[] = [
+    { label: emailString },
+    { label: pwString, type },
+  ];
 
-  let linkTextInputs = [
+  let linkTextInputs: LinkTextInputProps[] = [
     { route: routes.forgotPassword, text: geti18n("forgotPassword") },
     { route: routes.createAccount, text: geti18n("createAccount") },
     { route: routes.home, text: geti18n("cancel") },

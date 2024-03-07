@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { createUrlFromText, getMobileTestId, tw } from "../../store";
 
-type LinkTextInputProps = {
+export type LinkTextInputProps = {
   route: string;
   text: string;
 };

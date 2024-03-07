@@ -1,5 +1,5 @@
 import * as funcs from "../utils";
-import { getPageTestId, getTextFromUrl, routes } from "../utils";
+import { routes } from "../utils";
 import { mockIsMobile } from "../../components/testingUtils";
 
 describe("geti18n", () => {
