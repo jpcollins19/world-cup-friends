@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useFormikContext } from "formik";
-import { createUrlFromText, getMobileTestId, tw } from "../../store";
+import { createUrlFromText, getPageTestId, tw } from "../../store";
 import { SignInSchema } from "../signIn/SignInSchema";
+import { useIsMobile } from "../../hooks";
 
 export type TextFieldInputProps = {
   label: string;
@@ -12,19 +13,16 @@ export type TextFieldInputProps = {
 type TextFieldProps = {
   input: TextFieldInputProps;
   onChange: (ev: any) => void | string;
-  isMobile?: boolean;
 };
 
 export const TextField: React.FunctionComponent<TextFieldProps> = ({
   ...props
 }) => {
-  const { input, onChange, isMobile } = props;
-
-  const mobileTestId = getMobileTestId(isMobile);
+  const { input, onChange } = props;
 
   const label = input.label;
 
-  const inputTestId = `text-field-input-${createUrlFromText(label)}${mobileTestId}`;
+  const isMobile = useIsMobile();
 
   const inputClass = isMobile ? "h-20 text-3xl" : "h-14";
 
@@ -32,8 +30,16 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
 
   const { values } = useFormikContext<SignInSchema>();
 
+  const dataTestId = getPageTestId("text-field");
+
+  const inputTestId = getPageTestId(
+    `text-field-input-${createUrlFromText(label)}`,
+  );
+
+  const spanTestId = getPageTestId("input-text-span1");
+
   return (
-    <div data-testid={`text-field${mobileTestId}`} className="w-8/12 relative">
+    <div data-testid={dataTestId} className="w-8/12 relative">
       <input
         data-testid={inputTestId}
         required
@@ -45,7 +51,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
         className={`${inputClass} ${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`}
       />
       <span
-        data-testid={`input-text-span1${mobileTestId}`}
+        data-testid={spanTestId}
         className={`${spanClass} w-full absolute pointer-events-none top-2 text-gray-700 text-center`}
       >
         {label}

@@ -2,7 +2,7 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { getTestIdTag } from "../../testingUtils";
+import { getTestIdTag, mockIsMobile } from "../../testingUtils";
 import Logo from "../../navbar/Logo";
 
 describe("<Logo/>", () => {
@@ -85,9 +85,11 @@ describe("<Logo/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
+          mockIsMobile(true);
+
           render(
             <Router>
-              <Logo isMobile={true} />
+              <Logo />
             </Router>,
           );
 
@@ -100,9 +102,11 @@ describe("<Logo/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
+      mockIsMobile(true);
+
       render(
         <Router>
-          <Logo isMobile={true} />
+          <Logo />
         </Router>,
       );
 

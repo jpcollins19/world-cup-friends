@@ -3,16 +3,15 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import {
-  click,
   changeInputText,
+  click,
+  emailInputTestId,
   getButton,
   getButtonTestId,
   getTestIdTag,
   getText,
   matchMediaWorkAround,
   mockIsMobile,
-  submit,
-  emailInputTestId,
   pwInputTestId,
   submitLowerCase,
   submitUpperCase,
@@ -20,7 +19,7 @@ import {
 import SignIn from "../signIn/SignIn";
 import store from "../../store";
 
-jest.mock("react-responsive");
+//jest.mock("react-responsive");
 
 describe("<SignIn/>", () => {
   beforeEach(() => {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { createUrlFromText, getMobileTestId, tw } from "../../store";
+import { createUrlFromText, getPageTestId, tw } from "../../store";
+import { useIsMobile } from "../../hooks";
 
 export type LinkTextInputProps = {
   route: string;
@@ -9,25 +10,20 @@ export type LinkTextInputProps = {
 
 type LinkTextProps = {
   input: LinkTextInputProps;
-  isMobile?: boolean;
 };
 
-export const LinkText: React.FunctionComponent<LinkTextProps> = ({
-  ...props
-}) => {
-  const { input, isMobile } = props;
-
-  const mobileTestId = getMobileTestId(isMobile);
-
+export const LinkText: React.FunctionComponent<LinkTextProps> = ({ input }) => {
   const text = input.text;
 
-  const testId = `linkText-component${mobileTestId}`;
-  const linkTestId = `linkText-link-${createUrlFromText(text)}${mobileTestId}`;
+  const dataTestId = getPageTestId("linkText-component");
+  const linkTestId = getPageTestId(`linkText-link-${createUrlFromText(text)}`);
+
+  const isMobile = useIsMobile();
 
   const linkClass = isMobile ? "text-2xl" : "";
 
   return (
-    <div data-testid={testId} className={`${tw.flexBoth} mt-4 w-full`}>
+    <div data-testid={dataTestId} className={`${tw.flexBoth} mt-4 w-full`}>
       {/*{option.route === routes.signIn && (*/}
       {/*    <h4 className="create-account-sign-in">Already have an*/}
       {/*      account? </h4>*/}

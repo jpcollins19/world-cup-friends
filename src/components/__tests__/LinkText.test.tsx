@@ -1,7 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../testingUtils";
+import { getTestIdTag, mockIsMobile } from "../testingUtils";
 import { geti18n, routes } from "../../store";
 import { LinkText } from "../buffet";
 
@@ -66,13 +66,14 @@ describe("<LinkText/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
+          mockIsMobile(true);
+
           render(
             <LinkText
               input={{
                 route: routes.createAccount,
                 text: geti18n("forgotPassword"),
               }}
-              isMobile={true}
             />,
           );
 
@@ -86,13 +87,14 @@ describe("<LinkText/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
+      mockIsMobile(true);
+
       render(
         <LinkText
           input={{
             route: routes.createAccount,
             text: geti18n("forgotPassword"),
           }}
-          isMobile={true}
         />,
       );
 

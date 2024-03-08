@@ -1,28 +1,26 @@
 import * as React from "react";
 import Error from "@mui/icons-material/ErrorOutline";
-import { getMobileTestId, tw } from "../../store";
+import { getPageTestId, tw } from "../../store";
+import { useIsMobile } from "../../hooks";
 
 type ErrorMessageProps = {
   text: string;
-  isMobile?: boolean;
 };
 
 export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
-  ...props
+  text,
 }) => {
-  const { text, isMobile } = props;
-
-  const mobileTestId = getMobileTestId(isMobile);
+  const isMobile = useIsMobile();
 
   const fontSize = isMobile ? 50 : 20;
 
   const textSizeClass = isMobile ? "text-2xl" : "";
 
-  const testId = `error-message${mobileTestId}`;
-  const textTestId = `error-message-text${mobileTestId}`;
+  const dataTestId = getPageTestId("error-message");
+  const textTestId = getPageTestId("error-message-text");
 
   return (
-    <div data-testid={testId} className={`${tw.flexBoth} my-4`}>
+    <div data-testid={dataTestId} className={`${tw.flexBoth} my-4`}>
       <Error style={{ fontSize }} />
       <div data-testid={textTestId} className={`${textSizeClass} ml-2`}>
         {text}

@@ -3,9 +3,19 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { getTestIdTag } from "../../testingUtils";
+import { getTestIdTag, mockIsMobile } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
 import store from "../../../store";
+
+// useMediaQuery other options
+//
+// 1. apply "(useMediaQuery as jest.Mock).mockReturnValue(true)" to the specific mobile test
+//
+// 2. breka out mobile testing into it's own file, and apply the below to the overall file
+//
+// jest.mock("react-responsive", () => ({
+//   useMediaQuery: jest.fn().mockReturnValue(true),
+// }));
 
 describe("<Navbar/>", () => {
   it("should render the component", async () => {
@@ -60,10 +70,12 @@ describe("<Navbar/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
+      mockIsMobile(true);
+
       render(
         <Provider store={store}>
           <Router>
-            <Navbar isMobile={true} />
+            <Navbar />
           </Router>
         </Provider>,
       );

@@ -1,11 +1,8 @@
 import * as React from "react";
 import { useGetActiveUsers, useShouldPayoutShow } from "../../hooks";
-import { calcPayout, getMobileTestId } from "../../store";
-import { isMobileProps } from "../buffet";
+import { calcPayout, getPageTestId } from "../../store";
 
-export const PayoutTable: React.FunctionComponent<isMobileProps> = ({
-  isMobile,
-}) => {
+export const PayoutTable: React.FunctionComponent = () => {
   const activeUsers = useGetActiveUsers();
 
   const [payout, setPayout] = React.useState(calcPayout(activeUsers));
@@ -16,9 +13,7 @@ export const PayoutTable: React.FunctionComponent<isMobileProps> = ({
 
   // const user = useSelector((state) => state.auth);
 
-  const mobileTestId = getMobileTestId(isMobile);
-
-  const dataTestId = `payout-table${mobileTestId}`;
+  const dataTestId = getPageTestId("payout-table");
 
   const shouldPayoutShow: boolean = useShouldPayoutShow();
 

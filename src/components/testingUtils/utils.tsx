@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react";
+import { useMediaQuery } from "react-responsive";
 
 export const getTestIdTag = (testId: string) => {
   return screen.findByTestId(testId as any);

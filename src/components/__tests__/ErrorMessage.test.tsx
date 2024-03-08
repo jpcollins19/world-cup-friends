@@ -1,7 +1,11 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag, invalidEmailAndOrPw } from "../testingUtils";
+import {
+  getTestIdTag,
+  invalidEmailAndOrPw,
+  mockIsMobile,
+} from "../testingUtils";
 import { geti18n } from "../../store";
 import { ErrorMessage } from "../buffet";
 
@@ -52,9 +56,9 @@ describe("<Error/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(
-            <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={true} />,
-          );
+          mockIsMobile(true);
+
+          render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -66,9 +70,9 @@ describe("<Error/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      render(
-        <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={true} />,
-      );
+      mockIsMobile(true);
+
+      render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 
       const pageTestId = await getTestIdTag("error-message-mobile");
       const textTestId = await getTestIdTag("error-message-text-mobile");

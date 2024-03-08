@@ -5,7 +5,7 @@ import PoolPicks from "@mui/icons-material/People";
 import MyPicks from "@mui/icons-material/DnsRounded";
 import Admin from "@mui/icons-material/SettingsAccessibility";
 import GolferOdds from "@mui/icons-material/BarChart";
-import { routes, tw } from "../../../store";
+import { getPageTestId, routes, tw } from "../../../store";
 import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
 import PayoutTable from "../PayoutTable";
@@ -57,16 +57,18 @@ export const NavbarComp: React.FunctionComponent = () => {
     routesToUse.unshift(admin);
   }
 
+  const dataTestId = getPageTestId("navbar-comp");
+
   return (
     <div
-      data-testid="navbar-comp"
+      data-testid={dataTestId}
       className={`${tw.elevate} w-full h-4/5 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`}
     >
       {routesToUse.map((route, idx) => (
         <RouteComp key={idx} route={route} />
       ))}
 
-      <PayoutTable isMobile={false} />
+      <PayoutTable />
     </div>
   );
 };

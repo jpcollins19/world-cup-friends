@@ -1,20 +1,15 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { isMobileProps } from "../buffet";
-import { getMobileTestId, routes, tw } from "../../store";
+import { getPageTestId, routes } from "../../store";
 
 const worldCupImage =
   "https://1000logos.net/wp-content/uploads/2023/05/World-Cup-2026-Logo.png";
 
 //  "https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup-900x720.png";
 
-export const Logo: React.FunctionComponent<isMobileProps> = ({ ...props }) => {
-  const { isMobile } = props;
-
-  const mobileTestId = getMobileTestId(isMobile);
-
-  const dataTestId = `logo${mobileTestId}`;
-  const imageTestId = `logo-image${mobileTestId}`;
+export const Logo: React.FunctionComponent = () => {
+  const dataTestId = getPageTestId("logo");
+  const imageTestId = getPageTestId("logo-image");
 
   return (
     <Link

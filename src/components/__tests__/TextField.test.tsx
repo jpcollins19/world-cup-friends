@@ -10,10 +10,9 @@ import {
   email,
   pw,
   elevateClass,
+  mockIsMobile,
 } from "../testingUtils";
 import { TextField } from "../buffet";
-
-jest.mock("react-responsive");
 
 describe("<TextField/>", () => {
   const onSubmit = jest.fn();
@@ -139,12 +138,13 @@ describe("<TextField/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
+          mockIsMobile(true);
+
           render(
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               <TextField
                 input={{ label: pw, type: pw }}
                 onChange={onChange()}
-                isMobile={true}
               />
             </Formik>,
           );
@@ -158,13 +158,11 @@ describe("<TextField/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
+      mockIsMobile(true);
+
       render(
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          <TextField
-            input={{ label: pw, type: pw }}
-            onChange={onChange()}
-            isMobile={true}
-          />
+          <TextField input={{ label: pw, type: pw }} onChange={onChange()} />
         </Formik>,
       );
 

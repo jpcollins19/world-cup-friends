@@ -10,6 +10,7 @@ import {
   getTestIdTag,
   flexBothClass,
   elevateClass,
+  mockIsMobile,
 } from "../testingUtils";
 import { Button } from "../buffet";
 
@@ -135,7 +136,9 @@ describe("<Button/>", () => {
     describe("notDisabled - mobile", () => {
       notDisabled.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(<Button text={submitUpperCase} isMobile={true} />);
+          mockIsMobile(true);
+
+          render(<Button text={submitUpperCase} />);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -146,6 +149,8 @@ describe("<Button/>", () => {
     describe("disabled - comp", () => {
       disabled.comp.forEach((test) => {
         it(`${test.testId}`, async () => {
+          mockIsMobile(false);
+
           render(<Button text={submitUpperCase} disabled={true} />);
 
           const testId = await getTestIdTag(test.testId);
@@ -157,9 +162,9 @@ describe("<Button/>", () => {
     describe("disabled - mobile", () => {
       disabled.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(
-            <Button text={submitUpperCase} disabled={true} isMobile={true} />,
-          );
+          mockIsMobile(true);
+
+          render(<Button text={submitUpperCase} disabled={true} />);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -170,7 +175,9 @@ describe("<Button/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      render(<Button text={submitUpperCase} isMobile={true} />);
+      mockIsMobile(true);
+
+      render(<Button text={submitUpperCase} />);
 
       const testId = await getButtonTestId(submitLowerCase, true);
 

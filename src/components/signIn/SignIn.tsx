@@ -45,10 +45,8 @@ export const SignIn: React.FunctionComponent = () => {
     toast.dismiss();
   }, []);
 
-  const isMobile = useIsMobile();
-
   const errorMessageComponent = (
-    <ErrorMessage text={geti18n("invalidEmailOrPw")} isMobile={isMobile} />
+    <ErrorMessage text={geti18n("invalidEmailOrPw")} />
   );
 
   React.useEffect(() => {
@@ -115,6 +113,8 @@ export const SignIn: React.FunctionComponent = () => {
 
   const dataTestId = getPageTestId("signIn-page");
 
+  const isMobile = useIsMobile();
+
   const toasterContainerClass = isMobile ? "mt-36" : "mt-7";
   const signInContainerClass = isMobile ? "h-3/6 w-8/12" : "h-4/6 w-4/12";
   const headerClass = isMobile ? "text-6xl mt-20" : "text-4xl mt-10";
@@ -147,12 +147,7 @@ export const SignIn: React.FunctionComponent = () => {
             className={`${tw.flexA} h-5/6 pt-10 flex-col`}
           >
             {textFieldInputs.map((input, idx) => (
-              <TextField
-                key={idx}
-                input={input}
-                onChange={onChange}
-                isMobile={isMobile}
-              />
+              <TextField key={idx} input={input} onChange={onChange} />
             ))}
 
             <div
@@ -168,13 +163,12 @@ export const SignIn: React.FunctionComponent = () => {
                 form="sign-in"
                 text={geti18n("submit")}
                 disabled={!isValid || !dirty}
-                isMobile={isMobile}
               />
             </div>
 
             <div data-testid="signIn-linkText" className={linkTextClass}>
               {linkTextInputs.map((input, idx) => (
-                <LinkText key={idx} input={input} isMobile={isMobile} />
+                <LinkText key={idx} input={input} />
               ))}
             </div>
           </Form>
