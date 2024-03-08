@@ -1,5 +1,10 @@
 import { useSelector } from "react-redux";
-import { RootState, UserSchema } from "../store";
+import {
+  RootState,
+  TourneyStageSchema,
+  TourneyStageState,
+  UserSchema,
+} from "../store";
 
 export const useIsUserLoggedIn = (): boolean => {
   const auth = useSelector((state: RootState) => state.auth);
@@ -19,15 +24,26 @@ export const useGetActiveUsers = (): UserSchema[] => {
   return users.filter((user) => user.tiebreaker);
 };
 
-export const useShouldPayoutShow = (): boolean => {
-  //  const stage = useSelector((state: RootState) => state.tourneyStage);
-  // const tourneyStarted = joe?.tourneyStage !== 1;
+export const findTourneyStage = (): number | TourneyStageState => {
+  return useSelector((state: RootState) => state.tourneyStage);
+};
 
-  const tourneyStarted = true;
+export const useShouldPayoutShow = (): boolean => {
+  const tourneyStage = findTourneyStage();
+
+  const tourneyStarted = tourneyStage !== 1;
 
   const user = useSelector((state: RootState) => state.auth);
 
   const userSubmittedPicks = user?.tiebreaker ?? false;
 
-  return (!tourneyStarted && user.id) || (tourneyStarted && userSubmittedPicks);
+  const isUserLoggedIn = useIsUserLoggedIn();
+
+  return !tourneyStarted && isUserLoggedIn
+    ? true
+    : tourneyStarted && userSubmittedPicks;
+
+  // return (
+  //     (!tourneyStarted && user?.id) || (tourneyStarted && userSubmittedPicks)
+  // );
 };

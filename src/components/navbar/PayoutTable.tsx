@@ -1,5 +1,9 @@
 import * as React from "react";
-import { useGetActiveUsers, useShouldPayoutShow } from "../../hooks";
+import {
+  findTourneyStage,
+  useGetActiveUsers,
+  useShouldPayoutShow,
+} from "../../hooks";
 import { calcPayout, getPageTestId } from "../../store";
 
 export const PayoutTable: React.FunctionComponent = () => {

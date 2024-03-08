@@ -2,13 +2,14 @@ import axios from "axios";
 
 const LOAD_TOURNEY_STAGE = "LOAD_TOURNEY_STAGE";
 
-export const _loadTourneyStage = (stage: any) => {
+export const _loadTourneyStage = (stage: number) => {
   return { type: LOAD_TOURNEY_STAGE, stage };
 };
 
 export const loadTourneyStage = () => {
   return async (dispatch: any) => {
     const stage = (await axios.get("/api/tourney-stage")).data;
+
     dispatch(_loadTourneyStage(stage.stage));
   };
 };

@@ -3,10 +3,18 @@ import "@testing-library/react-hooks";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { renderHook } from "@testing-library/react-hooks";
-import { store, setAuth, loadUsers, UserSchema, _loadUsers } from "../../store";
+import {
+  store,
+  setAuth,
+  loadUsers,
+  UserSchema,
+  _loadUsers,
+  _loadTourneyStage,
+} from "../../store";
 import * as hooks from "../";
-import { createUser } from "../fixtures";
-import { useGetActiveUsers } from "../";
+import { createUser, getFakerInfo } from "../fixtures";
+import { findTourneyStage, useGetActiveUsers } from "../";
+import { getWrapper, updateStore } from "./hookUtils";
 
 beforeAll(() => {
   const { error } = console;
@@ -20,11 +28,11 @@ beforeAll(() => {
 
 describe("useIsUserLoggedIn ", () => {
   it(`user is logged in`, () => {
-    store.dispatch(setAuth({ id: "user123" }));
+    const auth = { id: getFakerInfo("uuid") };
 
-    const wrapper: React.FC<{ children?: React.ReactNode }> = ({
-      children,
-    }) => <Provider store={store}>{children}</Provider>;
+    updateStore(setAuth, auth);
+
+    const wrapper = getWrapper();
 
     const { result } = renderHook(() => hooks.useIsUserLoggedIn(), {
       wrapper,
@@ -34,11 +42,11 @@ describe("useIsUserLoggedIn ", () => {
   });
 
   it(`user is not logged in`, () => {
-    store.dispatch(setAuth({ id: null }));
+    const auth = { id: null };
 
-    const wrapper: React.FC<{ children?: React.ReactNode }> = ({
-      children,
-    }) => <Provider store={store}>{children}</Provider>;
+    updateStore(setAuth, auth);
+
+    const wrapper = getWrapper();
 
     const { result } = renderHook(() => hooks.useIsUserLoggedIn(), {
       wrapper,
@@ -50,11 +58,11 @@ describe("useIsUserLoggedIn ", () => {
 
 describe("useIsUserAdmin ", () => {
   it(`user is admin`, () => {
-    store.dispatch(setAuth({ id: "user123", isAdmin: true }));
+    const auth = { id: getFakerInfo("uuid"), isAdmin: true };
 
-    const wrapper: React.FC<{ children?: React.ReactNode }> = ({
-      children,
-    }) => <Provider store={store}>{children}</Provider>;
+    updateStore(setAuth, auth);
+
+    const wrapper = getWrapper();
 
     const { result } = renderHook(() => hooks.useIsUserAdmin(), {
       wrapper,
@@ -64,11 +72,11 @@ describe("useIsUserAdmin ", () => {
   });
 
   it(`user is not admin`, () => {
-    store.dispatch(setAuth({ id: "user123", isAdmin: false }));
+    const auth = { id: getFakerInfo("uuid"), isAdmin: false };
 
-    const wrapper: React.FC<{ children?: React.ReactNode }> = ({
-      children,
-    }) => <Provider store={store}>{children}</Provider>;
+    updateStore(setAuth, auth);
+
+    const wrapper = getWrapper();
 
     const { result } = renderHook(() => hooks.useIsUserAdmin(), {
       wrapper,
@@ -79,8 +87,8 @@ describe("useIsUserAdmin ", () => {
 });
 
 describe("useGetActiveUsers ", () => {
-  const notSubmitted = createUser();
-  const submitted = createUser(100);
+  const notSubmitted: UserSchema = createUser();
+  const submitted: UserSchema = createUser(100);
 
   const testsToRun = [
     {
@@ -122,17 +130,33 @@ describe("useGetActiveUsers ", () => {
 
   testsToRun.forEach((test) => {
     it(`when user count to return is: ${test.result}`, () => {
-      store.dispatch(_loadUsers(test.users));
+      updateStore(_loadUsers, test.users);
 
-      const wrapper: React.FC<{ children?: React.ReactNode }> = ({
-        children,
-      }) => <Provider store={store}>{children}</Provider>;
+      const wrapper = getWrapper();
 
       const { result } = renderHook(() => hooks.useGetActiveUsers(), {
         wrapper,
       });
 
       expect(result.current.length).toBe(test.result);
+    });
+  });
+});
+
+describe("findTourneyStage ", () => {
+  const testsToRun = [1, 2, 3];
+
+  testsToRun.forEach((stage) => {
+    it(`tourneyStage is ${stage}`, () => {
+      updateStore(_loadTourneyStage, stage);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.findTourneyStage(), {
+        wrapper,
+      });
+
+      expect(result.current).toBe(stage);
     });
   });
 });

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const LOAD_USERS = "LOAD_USERS";
 
-export const _loadUsers = (users: any) => {
+export const _loadUsers = (users: UsersState) => {
   return { type: LOAD_USERS, users };
 };
 

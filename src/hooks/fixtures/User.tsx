@@ -1,16 +1,5 @@
 import { UserSchema } from "../../store";
-import { emails, names, uuids } from "./Faker";
-
-const getFakerInfo = (type: string) => {
-  const arrayToUse =
-    type === "uuid" ? uuids : type === "email" ? emails : names;
-
-  const arrayLength = arrayToUse.length;
-
-  const randomNum = Math.ceil(Math.random() * arrayLength) - 1;
-
-  return arrayToUse[randomNum];
-};
+import { getFakerInfo } from "./";
 
 export const createUser = (tiebreaker?: number): UserSchema => {
   return {
