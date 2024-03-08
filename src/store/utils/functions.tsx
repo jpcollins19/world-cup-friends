@@ -1,6 +1,7 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile } from "../../hooks";
+import { UserSchema } from "../users_store";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -96,4 +97,44 @@ const isLastIdx = (arr: string[], idx: number) => {
 
 const addSpace = (arr: string[], idx: number) => {
   return isLastIdx(arr, idx) ? " " : "";
+};
+
+export const calcPayout = (users: any): any => {
+  const pot = users?.length * 20;
+
+  const result = {
+    firstPlace: 0,
+    secondPlace: 0,
+    thirdPlace: 0,
+    numOfPicks: users?.length,
+  };
+
+  switch (users?.length) {
+    case 1:
+      result.firstPlace = 15;
+      result.secondPlace = 5;
+      result.thirdPlace = 0;
+      break;
+    case 2:
+      result.firstPlace = 30;
+      result.secondPlace = 10;
+      result.thirdPlace = 0;
+      break;
+    case 3:
+      result.firstPlace = 45;
+      result.secondPlace = 15;
+      result.thirdPlace = 0;
+      break;
+    case 4:
+      result.firstPlace = 60;
+      result.secondPlace = 20;
+      result.thirdPlace = 0;
+      break;
+    default:
+      result.thirdPlace = 20;
+      result.firstPlace = (pot - result.thirdPlace) * 0.75;
+      result.secondPlace = (pot - result.thirdPlace) * 0.25;
+  }
+
+  return result;
 };

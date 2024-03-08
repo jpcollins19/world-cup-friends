@@ -1,4 +1,6 @@
-const { db, User } = require("../db/index.js");
+const { db, User, TourneyStage } = require("../db/index.js");
+
+const tourneyStage = 1;
 
 const users = [
   {
@@ -29,6 +31,10 @@ const syncAndSeed = async () => {
       }),
     ),
   );
+
+  await TourneyStage.create({
+    stage: tourneyStage,
+  });
 };
 
 module.exports = syncAndSeed;

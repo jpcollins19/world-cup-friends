@@ -8,7 +8,7 @@ import GolferOdds from "@mui/icons-material/BarChart";
 import { routes, tw } from "../../../store";
 import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
-import PayoutData from "../PayoutData";
+import PayoutTable from "../PayoutTable";
 
 export const NavbarComp: React.FunctionComponent = () => {
   const color = "#cbd5e1";
@@ -66,7 +66,7 @@ export const NavbarComp: React.FunctionComponent = () => {
         <RouteComp key={idx} route={route} />
       ))}
 
-      <PayoutData />
+      <PayoutTable isMobile={false} />
     </div>
   );
 };

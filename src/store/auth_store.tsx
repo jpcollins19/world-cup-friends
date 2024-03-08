@@ -81,10 +81,11 @@ export const logout = (history: any) => {
 export interface AuthState {
   id: null;
   isAdmin: null;
+  tiebreaker: null;
 }
 
 export default function (
-  state: AuthState = { id: null, isAdmin: null },
+  state: AuthState = { id: null, isAdmin: null, tiebreaker: null },
   action: any,
 ) {
   switch (action.type) {

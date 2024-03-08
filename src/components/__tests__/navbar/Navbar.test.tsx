@@ -76,5 +76,7 @@ describe("<Navbar/>", () => {
     });
 
     it.todo("renders the logo and navBar mobile components");
+
+    it.todo("PayoutData -- renders the data needed");
   });
 });

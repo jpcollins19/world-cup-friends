@@ -41,8 +41,6 @@ const Routes = () => {
 
   const userIsLoggedIn = useIsUserLoggedIn();
 
-  console.log("userIsLoggedIn", userIsLoggedIn);
-
   return loading ? (
     <Loading />
   ) : (

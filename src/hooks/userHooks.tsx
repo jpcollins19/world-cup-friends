@@ -18,3 +18,16 @@ export const useGetActiveUsers = (): UserSchema[] => {
 
   return users.filter((user) => user.tiebreaker);
 };
+
+export const useShouldPayoutShow = (): boolean => {
+  //  const stage = useSelector((state: RootState) => state.tourneyStage);
+  // const tourneyStarted = joe?.tourneyStage !== 1;
+
+  const tourneyStarted = true;
+
+  const user = useSelector((state: RootState) => state.auth);
+
+  const userSubmittedPicks = user?.tiebreaker ?? false;
+
+  return (!tourneyStarted && user.id) || (tourneyStarted && userSubmittedPicks);
+};
