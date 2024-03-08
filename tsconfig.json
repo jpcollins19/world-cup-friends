@@ -15,14 +15,17 @@
       "es5",
       "scripthost",
       "es2015.promise"
-    ]
+    ],
   },
-//  "include": [
-//    "src/index.tsx"
-//  ],
+  //  "include": [
+  //    "src/index.tsx"
+  //  ],
   "include": [
     "./src/**/**/\*"
   ],
-//  "include": ["src/**/*.tsx", "src/**/*.ts"],
-//  "exclude": ["node_modules"]
+  "types": [
+    "faker"
+  ]
+  //  "include": ["src/**/*.tsx", "src/**/*.ts"],
+  //  "exclude": ["node_modules"]
 }

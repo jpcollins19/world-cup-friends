@@ -1,16 +1,20 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { getTestIdTag } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
+import store from "../../../store";
 
 describe("<Navbar/>", () => {
   it("should render the component", async () => {
     render(
-      <Router>
-        <Navbar />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <Navbar />
+        </Router>
+      </Provider>,
     );
 
     const testId = await getTestIdTag("navbar");
@@ -22,8 +26,13 @@ describe("<Navbar/>", () => {
 
   it.todo("renders the logo and NavbarComp components");
 
-  it.todo("NavBarComp -- renders the RouteComp components and all routes");
+  it.todo(
+    "NavBarComp -- renders the RouteComp components and all routes based on applicable auth state",
+  );
+
   it.todo("RouteComp -- renders the data needed");
+
+  it.todo("PayoutData -- renders the data needed");
 
   // describe("classTesting", () => {
   //   const testsToRun = [
@@ -52,9 +61,11 @@ describe("<Navbar/>", () => {
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
       render(
-        <Router>
-          <Navbar isMobile={true} />
-        </Router>,
+        <Provider store={store}>
+          <Router>
+            <Navbar isMobile={true} />
+          </Router>
+        </Provider>,
       );
 
       const testId = await getTestIdTag("navbar-mobile");

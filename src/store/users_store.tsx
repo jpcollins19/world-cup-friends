@@ -2,7 +2,7 @@ import axios from "axios";
 
 const LOAD_USERS = "LOAD_USERS";
 
-const _loadUsers = (users: any) => {
+export const _loadUsers = (users: any) => {
   return { type: LOAD_USERS, users };
 };
 
@@ -18,20 +18,12 @@ export type UserSchema = {
   email: string;
   password: string;
   name: string;
+  tiebreaker?: number | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export interface UsersState {}
-
-// export const users = (state: UsersState = [], action) => {
-//   switch (action.type) {
-//     case LOAD_USERS:
-//       return action.users;
-//     default:
-//       return state;
-//   }
-// };
+export interface UsersState extends Array<UserSchema> {}
 
 export default function (state: UsersState = [], action: any) {
   switch (action.type) {
@@ -41,3 +33,12 @@ export default function (state: UsersState = [], action: any) {
       return state;
   }
 }
+
+// export const users = (state: UsersState = [], action) => {
+//   switch (action.type) {
+//     case LOAD_USERS:
+//       return action.users;
+//     default:
+//       return state;
+//   }
+// };

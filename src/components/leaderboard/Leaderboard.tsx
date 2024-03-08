@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
-import { tDispatch, logout } from "../../store";
+import { tDispatch, logout, loadingDefault } from "../../store";
+import { Loading } from "../buffet";
 // import {Link} from "react-router-dom";
 // import { useAppDispatch } from "../hooks";
 // import Sign_In_Options from "../Sign_In_Options";
@@ -42,7 +43,9 @@ export const Leaderboard: React.FunctionComponent = () => {
   const dispatch = tDispatch();
   const history = useHistory();
 
-  return (
+  return loadingDefault() ? (
+    <Loading />
+  ) : (
     <div data-testid="leaderboard-page" className="pb-10">
       leaderboard page
       {/*{!isMobile && showPayout && <Payout />}*/}

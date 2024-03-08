@@ -7,6 +7,8 @@ import Admin from "@mui/icons-material/SettingsAccessibility";
 import GolferOdds from "@mui/icons-material/BarChart";
 import { routes, tw } from "../../../store";
 import RouteComp, { RouteProps } from "./RouteComp";
+import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
+import PayoutData from "../PayoutData";
 
 export const NavbarComp: React.FunctionComponent = () => {
   const color = "#cbd5e1";
@@ -41,7 +43,19 @@ export const NavbarComp: React.FunctionComponent = () => {
     },
   ];
 
-  const routesToUse: RouteProps[] = [admin, ...loggedInRoutes, rules];
+  const routesToUse: RouteProps[] = [rules];
+
+  const userIsLoggedIn: boolean = useIsUserLoggedIn();
+
+  if (userIsLoggedIn) {
+    routesToUse.unshift(...loggedInRoutes);
+  }
+
+  const userIsAdmin: boolean = useIsUserAdmin();
+
+  if (userIsAdmin) {
+    routesToUse.unshift(admin);
+  }
 
   return (
     <div
@@ -51,6 +65,8 @@ export const NavbarComp: React.FunctionComponent = () => {
       {routesToUse.map((route, idx) => (
         <RouteComp key={idx} route={route} />
       ))}
+
+      <PayoutData />
     </div>
   );
 };

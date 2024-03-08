@@ -1,6 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
 import {
   click,
   changeInputText,
@@ -17,7 +18,6 @@ import {
   submitUpperCase,
 } from "../testingUtils";
 import SignIn from "../signIn/SignIn";
-import { Provider } from "react-redux";
 import store from "../../store";
 
 jest.mock("react-responsive");

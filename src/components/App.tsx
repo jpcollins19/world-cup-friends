@@ -10,7 +10,7 @@ const App = () => {
   React.useEffect(() => {
     (async () => {
       await dispatch(me());
-      // dispatch(loadUsers());
+      await dispatch(loadUsers());
     })();
   }, []);
 

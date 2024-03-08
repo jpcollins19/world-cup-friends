@@ -80,9 +80,13 @@ export const logout = (history: any) => {
 
 export interface AuthState {
   id: null;
+  isAdmin: null;
 }
 
-export default function (state: AuthState = { id: null }, action: any) {
+export default function (
+  state: AuthState = { id: null, isAdmin: null },
+  action: any,
+) {
   switch (action.type) {
     case SET_AUTH:
       return action.payload.auth;
