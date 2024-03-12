@@ -82,10 +82,16 @@ export interface AuthState {
   id: null;
   isAdmin: null;
   tiebreaker: null;
+  emailNotifications: null;
 }
 
 export default function (
-  state: AuthState = { id: null, isAdmin: null, tiebreaker: null },
+  state: AuthState = {
+    id: null,
+    isAdmin: null,
+    tiebreaker: null,
+    emailNotifications: null,
+  },
   action: any,
 ) {
   switch (action.type) {

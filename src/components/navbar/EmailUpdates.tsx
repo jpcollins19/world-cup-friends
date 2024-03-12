@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { me, routes, tDispatch } from "../../store";
-import { useGetUser } from "../../hooks";
+import { colors, geti18n, me, routes, tDispatch, tw } from "../../store";
+import { useGetUser, useIsUserLoggedIn } from "../../hooks";
 
 export const EmailUpdates: React.FunctionComponent = () => {
   const dispatch = tDispatch();
+
+  const [isHovered, setIsHovered] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
@@ -14,24 +16,29 @@ export const EmailUpdates: React.FunctionComponent = () => {
 
   const user = useGetUser();
 
-  // const emailNotificationSetting = user?.emailNotifications ? "out of" : "into";
-  //
-  // const compVerbiage = `Opt me ${emailNotificationSetting} email notifications`;
-  //
+  const compVerbiage = user?.emailNotifications
+    ? geti18n("emailNotificationsOptOut")
+    : geti18n("emailNotificationsOptIn");
+
   // const pageVerbiage = isMobile ? "Edit Notification Settings" : compVerbiage;
 
-  return (
+  const hoverClass = isHovered ? "" : "hidden";
+
+  return useIsUserLoggedIn() ? (
     <Link
       to={routes.editProfileEmailNotifications}
-      // className={`email-notifications-cont${isMobile ? "-mobile" : ""}`}
+      className={`${tw.flexBoth} ${tw.whiteTextMed}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/*{pageVerbiage}*/}joe
-      <p>
-        Email notifications can be sent out to you each time the website is
-        updated with new golfer scores!
+      {compVerbiage}
+      <p
+        className={`${colors.navbarBackground} ${hoverClass} text-center fixed top-65 left-72 p-2 border border-black border-solid rounded-md max-w-xs`}
+      >
+        {geti18n("emailNotificationExplanation")}
       </p>
     </Link>
-  );
+  ) : null;
 };
 
 export default EmailUpdates;

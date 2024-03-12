@@ -9,7 +9,6 @@ import {
 } from "../../store";
 import * as hooks from "../";
 import { createUser, getFakerInfo } from "../fixtures";
-
 import {
   getWrapper,
   ignoreReactDOMRenderError,
@@ -20,63 +19,99 @@ beforeAll(() => {
   ignoreReactDOMRenderError();
 });
 
-describe("useIsUserLoggedIn ", () => {
-  it(`user is logged in`, () => {
-    const auth = { id: getFakerInfo("uuid") };
+const authLoggedInWithPicks = { id: getFakerInfo("uuid"), tiebreaker: 101 };
+const authLoggedInWithNoPicks = { id: getFakerInfo("uuid"), tiebreaker: null };
+const authNotLoggedIn = { id: null };
 
-    updateStore(setAuth, auth);
+const authLoggedInAndIsAdmin = { id: getFakerInfo("uuid"), isAdmin: true };
 
-    const wrapper = getWrapper();
+describe("useGetUser", () => {
+  const testsToRun = [
+    { scenario: "user is logged in", userData: authLoggedInWithPicks },
+    { scenario: "user is not logged in", userData: authNotLoggedIn },
+  ];
 
-    const { result } = renderHook(() => hooks.useIsUserLoggedIn(), {
-      wrapper,
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      const userData = test.userData;
+
+      updateStore(setAuth, userData);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.useGetUser(), {
+        wrapper,
+      });
+
+      expect(result.current).toBe(userData);
     });
-
-    expect(result.current).toBe(true);
   });
+});
 
-  it(`user is not logged in`, () => {
-    const auth = { id: null };
+describe("useIsUserLoggedIn ", () => {
+  const testsToRun = [
+    {
+      scenario: "user is logged in",
+      userData: authLoggedInWithPicks,
+      result: true,
+    },
+    {
+      scenario: "user is not logged in",
+      userData: authNotLoggedIn,
+      result: false,
+    },
+  ];
 
-    updateStore(setAuth, auth);
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      const userData = test.userData;
 
-    const wrapper = getWrapper();
+      updateStore(setAuth, userData);
 
-    const { result } = renderHook(() => hooks.useIsUserLoggedIn(), {
-      wrapper,
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.useIsUserLoggedIn(), {
+        wrapper,
+      });
+
+      expect(result.current).toBe(test.result);
     });
-
-    expect(result.current).toBe(false);
   });
 });
 
 describe("useIsUserAdmin ", () => {
-  it(`user is admin`, () => {
-    const auth = { id: getFakerInfo("uuid"), isAdmin: true };
+  const testsToRun = [
+    {
+      scenario: "user is logged in and isAdmin",
+      userData: authLoggedInAndIsAdmin,
+      result: true,
+    },
+    {
+      scenario: "user is logged in and isAdmin === false",
+      userData: authLoggedInWithPicks,
+      result: false,
+    },
+    {
+      scenario: "user is not logged in",
+      userData: authNotLoggedIn,
+      result: false,
+    },
+  ];
 
-    updateStore(setAuth, auth);
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      const userData = test.userData;
 
-    const wrapper = getWrapper();
+      updateStore(setAuth, userData);
 
-    const { result } = renderHook(() => hooks.useIsUserAdmin(), {
-      wrapper,
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.useIsUserAdmin(), {
+        wrapper,
+      });
+
+      expect(result.current).toBe(test.result);
     });
-
-    expect(result.current).toBe(true);
-  });
-
-  it(`user is not admin`, () => {
-    const auth = { id: getFakerInfo("uuid"), isAdmin: false };
-
-    updateStore(setAuth, auth);
-
-    const wrapper = getWrapper();
-
-    const { result } = renderHook(() => hooks.useIsUserAdmin(), {
-      wrapper,
-    });
-
-    expect(result.current).toBe(false);
   });
 });
 
@@ -137,20 +172,52 @@ describe("useGetActiveUsers ", () => {
   });
 });
 
-describe("findTourneyStage ", () => {
-  const testsToRun = [1, 2, 3];
+describe("useShouldPayoutShow ", () => {
+  const testsToRun = [
+    {
+      scenario: "tourney has not started, user is logged in",
+      userData: authLoggedInWithPicks,
+      tourneyStage: 1,
+      result: true,
+    },
+    {
+      scenario: "tourney has not started, user is not logged in",
+      userData: authNotLoggedIn,
+      tourneyStage: 1,
+      result: false,
+    },
+    {
+      scenario: "tourney has started, user is logged in, and has picks",
+      userData: authLoggedInWithPicks,
+      tourneyStage: 2,
+      result: true,
+    },
+    {
+      scenario: "tourney has started, user is logged in, but has no picks",
+      userData: authLoggedInWithNoPicks,
+      tourneyStage: 2,
+      result: false,
+    },
+    {
+      scenario: "tourney has started, user is not logged in",
+      userData: authNotLoggedIn,
+      tourneyStage: 2,
+      result: false,
+    },
+  ];
 
-  testsToRun.forEach((stage) => {
-    it(`tourneyStage is ${stage}`, () => {
-      updateStore(_loadTourneyStage, stage);
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      updateStore(setAuth, test.userData);
+      updateStore(_loadTourneyStage, test.tourneyStage);
 
       const wrapper = getWrapper();
 
-      const { result } = renderHook(() => hooks.findTourneyStage(), {
+      const { result } = renderHook(() => hooks.useShouldPayoutShow(), {
         wrapper,
       });
 
-      expect(result.current).toBe(stage);
+      expect(result.current).toBe(test.result);
     });
   });
 });

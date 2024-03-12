@@ -14,6 +14,7 @@ export const routes = {
 
 export const colors = {
   black: "#020617",
+  navbarBackground: "bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700",
   navbarIconColor: "#cbd5e1", //gray-300
   red: "#b91c1c",
 };

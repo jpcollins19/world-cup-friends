@@ -1,6 +1,7 @@
-const { db, User, TourneyStage } = require("../db/index.js");
+const { db, User, TourneyStage, LastUpdated } = require("../db/index.js");
 
 const tourneyStage = 1;
+const lastUpdated = "4/9/24 at 1:30 PM CT";
 
 const users = [
   {
@@ -9,6 +10,7 @@ const users = [
     name: "Joe",
     isAdmin: true,
     tiebreaker: 101,
+    emailNotifications: true,
   },
   {
     email: "jack@gmail.com",
@@ -28,12 +30,17 @@ const syncAndSeed = async () => {
         name: user.name,
         isAdmin: user.isAdmin,
         tiebreaker: user.tiebreaker,
+        emailNotifications: user.emailNotifications,
       }),
     ),
   );
 
   await TourneyStage.create({
     stage: tourneyStage,
+  });
+
+  await LastUpdated.create({
+    answer: lastUpdated,
   });
 };
 

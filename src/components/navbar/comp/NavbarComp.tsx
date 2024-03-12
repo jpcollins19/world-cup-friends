@@ -10,6 +10,7 @@ import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
 import PayoutData from "../PayoutData";
 import EmailUpdates from "../EmailUpdates";
+import LastUpdated from "../LastUpdated";
 
 export const NavbarComp: React.FunctionComponent = () => {
   const color = colors.navbarIconColor;
@@ -63,7 +64,7 @@ export const NavbarComp: React.FunctionComponent = () => {
   return (
     <div
       data-testid={dataTestId}
-      className={`${tw.elevate} w-full h-4/5 flex flex-col justify-between bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`}
+      className={`${tw.elevate} ${colors.navbarBackground} w-full h-4/5 flex flex-col justify-between`}
     >
       <div>
         {routesToUse.map((route, idx) => (
@@ -71,8 +72,9 @@ export const NavbarComp: React.FunctionComponent = () => {
         ))}
       </div>
 
-      <div>
+      <div className="h-full flex flex-col justify-around">
         <EmailUpdates />
+        <LastUpdated />
       </div>
 
       <div>

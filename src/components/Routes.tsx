@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import {
   withRouter,
   useLocation,
@@ -8,7 +6,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { me, routes, tDispatch } from "../store";
+import { loadLastUpdated, me, routes, tDispatch } from "../store";
 import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
 import { Loading } from "./buffet";
@@ -19,15 +17,16 @@ const Routes = () => {
   const dispatch = tDispatch();
   const { pathname } = useLocation();
 
-  useEffect(() => {
+  React.useEffect(() => {
     (async () => {
       await dispatch(me());
+      await dispatch(loadLastUpdated());
     })();
   }, []);
 
   const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setLoading(true);
 
     setTimeout(() => {

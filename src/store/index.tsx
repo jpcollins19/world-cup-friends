@@ -25,18 +25,21 @@ import { thunk, ThunkDispatch, ThunkAction } from "redux-thunk";
 import auth, { AuthState } from "./auth_store";
 import users, { UsersState } from "./users_store";
 import tourneyStage, { TourneyStageSchema } from "./tourneyStage_store";
+import lastUpdated, { LastUpdatedSchema } from "./lastUpdated_store";
 
 // Define the root state type
 export interface RootState {
   auth: AuthState;
   users: UsersState;
   tourneyStage: TourneyStageSchema;
+  lastUpdated: LastUpdatedSchema;
 }
 
 export const reducer: Reducer<RootState> = combineReducers({
   auth,
   users,
   tourneyStage,
+  lastUpdated,
 });
 
 //const middleware = applyMiddleware(thunk);
@@ -76,4 +79,5 @@ export default store;
 export * from "./auth_store";
 export * from "./users_store";
 export * from "./tourneyStage_store";
+export * from "./lastUpdated_store";
 export * from "./utils/index";

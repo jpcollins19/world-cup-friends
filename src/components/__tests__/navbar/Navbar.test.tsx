@@ -26,7 +26,7 @@ describe("<Navbar/>", () => {
     expect(testId).toBeInTheDocument();
   });
 
-  it.todo("renders the default subcomponents - logo, Rules route dataTestIds");
+  it.todo("renders the default subcomponents - logo & Rules route dataTestIds");
 
   it.todo(
     "NavBarComp -- new test file -- renders the RouteComp components and all routes based on applicable auth state",
@@ -35,6 +35,10 @@ describe("<Navbar/>", () => {
   it.todo("RouteComp -- new test file");
 
   it.todo("PayoutData -- test file with mocking hooks already created");
+
+  it.todo("EmailUpdates");
+
+  it.todo("LastUpdated");
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {

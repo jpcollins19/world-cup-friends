@@ -19,6 +19,7 @@ export type UserSchema = {
   password: string;
   name: string;
   tiebreaker?: number | null;
+  emailNotifications: boolean;
   createdAt: string;
   updatedAt: string;
 };

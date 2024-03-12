@@ -42,6 +42,10 @@ const User = db.define("users", {
     type: INTEGER,
     defaultValue: null,
   },
+  emailNotifications: {
+    type: BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 User.addHook("beforeSave", async function (user) {
