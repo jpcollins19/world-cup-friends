@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import {
   getTestIdTag,
   invalidEmailAndOrPw,
-  mockIsMobile,
+  mockWindowMobileView,
 } from "../testingUtils";
 import { geti18n } from "../../store";
 import { ErrorMessage } from "../buffet";
@@ -56,7 +56,7 @@ describe("<Error/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
 
           render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 
@@ -70,7 +70,7 @@ describe("<Error/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       render(<ErrorMessage text={geti18n("invalidEmailOrPw")} />);
 

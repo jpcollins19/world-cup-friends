@@ -10,7 +10,7 @@ import {
   getTestIdTag,
   flexBothClass,
   elevateClass,
-  mockIsMobile,
+  mockWindowMobileView,
 } from "../testingUtils";
 import { Button } from "../buffet";
 
@@ -136,7 +136,7 @@ describe("<Button/>", () => {
     describe("notDisabled - mobile", () => {
       notDisabled.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
 
           render(<Button text={submitUpperCase} />);
 
@@ -149,7 +149,7 @@ describe("<Button/>", () => {
     describe("disabled - comp", () => {
       disabled.comp.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(false);
+          mockWindowMobileView(false);
 
           render(<Button text={submitUpperCase} disabled={true} />);
 
@@ -162,7 +162,7 @@ describe("<Button/>", () => {
     describe("disabled - mobile", () => {
       disabled.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
 
           render(<Button text={submitUpperCase} disabled={true} />);
 
@@ -175,7 +175,7 @@ describe("<Button/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       render(<Button text={submitUpperCase} />);
 

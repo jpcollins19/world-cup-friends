@@ -1,7 +1,7 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile } from "../../hooks";
-import { UserSchema } from "../users_store";
+import { calcPayoutSchema } from "./functionSchemas";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -91,15 +91,15 @@ export const cap1stLetter = (str: string): string => {
     .join("");
 };
 
-const isLastIdx = (arr: string[], idx: number) => {
+const isLastIdx = (arr: string[], idx: number): boolean => {
   return idx !== arr.length - 1;
 };
 
-const addSpace = (arr: string[], idx: number) => {
+const addSpace = (arr: string[], idx: number): string => {
   return isLastIdx(arr, idx) ? " " : "";
 };
 
-export const calcPayout = (users: any): any => {
+export const calcPayout = (users: any): calcPayoutSchema => {
   const pot = users?.length * 20;
 
   const result = {

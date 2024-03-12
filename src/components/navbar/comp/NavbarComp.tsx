@@ -5,13 +5,14 @@ import PoolPicks from "@mui/icons-material/People";
 import MyPicks from "@mui/icons-material/DnsRounded";
 import Admin from "@mui/icons-material/SettingsAccessibility";
 import GolferOdds from "@mui/icons-material/BarChart";
-import { getPageTestId, routes, tw } from "../../../store";
+import { colors, getPageTestId, routes, tw } from "../../../store";
 import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
-import PayoutTable from "../PayoutTable";
+import PayoutData from "../PayoutData";
+import EmailUpdates from "../EmailUpdates";
 
 export const NavbarComp: React.FunctionComponent = () => {
-  const color = "#cbd5e1";
+  const color = colors.navbarIconColor;
   const iconFontSize = "large";
 
   const rules: RouteProps = {
@@ -62,13 +63,21 @@ export const NavbarComp: React.FunctionComponent = () => {
   return (
     <div
       data-testid={dataTestId}
-      className={`${tw.elevate} w-full h-4/5 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`}
+      className={`${tw.elevate} w-full h-4/5 flex flex-col justify-between bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`}
     >
-      {routesToUse.map((route, idx) => (
-        <RouteComp key={idx} route={route} />
-      ))}
+      <div>
+        {routesToUse.map((route, idx) => (
+          <RouteComp key={idx} route={route} />
+        ))}
+      </div>
 
-      <PayoutTable />
+      <div>
+        <EmailUpdates />
+      </div>
+
+      <div>
+        <PayoutData />
+      </div>
     </div>
   );
 };

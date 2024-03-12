@@ -1,5 +1,25 @@
-import { fireEvent, screen } from "@testing-library/react";
-import { useMediaQuery } from "react-responsive";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import store, { UserSchema } from "../../store";
+import * as React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import {
+  useGetActiveUsers,
+  useIsMobile,
+  useShouldPayoutShow,
+} from "../../hooks";
+
+export const renderProvider = (component: any, withRouter?: boolean) => {
+  const providerToUse = withRouter ? (
+    <Provider store={store}>
+      <Router>{component}</Router>
+    </Provider>
+  ) : (
+    <Provider store={store}>{component}</Provider>
+  );
+
+  render(providerToUse);
+};
 
 export const getTestIdTag = (testId: string) => {
   return screen.findByTestId(testId as any);
@@ -49,6 +69,24 @@ export const getButton = async (str: string, isMobile?: boolean) => {
   return testId.querySelector("button");
 };
 
-export const mockIsMobile = (boolean: boolean) => {
+export const mockWindowMobileView = (boolean: boolean) => {
   return require("react-responsive").useMediaQuery.mockReturnValue(boolean);
+};
+
+const mockReturnedValue = (hookToMock: any, value: any) => {
+  const hook = hookToMock as jest.MockedFunction<any>;
+
+  hook.mockReturnValue(value);
+};
+
+export const mockUseIsMobile = (boolean: boolean) => {
+  mockReturnedValue(useIsMobile, boolean);
+};
+
+export const mockUseGetActiveUsers = (users: UserSchema[]) => {
+  mockReturnedValue(useGetActiveUsers, users);
+};
+
+export const mockUseShouldPayoutShow = (boolean: boolean) => {
+  mockReturnedValue(useShouldPayoutShow, boolean);
 };

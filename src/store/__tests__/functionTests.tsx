@@ -1,6 +1,6 @@
 import * as funcs from "../utils";
-import { routes } from "../utils";
-import { mockIsMobile } from "../../components/testingUtils";
+import { calcPayoutSchema, routes } from "../utils";
+import { mockWindowMobileView } from "../../components/testingUtils";
 
 describe("geti18n", () => {
   const testsToRun = [
@@ -10,7 +10,7 @@ describe("geti18n", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.str}`, () => {
-      const result = funcs.geti18n(test.str as any);
+      const result: string = funcs.geti18n(test.str as any);
 
       expect(result).toBe(test.result);
     });
@@ -26,7 +26,7 @@ describe("createUrlFromText ", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.str}`, () => {
-      const result = funcs.createUrlFromText(test.str);
+      const result: string = funcs.createUrlFromText(test.str);
 
       expect(result).toBe(test.result);
     });
@@ -41,7 +41,7 @@ describe("getMobileTestId ", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.boolean}`, () => {
-      const result = funcs.getMobileTestId(test.boolean);
+      const result: string = funcs.getMobileTestId(test.boolean);
 
       expect(result).toBe(test.result);
     });
@@ -61,9 +61,9 @@ describe("getPageTestId ", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.str}`, () => {
-      mockIsMobile(test.isMobile);
+      mockWindowMobileView(test.isMobile);
 
-      const result = funcs.getPageTestId(test.str);
+      const result: string = funcs.getPageTestId(test.str);
 
       expect(result).toBe(test.result);
     });
@@ -79,7 +79,7 @@ describe("cap1stLetter", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.str}`, () => {
-      const result = funcs.cap1stLetter(test.str);
+      const result: string = funcs.cap1stLetter(test.str);
 
       expect(result).toBe(test.result);
     });
@@ -98,7 +98,7 @@ describe("getTextFromUrl ", () => {
 
   testsToRun.forEach((test) => {
     it(`${test.url}`, () => {
-      const result = funcs.getTextFromUrl(test.url);
+      const result: string = funcs.getTextFromUrl(test.url);
 
       expect(result).toBe(test.result);
     });
@@ -181,7 +181,7 @@ describe("calcPayout", () => {
 
   testsToRun.forEach((test) => {
     it(`submitted picks count = ${test.scenario}`, () => {
-      const result = funcs.calcPayout(test.users);
+      const result: calcPayoutSchema = funcs.calcPayout(test.users);
 
       expect(result.firstPlace).toBe(test.result.firstPlace);
       expect(result.secondPlace).toBe(test.result.secondPlace);

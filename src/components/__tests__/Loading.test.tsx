@@ -1,7 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag, mockIsMobile } from "../testingUtils";
+import { getTestIdTag, mockWindowMobileView } from "../testingUtils";
 import Loading from "../buffet/Loading";
 
 describe("<Loading/>", () => {
@@ -15,7 +15,7 @@ describe("<Loading/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       render(<Loading />);
 

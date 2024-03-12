@@ -37,7 +37,6 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
       data-testid={dataTestId}
       to={routePath}
       className={`${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2 my-2 ${currentPageClass}`}
-      // onClick={onClick}
     >
       <div className={`${tw.flexA} w-full`}>
         <div className="ml-5">{route.icon}</div>

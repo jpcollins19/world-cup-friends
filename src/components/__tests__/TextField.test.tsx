@@ -10,7 +10,7 @@ import {
   email,
   pw,
   elevateClass,
-  mockIsMobile,
+  mockWindowMobileView,
 } from "../testingUtils";
 import { TextField } from "../buffet";
 
@@ -138,7 +138,7 @@ describe("<TextField/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
 
           render(
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -158,7 +158,7 @@ describe("<TextField/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       render(
         <Formik initialValues={initialValues} onSubmit={onSubmit}>

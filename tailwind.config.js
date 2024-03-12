@@ -7,6 +7,7 @@ module.exports = {
       routesNotSelected: "0 0 6px 0 #e5e7eb",
       routesSelected: "0 0 6px 0 #0369a1",
       routesHover: "0 0 6px 0 #0ea5e9",
+      payoutBorder: "0 0 3px 0 #cbd5e1",
     },
     extend: {
       boxShadow: ["active"],

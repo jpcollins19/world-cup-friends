@@ -1,5 +1,5 @@
 import * as hooks from "../";
-import { mockIsMobile } from "../../components/testingUtils";
+import { mockWindowMobileView } from "../../components/testingUtils";
 
 describe("useIsMobile ", () => {
   const testsToRun = [
@@ -9,9 +9,9 @@ describe("useIsMobile ", () => {
 
   testsToRun.forEach((test) => {
     it(`when mobile view is ${test.isMobile}`, () => {
-      mockIsMobile(test.isMobile);
+      mockWindowMobileView(test.isMobile);
 
-      const result = hooks.useIsMobile();
+      const result: boolean = hooks.useIsMobile();
 
       expect(result).toBe(test.result);
     });

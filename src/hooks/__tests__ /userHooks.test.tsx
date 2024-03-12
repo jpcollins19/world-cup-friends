@@ -1,29 +1,23 @@
 import * as React from "react";
 import "@testing-library/react-hooks";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import { renderHook } from "@testing-library/react-hooks";
 import {
-  store,
   setAuth,
-  loadUsers,
   UserSchema,
   _loadUsers,
   _loadTourneyStage,
 } from "../../store";
 import * as hooks from "../";
 import { createUser, getFakerInfo } from "../fixtures";
-import { findTourneyStage, useGetActiveUsers } from "../";
-import { getWrapper, updateStore } from "./hookUtils";
+
+import {
+  getWrapper,
+  ignoreReactDOMRenderError,
+  updateStore,
+} from "./hookUtils";
 
 beforeAll(() => {
-  const { error } = console;
-  console.error = (...args) => {
-    if (args[0] && args[0].startsWith("Warning: ReactDOM.render")) {
-      return;
-    }
-    error.apply(console, args);
-  };
+  ignoreReactDOMRenderError();
 });
 
 describe("useIsUserLoggedIn ", () => {

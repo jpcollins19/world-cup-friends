@@ -4,6 +4,7 @@ export const routes = {
   createAccount: "/create-account",
   forgotPassword: "/forgot-password",
   groupDetails: "/group-details",
+  editProfileEmailNotifications: "/edit-profile-email-notifications",
   leaderboard: "/leaderboard",
   myPicks: "/my-picks",
   poolPicks: "/pool-picks",
@@ -13,6 +14,7 @@ export const routes = {
 
 export const colors = {
   black: "#020617",
+  navbarIconColor: "#cbd5e1", //gray-300
   red: "#b91c1c",
 };
 

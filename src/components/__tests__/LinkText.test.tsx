@@ -1,7 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag, mockIsMobile } from "../testingUtils";
+import { getTestIdTag, mockWindowMobileView } from "../testingUtils";
 import { geti18n, routes } from "../../store";
 import { LinkText } from "../buffet";
 
@@ -66,7 +66,7 @@ describe("<LinkText/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         it(`${test.testId}`, async () => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
 
           render(
             <LinkText
@@ -87,7 +87,7 @@ describe("<LinkText/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       render(
         <LinkText

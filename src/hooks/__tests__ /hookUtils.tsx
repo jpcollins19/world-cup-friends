@@ -13,3 +13,13 @@ export const getWrapper = () => {
 
   return wrapper;
 };
+
+export const ignoreReactDOMRenderError = () => {
+  const { error } = console;
+  console.error = (...args) => {
+    if (args[0] && args[0].startsWith("Warning: ReactDOM.render")) {
+      return;
+    }
+    error.apply(console, args);
+  };
+};

@@ -1,7 +1,5 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
 import {
   changeInputText,
   click,
@@ -11,13 +9,13 @@ import {
   getTestIdTag,
   getText,
   matchMediaWorkAround,
-  mockIsMobile,
+  mockWindowMobileView,
   pwInputTestId,
+  renderProvider,
   submitLowerCase,
   submitUpperCase,
 } from "../testingUtils";
 import SignIn from "../signIn/SignIn";
-import store from "../../store";
 
 //jest.mock("react-responsive");
 
@@ -27,11 +25,7 @@ describe("<SignIn/>", () => {
   });
 
   it("should render the SignIn page", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const pageTestId = await getTestIdTag("signIn-page");
 
@@ -40,11 +34,7 @@ describe("<SignIn/>", () => {
   });
 
   it("toasterContainer renders", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const toasterContTestId = await getTestIdTag("toaster-cont");
 
@@ -52,11 +42,7 @@ describe("<SignIn/>", () => {
   });
 
   it("both TextFields render", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const emailInput = await getTestIdTag(emailInputTestId);
     const pwInput = await getTestIdTag(pwInputTestId);
@@ -68,11 +54,7 @@ describe("<SignIn/>", () => {
   });
 
   it("submit button renders as disabled", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const buttonTestId = await getButtonTestId(submitLowerCase);
 
@@ -86,11 +68,7 @@ describe("<SignIn/>", () => {
   });
 
   it("submit button being enabled", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const emailInput = await getTestIdTag(emailInputTestId);
     const pwInput = await getTestIdTag(pwInputTestId);
@@ -104,12 +82,7 @@ describe("<SignIn/>", () => {
   });
 
   it("view pw button works", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
-
+    renderProvider(<SignIn />);
     const viewPw = await getTestIdTag("signIn-view-pw");
 
     await click(viewPw);
@@ -120,11 +93,7 @@ describe("<SignIn/>", () => {
   });
 
   it("3 links at bottom of page have accurate text and take you to correct urls", async () => {
-    render(
-      <Provider store={store}>
-        <SignIn />
-      </Provider>,
-    );
+    renderProvider(<SignIn />);
 
     const pwLinkTestId = await getTestIdTag("linkText-link-forgot-password");
     const createAccountLinkTestId = await getTestIdTag(
@@ -199,15 +168,11 @@ describe("<SignIn/>", () => {
     describe("comp", () => {
       testsToRun.comp.forEach((test) => {
         beforeEach(() => {
-          mockIsMobile(false);
+          mockWindowMobileView(false);
         });
 
         it(`${test.testId}`, async () => {
-          render(
-            <Provider store={store}>
-              <SignIn />
-            </Provider>,
-          );
+          renderProvider(<SignIn />);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -218,16 +183,11 @@ describe("<SignIn/>", () => {
     describe("mobile", () => {
       testsToRun.mobile.forEach((test) => {
         beforeEach(() => {
-          mockIsMobile(true);
+          mockWindowMobileView(true);
         });
 
         it(`${test.testId}`, async () => {
-          render(
-            <Provider store={store}>
-              <SignIn />
-            </Provider>,
-          );
-
+          renderProvider(<SignIn />);
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
         });
@@ -237,13 +197,9 @@ describe("<SignIn/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      render(
-        <Provider store={store}>
-          <SignIn />
-        </Provider>,
-      );
+      renderProvider(<SignIn />);
 
-      mockIsMobile(true);
+      mockWindowMobileView(true);
 
       const pageTestId = await getTestIdTag("signIn-page-mobile");
 
