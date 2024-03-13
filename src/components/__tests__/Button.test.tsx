@@ -59,7 +59,8 @@ describe("<Button/>", () => {
     const buttonContClass = "button-cont-submit";
     const buttonClass = "button-submit";
 
-    const buttonContClassBaseInfo = `${flexBothClass} ${elevateClass} my-5 rounded-lg`;
+    const buttonContClassBaseInfo = `${flexBothClass} ${elevateClass} rounded-lg w-fit`;
+    const buttonContClassSizeMed = "my-5";
 
     const notDisabledButtonContClassInfo = "bg-zinc-300";
     const disabledButtonContClassInfo = "bg-zinc-200";
@@ -73,14 +74,14 @@ describe("<Button/>", () => {
 
     const notDisabledButtonBorder = "border border-solid border-black";
 
-    const buttonClassComp = "min-w-[10rem] py-2";
-    const buttonClassMobile = "min-w-[15rem] py-4 text-2xl";
+    const buttonClassComp = "py-2 px-14";
+    const buttonClassMobile = "py-4 px-14 text-2xl";
 
     const notDisabled = {
       comp: [
         {
           testId: buttonContClass,
-          result: `${buttonContClassBaseInfo} ${notDisabledButtonContClassInfo}`,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeMed} ${notDisabledButtonContClassInfo}`,
         },
         {
           testId: buttonClass,
@@ -90,34 +91,11 @@ describe("<Button/>", () => {
       mobile: [
         {
           testId: `${buttonContClass}-mobile`,
-          result: `${buttonContClassBaseInfo} ${notDisabledButtonContClassInfo}`,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeMed} ${notDisabledButtonContClassInfo}`,
         },
         {
           testId: `${buttonClass}-mobile`,
           result: `${buttonClassBaseInfo} ${notDisabledButtonColor} ${notDisabledButtonHover} ${notDisabledButtonBorder} ${buttonClassMobile}`,
-        },
-      ],
-    };
-
-    const disabled = {
-      comp: [
-        {
-          testId: buttonContClass,
-          result: `${buttonContClassBaseInfo} ${disabledButtonContClassInfo}`,
-        },
-        {
-          testId: buttonClass,
-          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassComp}`,
-        },
-      ],
-      mobile: [
-        {
-          testId: `${buttonContClass}-mobile`,
-          result: `${buttonContClassBaseInfo} ${disabledButtonContClassInfo}`,
-        },
-        {
-          testId: `${buttonClass}-mobile`,
-          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassMobile}`,
         },
       ],
     };
@@ -146,6 +124,29 @@ describe("<Button/>", () => {
       });
     });
 
+    const disabled = {
+      comp: [
+        {
+          testId: buttonContClass,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeMed} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: buttonClass,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassComp}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${buttonContClass}-mobile`,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeMed} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: `${buttonClass}-mobile`,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassMobile}`,
+        },
+      ],
+    };
+
     describe("disabled - comp", () => {
       disabled.comp.forEach((test) => {
         it(`${test.testId}`, async () => {
@@ -165,6 +166,61 @@ describe("<Button/>", () => {
           mockWindowMobileView(true);
 
           render(<Button text={submitUpperCase} disabled={true} />);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    const buttonContClassSizeSmall = "my-1";
+
+    const sizeSmallTesting = {
+      comp: [
+        {
+          testId: buttonContClass,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeSmall} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: buttonClass,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor}`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${buttonContClass}-mobile`,
+          result: `${buttonContClassBaseInfo} ${buttonContClassSizeSmall} ${disabledButtonContClassInfo}`,
+        },
+        {
+          testId: `${buttonClass}-mobile`,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassMobile}`,
+        },
+      ],
+    };
+
+    describe("sizeSmall - comp", () => {
+      sizeSmallTesting.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(false);
+
+          render(
+            <Button text={submitUpperCase} disabled={true} size="small" />,
+          );
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("sizeSmall - mobile", () => {
+      sizeSmallTesting.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(true);
+
+          render(
+            <Button text={submitUpperCase} disabled={true} size="small" />,
+          );
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);

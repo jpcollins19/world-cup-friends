@@ -27,7 +27,7 @@ export const EmailUpdates: React.FunctionComponent = () => {
   return useIsUserLoggedIn() ? (
     <Link
       to={routes.editProfileEmailNotifications}
-      className={`${tw.flexBoth} ${tw.whiteTextMed}`}
+      className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkTextSm}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

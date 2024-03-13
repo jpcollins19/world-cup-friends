@@ -27,7 +27,10 @@ export const tw = {
   flexA: "flex items-center",
   flexBoth: "flex justify-center items-center",
   flexJ: "flex justify-center",
+  pointer: "cursor-default",
+  shrinkTextBase: "text-vwBase",
+  shrinkTextSm: "text-vwSm",
   textShadowSmWhite: "text-shadow-smWhite",
-  whiteTextMed: "text-shadow-med text-white",
-  whiteTextSm: "text-shadow-sm text-white",
+  whiteTextMed: "text-shadow-med text-white", //3px shadow
+  whiteTextSm: "text-shadow-sm text-white", //1.5px shadow
 };

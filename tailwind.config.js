@@ -56,7 +56,15 @@ module.exports = {
       //   grey3: "#DDDFE5",
       //   grey4: "#939DA8",
       // },
-
+      fontFamily: {
+        sans: "Helvetica, Arial, sans-serif",
+        // sans: ["Craftworkgrotesk", ...defaultTheme.fontFamily.sans],
+        //serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
+      },
+      fontSize: {
+        vwBase: "1vw",
+        vwSm: ".8vw",
+      },
       margin: {
         "17vw": "17vw",
       },
@@ -65,10 +73,9 @@ module.exports = {
         smWhite: "0 1.5px 1.5px #fff",
         med: "3px 3px 3px #020617",
       },
-      fontFamily: {
-        sans: "Helvetica, Arial, sans-serif",
-        // sans: ["Craftworkgrotesk", ...defaultTheme.fontFamily.sans],
-        //serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
+      width: {
+        payoutPlace: "4vw",
+        payoutAmount: "8vw",
       },
     },
     container: {

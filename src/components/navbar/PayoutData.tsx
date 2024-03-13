@@ -16,17 +16,18 @@ export const PayoutData: React.FunctionComponent = () => {
   const borderClass = "border-solid border-gray-300";
   const boxShadow = "shadow-payoutBorder";
 
-  const placeColumnClass = "min-w-16 text-center p-2";
-  const moneyColumnClass = "min-w-32 text-center p-2";
+  const placeColumnClass = "w-payoutPlace text-center p-2";
+  const moneyColumnClass = "w-payoutAmount text-center p-2";
 
   const shouldPayoutShow: boolean = useShouldPayoutShow();
 
   return shouldPayoutShow ? (
     <div
       data-testid={dataTestId}
-      className={`${tw.flexBoth} shadow-2xl flex-col h-full cursor-default shadow-routesNotSelected`}
+      // className={`${tw.flexBoth} shadow-2xl flex-col h-full cursor-default shadow-routesNotSelected`}
+      className={`${tw.flexBoth} ${tw.shrinkTextBase} shadow-2xl flex-col h-full cursor-default py-6`}
     >
-      <div className={`${tw.whiteTextMed} text-base pt-2`}>Payout</div>
+      <div className={`${tw.whiteTextMed} text-base`}>Payout</div>
       <div
         className={`${tw.flexBoth} ${tw.whiteTextMed} ${borderClass} ${boxShadow} text-sm border-2 rounded-lg m-2`}
       >
@@ -51,7 +52,7 @@ export const PayoutData: React.FunctionComponent = () => {
         </div>
       </div>
 
-      <div className={`${tw.whiteTextMed} text-sm pb-2`}>
+      <div className={`${tw.whiteTextMed} text-sm`}>
         # of submitted picks: {payout.numOfPicks}
       </div>
     </div>

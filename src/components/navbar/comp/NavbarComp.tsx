@@ -10,7 +10,7 @@ import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
 import PayoutData from "../PayoutData";
 import EmailUpdates from "../EmailUpdates";
-import LastUpdated from "../LastUpdated";
+import LastUpdatedContainer from "../lastUpdated/LastUpdatedContainer";
 
 export const NavbarComp: React.FunctionComponent = () => {
   const color = colors.navbarIconColor;
@@ -59,6 +59,8 @@ export const NavbarComp: React.FunctionComponent = () => {
     routesToUse.unshift(admin);
   }
 
+  const bottomContClass = userIsLoggedIn ? "shadow-routesNotSelected" : "";
+
   const dataTestId = getPageTestId("navbar-comp");
 
   return (
@@ -66,19 +68,21 @@ export const NavbarComp: React.FunctionComponent = () => {
       data-testid={dataTestId}
       className={`${tw.elevate} ${colors.navbarBackground} w-full h-4/5 flex flex-col justify-between`}
     >
-      <div>
+      <div className="flex-1">
         {routesToUse.map((route, idx) => (
           <RouteComp key={idx} route={route} />
         ))}
       </div>
 
-      <div className="h-full flex flex-col justify-around">
-        <EmailUpdates />
-        <LastUpdated />
+      <div className="flex-4">
+        <PayoutData />
       </div>
 
-      <div>
-        <PayoutData />
+      <div
+        className={`${bottomContClass} h-full flex flex-col flex-1 justify-around`}
+      >
+        <EmailUpdates />
+        <LastUpdatedContainer />
       </div>
     </div>
   );

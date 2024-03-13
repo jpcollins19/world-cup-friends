@@ -3,13 +3,17 @@ import { createUrlFromText, getPageTestId, tw } from "../../store";
 import { useIsMobile } from "../../hooks";
 
 type ButtonProps = {
+  text: string;
   form?: string;
   disabled?: boolean;
-  text: string;
+  size?: string;
 };
 
-export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
-  const { form, disabled, text } = props;
+export const Button: React.FunctionComponent<ButtonProps> = ({
+  size = "med",
+  ...props
+}) => {
+  const { text, form, disabled } = props;
 
   const buttonBackground = !disabled ? "bg-zinc-300" : "bg-zinc-200";
   const buttonColor = !disabled ? "text-black" : "text-gray-500";
@@ -18,9 +22,18 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
 
   const isMobile = useIsMobile();
 
+  const medButtonNeeded = size === "med";
+  const smallButtonNeeded = size === "small";
+
   const buttonClass = isMobile
-    ? "min-w-[15rem] py-4 text-2xl"
-    : "min-w-[10rem] py-2";
+    ? "py-4 px-14 text-2xl"
+    : medButtonNeeded
+      ? "py-2 px-14"
+      : smallButtonNeeded
+        ? ""
+        : "";
+
+  const buttonCont = medButtonNeeded ? "my-5" : smallButtonNeeded ? "my-1" : "";
 
   const dataTestId = getPageTestId(`button-cont-${createUrlFromText(text)}`);
   const buttonTestId = getPageTestId(`button-${createUrlFromText(text)}`);
@@ -28,7 +41,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({ ...props }) => {
   return (
     <div
       data-testid={dataTestId}
-      className={`${tw.flexBoth} ${tw.elevate} my-5 rounded-lg ${buttonBackground}`}
+      className={`${tw.flexBoth} ${tw.elevate} rounded-lg w-fit ${buttonCont} ${buttonBackground}`}
     >
       <button
         data-testid={buttonTestId}
