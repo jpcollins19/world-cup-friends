@@ -8,6 +8,7 @@ import {
   useIsMobile,
   useShouldPayoutShow,
 } from "../../hooks";
+import { Formik } from "formik";
 
 export const renderProvider = (component: any, withRouter?: boolean) => {
   const providerToUse = withRouter ? (
@@ -21,8 +22,25 @@ export const renderProvider = (component: any, withRouter?: boolean) => {
   render(providerToUse);
 };
 
+export const renderFormik = (
+  component: any,
+  initialValues: any,
+  onSubmit: any,
+  // onChange: any,
+) => {
+  render(
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {component}
+    </Formik>,
+  );
+};
+
 export const getTestIdTag = (testId: string) => {
   return screen.findByTestId(testId as any);
+};
+
+export const queryTestIdTag = (testId: string) => {
+  return screen.queryByTestId(testId as any);
 };
 
 export const getText = (text: string) => {

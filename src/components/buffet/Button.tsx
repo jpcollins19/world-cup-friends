@@ -7,13 +7,14 @@ type ButtonProps = {
   form?: string;
   disabled?: boolean;
   size?: string;
+  onClick?: () => void;
 };
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
   size = "med",
   ...props
 }) => {
-  const { text, form, disabled } = props;
+  const { text, form, disabled, onClick } = props;
 
   const buttonBackground = !disabled ? "bg-zinc-300" : "bg-zinc-200";
   const buttonColor = !disabled ? "text-black" : "text-gray-500";
@@ -26,11 +27,11 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   const smallButtonNeeded = size === "small";
 
   const buttonClass = isMobile
-    ? "py-4 px-14 text-2xl"
+    ? "py-4 px-10 text-2xl"
     : medButtonNeeded
-      ? "py-2 px-14"
+      ? "py-2 px-10"
       : smallButtonNeeded
-        ? ""
+        ? "px-3"
         : "";
 
   const buttonCont = medButtonNeeded ? "my-5" : smallButtonNeeded ? "my-1" : "";
@@ -48,7 +49,8 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
         form={form}
         type={form ? "submit" : undefined}
         disabled={disabled}
-        className={`px-3 cursor-pointer rounded-lg font-bold ${buttonColor} ${buttonHover} ${buttonBorder} ${buttonClass}`}
+        onClick={onClick}
+        className={`cursor-pointer rounded-lg font-bold ${buttonColor} ${buttonHover} ${buttonBorder} ${buttonClass}`}
       >
         {text}
       </button>

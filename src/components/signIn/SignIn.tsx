@@ -147,7 +147,12 @@ export const SignIn: React.FunctionComponent = () => {
             className={`${tw.flexA} h-5/6 pt-10 flex-col`}
           >
             {textFieldInputs.map((input, idx) => (
-              <TextField key={idx} input={input} onChange={onChange} />
+              <TextField
+                key={idx}
+                label={input.label}
+                type={input.type ?? null}
+                onChange={onChange}
+              />
             ))}
 
             <div

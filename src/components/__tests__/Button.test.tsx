@@ -65,7 +65,7 @@ describe("<Button/>", () => {
     const notDisabledButtonContClassInfo = "bg-zinc-300";
     const disabledButtonContClassInfo = "bg-zinc-200";
 
-    const buttonClassBaseInfo = "px-3 cursor-pointer rounded-lg font-bold";
+    const buttonClassBaseInfo = "cursor-pointer rounded-lg font-bold";
 
     const notDisabledButtonColor = "text-black";
     const disabledButtonColor = "text-gray-500";
@@ -74,8 +74,8 @@ describe("<Button/>", () => {
 
     const notDisabledButtonBorder = "border border-solid border-black";
 
-    const buttonClassComp = "py-2 px-14";
-    const buttonClassMobile = "py-4 px-14 text-2xl";
+    const buttonClassComp = "py-2 px-10";
+    const buttonClassMobile = "py-4 px-10 text-2xl";
 
     const notDisabled = {
       comp: [
@@ -174,6 +174,7 @@ describe("<Button/>", () => {
     });
 
     const buttonContClassSizeSmall = "my-1";
+    const buttonClassSizeSmall = "px-3";
 
     const sizeSmallTesting = {
       comp: [
@@ -183,7 +184,7 @@ describe("<Button/>", () => {
         },
         {
           testId: buttonClass,
-          result: `${buttonClassBaseInfo} ${disabledButtonColor}`,
+          result: `${buttonClassBaseInfo} ${disabledButtonColor} ${buttonClassSizeSmall}`,
         },
       ],
       mobile: [
