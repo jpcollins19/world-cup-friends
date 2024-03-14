@@ -1,29 +1,97 @@
 import * as React from "react";
-import { tw } from "../../../store";
+import { geti18n, tDispatch, tw, updateLastUpdated } from "../../../store";
 import Button from "../../buffet/Button";
 import LastUpdatedReadOnly from "./LastUpdatedReadOnly";
-import LastUpdatedEdit from "./LastUpdatedEdit";
+import { Form, FormikProvider, useFormik } from "formik";
+import { useGetLastUpdated } from "../../../hooks";
+import { TextField } from "../../buffet";
+
+export type LastUpdatedSchema = {
+  id: string | null;
+  [lastUpdated: string]: any;
+  //lastUpdated: any;
+};
 
 export const LastUpdatedAdmin: React.FunctionComponent = () => {
   const [editing, setEditing] = React.useState(false);
 
   const EditButton: React.FunctionComponent = () => {
-    return <Button text="Edit" size="small" onClick={() => setEditing(true)} />;
+    return (
+      <Button
+        text={geti18n("edit")}
+        size="small"
+        onClick={() => setEditing(true)}
+      />
+    );
   };
 
   const SaveButton: React.FunctionComponent = () => {
+    return <Button form="last-updated" text={geti18n("save")} size="small" />;
+  };
+
+  const updateContClass = `${tw.flexA} flex-col justify-around h-full`;
+
+  const LastUpdatedEdit: React.FunctionComponent = () => {
+    const dispatch = tDispatch();
+
+    const lastUpdated = useGetLastUpdated();
+
+    const answer = "answer" in lastUpdated ? lastUpdated.answer : null;
+
+    const onSubmit = async () => {
+      try {
+        setEditing(false);
+
+        const answer = { id: values.id, answer: values.lastUpdated };
+
+        await dispatch(updateLastUpdated(answer));
+      } catch (err: any) {
+        console.log(err);
+      }
+    };
+
+    const formik = useFormik<LastUpdatedSchema>({
+      initialValues: {
+        id: lastUpdated.id,
+        lastUpdated: answer,
+      },
+      onSubmit,
+    });
+
+    const { handleSubmit, values, setFieldValue } = formik;
+
+    const onChange = (ev: any) => {
+      setFieldValue("lastUpdated", ev.target.value);
+    };
+
     return (
-      <Button text="Save" size="small" onClick={() => setEditing(false)} />
+      <FormikProvider value={formik}>
+        <Form
+          onSubmit={handleSubmit}
+          id="last-updated"
+          className={`${updateContClass} m-0`}
+        >
+          <TextField
+            label="lastUpdated"
+            onChange={onChange}
+            showHelperText={false}
+            height="short"
+            width="large"
+            showValue={true}
+            schema="lastUpdated"
+          />
+
+          <SaveButton />
+        </Form>
+      </FormikProvider>
     );
   };
 
   return (
-    <div className={`${tw.flexA} justify-around`}>
+    <div className={updateContClass}>
       {editing ? <LastUpdatedEdit /> : <LastUpdatedReadOnly />}
 
-      <div className={`${tw.flexBoth} w-20`}>
-        {editing ? <SaveButton /> : <EditButton />}
-      </div>
+      <div className={`${tw.flexBoth} w-20`}>{!editing && <EditButton />}</div>
     </div>
   );
 };

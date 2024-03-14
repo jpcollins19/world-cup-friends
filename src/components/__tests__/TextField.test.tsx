@@ -69,8 +69,8 @@ describe("<TextField/>", () => {
     expect(input).toHaveValue(email);
   });
 
-  describe("showSpan", () => {
-    describe("when showSpan is true", () => {
+  describe("showHelperText & isRequired", () => {
+    describe("when showHelperText is true", () => {
       it("defaults to true and renders the span label", async () => {
         const component = <TextField label={email} onChange={onChange()} />;
 
@@ -82,7 +82,7 @@ describe("<TextField/>", () => {
         expect(span).toHaveTextContent("Email");
       });
 
-      it("isRequired defaults to true and showSpanRequiredSymbol renders", async () => {
+      it("isRequired defaults to true and requiredSymbol renders", async () => {
         const component = <TextField label={email} onChange={onChange()} />;
 
         renderFormik(component, initialValues, onSubmit);
@@ -93,7 +93,7 @@ describe("<TextField/>", () => {
         expect(spanRequiredSymbol).toHaveTextContent("*");
       });
 
-      it("when isRequired is false, showSpanRequiredSymbol does not render", async () => {
+      it("when isRequired is false, requiredSymbol does not render", async () => {
         const component = (
           <TextField label={email} onChange={onChange()} isRequired={false} />
         );
@@ -108,10 +108,14 @@ describe("<TextField/>", () => {
       });
     });
 
-    describe("when showSpan is false", () => {
+    describe("when showHelperText is false", () => {
       it("span label does not render", async () => {
         const component = (
-          <TextField label={email} onChange={onChange()} showSpan={false} />
+          <TextField
+            label={email}
+            onChange={onChange()}
+            showHelperText={false}
+          />
         );
 
         renderFormik(component, initialValues, onSubmit);
@@ -121,9 +125,13 @@ describe("<TextField/>", () => {
         expect(span).not.toBeInTheDocument();
       });
 
-      it("showSpanRequiredSymbol does not render", async () => {
+      it("requiredSymbol does not render", async () => {
         const component = (
-          <TextField label={email} onChange={onChange()} showSpan={false} />
+          <TextField
+            label={email}
+            onChange={onChange()}
+            showHelperText={false}
+          />
         );
 
         renderFormik(component, initialValues, onSubmit);
@@ -137,36 +145,62 @@ describe("<TextField/>", () => {
     });
   });
 
+  describe("showValue", () => {
+    // it("defaults to false", async () => {
+    //   const component = <TextField label={email} onChange={onChange()} />;
+    //
+    //   renderFormik(component, initialValues, onSubmit);
+    //
+    //   const span = await getTestIdTag(spanLabelTestId);
+    //
+    //   expect(span).toBeInTheDocument();
+    //   expect(span).toHaveTextContent("Email");
+    // });
+  });
+
   describe("classTesting", () => {
+    const textFieldContClass = "text-field";
+
+    const textFieldContClassBaseInfo = "relative";
+    const textFieldContClassWidthMed = "w-7/12";
+
     const inputClass = "text-field-input-password";
 
-    const spanClass = "input-text-span1-password";
-
     const inputClassBaseInfo = `${elevateClass} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`;
+    const inputClassHeightMed = "h-14";
+
+    const spanClass = "input-text-span1-password";
 
     const spanClassBaseInfo =
       "w-full absolute pointer-events-none top-2 text-gray-700 text-center";
 
     const testsToRun = {
       comp: [
-        { testId: inputClass, result: `${inputClassBaseInfo} h-14` },
+        {
+          testId: textFieldContClass,
+          result: `${textFieldContClassBaseInfo} ${textFieldContClassWidthMed}`,
+        },
+        {
+          testId: inputClass,
+          result: `${inputClassBaseInfo} ${inputClassHeightMed}`,
+        },
         {
           testId: spanClass,
-
           result: `${spanClassBaseInfo} text-xs`,
         },
       ],
 
       mobile: [
         {
+          testId: `${textFieldContClass}-mobile`,
+          result: textFieldContClassBaseInfo,
+        },
+        {
           testId: `${inputClass}-mobile`,
-
           result: `${inputClassBaseInfo} h-20 text-3xl`,
         },
-
         {
           testId: `${spanClass}-mobile`,
-
           result: `${spanClassBaseInfo} text-xl`,
         },
       ],
@@ -195,6 +229,162 @@ describe("<TextField/>", () => {
 
           const component = (
             <TextField label={pw} type={pw} onChange={onChange()} />
+          );
+
+          renderFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    const inputClassHeightShort = "h-9";
+
+    const heightShortTesting = {
+      comp: [
+        {
+          testId: textFieldContClass,
+          result: textFieldContClassBaseInfo,
+        },
+        {
+          testId: inputClass,
+          result: `${inputClassBaseInfo} ${inputClassHeightShort}`,
+        },
+        {
+          testId: spanClass,
+          result: `${spanClassBaseInfo} text-xs`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${textFieldContClass}-mobile`,
+          result: textFieldContClassBaseInfo,
+        },
+        {
+          testId: `${inputClass}-mobile`,
+          result: `${inputClassBaseInfo} h-20 text-3xl`,
+        },
+        {
+          testId: `${spanClass}-mobile`,
+          result: `${spanClassBaseInfo} text-xl`,
+        },
+      ],
+    };
+
+    describe("heightShort - comp", () => {
+      heightShortTesting.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(false);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              height="short"
+            />
+          );
+
+          renderFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("heightShort - mobile", () => {
+      heightShortTesting.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(true);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              height="short"
+            />
+          );
+
+          renderFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    const textFieldContClassWidthLarge = "w-11/12";
+
+    const widthLargeTesting = {
+      comp: [
+        {
+          testId: textFieldContClass,
+          result: `${textFieldContClassBaseInfo} ${textFieldContClassWidthLarge}`,
+        },
+        {
+          testId: inputClass,
+          result: `${inputClassBaseInfo} ${inputClassHeightMed}`,
+        },
+        {
+          testId: spanClass,
+          result: `${spanClassBaseInfo} text-xs`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${textFieldContClass}-mobile`,
+          result: `${textFieldContClassBaseInfo} ${textFieldContClassWidthLarge}`,
+        },
+        {
+          testId: `${inputClass}-mobile`,
+          result: `${inputClassBaseInfo} h-20 text-3xl`,
+        },
+        {
+          testId: `${spanClass}-mobile`,
+          result: `${spanClassBaseInfo} text-xl`,
+        },
+      ],
+    };
+
+    describe("widthLarge - comp", () => {
+      widthLargeTesting.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(false);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              width="large"
+            />
+          );
+
+          renderFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("widthLarge - mobile", () => {
+      widthLargeTesting.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(true);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              width="large"
+            />
           );
 
           renderFormik(component, initialValues, onSubmit);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { colors, geti18n, me, routes, tDispatch, tw } from "../../store";
-import { useGetUser, useIsUserLoggedIn } from "../../hooks";
+import { useGetUser, useIsUserAdmin, useIsUserLoggedIn } from "../../hooks";
 
 export const EmailUpdates: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -20,11 +20,13 @@ export const EmailUpdates: React.FunctionComponent = () => {
     ? geti18n("emailNotificationsOptOut")
     : geti18n("emailNotificationsOptIn");
 
+  const isAdmin = useIsUserAdmin();
+
   // const pageVerbiage = isMobile ? "Edit Notification Settings" : compVerbiage;
 
   const hoverClass = isHovered ? "" : "hidden";
 
-  return useIsUserLoggedIn() ? (
+  return useIsUserLoggedIn() && !isAdmin ? (
     <Link
       to={routes.editProfileEmailNotifications}
       className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkTextSm}`}

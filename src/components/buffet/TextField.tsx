@@ -8,73 +8,97 @@ import {
 } from "../../store";
 import { SignInSchema } from "../signIn/SignInSchema";
 import { useIsMobile } from "../../hooks";
-import { LastUpdatedSchema } from "../navbar/lastUpdated/LastUpdatedEdit";
+import { LastUpdatedSchema } from "../navbar/lastUpdated/LastUpdatedAdmin";
 
 export type TextFieldInputProps = {
   label: string;
   type?: string;
 };
 
+// interface ValueProps {
+//   schema: string;
+// }
+
+// type ShowValueProps = {
+//   showValue: true;
+//   schema: string;
+// };
+//
+// type HideValueProps = {
+//   showValue?: false;
+// };
+
+// type TextFieldProps = {
+//   label: string; //requiring label so the input testId is created/tracked
+//   type?: string | null;
+//   onChange?: (ev: any) => void | string;
+//   showSpan?: boolean;
+//   isRequired?: boolean;
+//   size?: string;
+// } & (HideValueProps | ShowValueProps);
+
 type TextFieldProps = {
   label: string; //requiring label so the input testId is created/tracked
   type?: string | null;
   onChange?: (ev: any) => void | string;
-  schema?: string;
-  showSpan?: boolean;
+  showHelperText?: boolean;
   isRequired?: boolean;
+  height?: string;
+  width?: string;
+  showValue?: boolean;
+  schema?: string;
 };
 
+// type TextFieldProps =
+//   | (HideValueProps & {
+//       label: string; //requiring label so the input testId is created/tracked
+//       type?: string | null;
+//       onChange?: (ev: any) => void | string;
+//       showSpan?: boolean;
+//       isRequired?: boolean;
+//       size?: string;
+//     })
+//   | (ShowValueProps & {
+//       label: string; //requiring label so the input testId is created/tracked
+//       type?: string | null;
+//       onChange?: (ev: any) => void | string;
+//       showSpan?: boolean;
+//       isRequired?: boolean;
+//       size?: string;
+//       showValue: boolean;
+//       schema: string;
+//     });
+
+interface InputAttributes extends React.InputHTMLAttributes<HTMLInputElement> {
+  "data-testid": string;
+  value?: string;
+}
+
 export const TextField: React.FunctionComponent<TextFieldProps> = ({
+  showHelperText = true,
   isRequired = true,
-  showSpan = true,
+  height = "med",
+  width = "med",
+  showValue = false,
   ...props
 }) => {
   const { label, type, onChange, schema } = props;
 
-  function useFormikContextWithType<T>(schemaType: T) {
-    return useFormikContext<T>();
-  }
-
-  type AllSchemas = SignInSchema | LastUpdatedSchema;
-
-  function assignSchema(schemaType: string) {
-    let assignedSchema;
-
-    if (schemaType === "signIn") {
-      assignedSchema = { email: "", password: "" }; // Replace with actual values
-    } else if (schemaType === "loading") {
-      // assignedSchema = { isLoading: false }; // Replace with actual values
-    } else {
-      console.error("Unknown schema type");
-      return; // Exit the function or handle the error as needed
-    }
-
-    // Now you can use 'assignedSchema' as your schema
-    const { values } = useFormikContextWithType(assignedSchema);
-    // console.log(values);
-
-    return values;
-  }
-
-  // let values;
-  //
-  // if (schema) {
-  //   values = assignSchema(schema);
-  // }
-
-  // console.log("values", values);
-
-  //const label = input.label;
-
   const isMobile = useIsMobile();
 
-  const inputClass = isMobile ? "h-20 text-3xl" : "h-14";
+  const largeTextFieldNeeded = width === "large";
+
+  const textFieldContClass = largeTextFieldNeeded ? "w-11/12" : "w-7/12";
+
+  const shortTextFieldNeeded = height === "short";
+
+  const inputClass = isMobile
+    ? "h-20 text-3xl"
+    : shortTextFieldNeeded
+      ? "h-9"
+      : "h-14";
 
   const spanClass = isMobile ? "text-xl" : "text-xs";
-
-  //const { values } = useFormikContextWithType(assignedSchema);
-
-  //const { values } = useFormikContext<AllSchemas>();
 
   const dataTestId = getPageTestId("text-field");
 
@@ -111,19 +135,78 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
     );
   };
 
-  return (
-    <div data-testid={dataTestId} className="w-8/12 relative">
-      <input
-        data-testid={inputTestId}
-        type={type ?? "text"}
-        name={label}
-        autoComplete="on"
-        // value={values[label]}
-        onChange={onChange}
-        className={`${inputClass} ${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center`}
-      />
+  const inputAttributes: InputAttributes = {
+    "data-testid": inputTestId,
+    type: type ?? "text",
+    name: label,
+    autoComplete: "on",
+    onChange,
+    className: `${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center ${inputClass}`,
+  };
 
-      {showSpan && <SpanLabel />}
+  function useFormikContextWithType<T>(schemaType: T) {
+    return useFormikContext<LastUpdatedSchema>();
+  }
+
+  // function assignSchema(schemaType: string | undefined) {
+  //   let assignedSchema;
+  //
+  //   // if (schemaType === "lastUpdated") {
+  //   //   assignedSchema = LastUpdatedSchema; // Replace with actual values
+  //   // } else if (schemaType === "signIn") {
+  //   //   // assignedSchema = { isLoading: false }; // Replace with actual values
+  //   // } else {
+  //   //   console.error("Unknown schema type");
+  //   //   return; // Exit the function or handle the error as needed
+  //   // }
+  //
+  //   // Now you can use 'assignedSchema' as your schema
+  //   //const { values } = useFormikContextWithType(assignedSchema);
+  //
+  //   const { values } = useFormikContext<LastUpdatedSchema>();
+  //   // console.log(values);
+  //
+  //   return values;
+  // }
+
+  if (showValue) {
+    const { values } = useFormikContext<LastUpdatedSchema>();
+
+    inputAttributes.value = values[label];
+    //as keyof LastUpdatedSchema];
+  }
+
+  type AllSchemas = SignInSchema | LastUpdatedSchema;
+
+  // let values;
+  //
+  // if (schema) {
+  //   values = assignSchema(schema);
+  // }
+
+  // console.log("values", values);
+
+  //const label = input.label;
+
+  //const { values } = useFormikContextWithType(assignedSchema);
+
+  //const { values } = useFormikContext<AllSchemas>();
+
+  return (
+    <div data-testid={dataTestId} className={`relative ${textFieldContClass}`}>
+      <input {...inputAttributes} />
+
+      {/*<input*/}
+      {/*  data-testid={inputTestId}*/}
+      {/*  type={type ?? "text"}*/}
+      {/*  name={label}*/}
+      {/*  autoComplete="on"*/}
+      {/*  // value={values[label]}*/}
+      {/*  onChange={onChange}*/}
+      {/*  className={`${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center ${inputClass}`}*/}
+      {/*/>*/}
+
+      {showHelperText && <SpanLabel />}
     </div>
   );
 };

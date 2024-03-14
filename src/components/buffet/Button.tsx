@@ -23,18 +23,15 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
 
   const isMobile = useIsMobile();
 
-  const medButtonNeeded = size === "med";
   const smallButtonNeeded = size === "small";
 
   const buttonClass = isMobile
     ? "py-4 px-10 text-2xl"
-    : medButtonNeeded
-      ? "py-2 px-10"
-      : smallButtonNeeded
-        ? "px-3"
-        : "";
+    : smallButtonNeeded
+      ? "px-3"
+      : "py-2 px-10";
 
-  const buttonCont = medButtonNeeded ? "my-5" : smallButtonNeeded ? "my-1" : "";
+  const buttonCont = smallButtonNeeded ? "my-1" : "my-5";
 
   const dataTestId = getPageTestId(`button-cont-${createUrlFromText(text)}`);
   const buttonTestId = getPageTestId(`button-${createUrlFromText(text)}`);

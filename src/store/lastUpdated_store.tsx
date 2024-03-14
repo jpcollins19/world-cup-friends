@@ -14,6 +14,17 @@ export const loadLastUpdated = () => {
   };
 };
 
+export const updateLastUpdated = (lastUpdated: any) => {
+  return async (dispatch: any) => {
+    console.log("thunk started");
+    lastUpdated = (
+      await axios.put(`/api/last-updated/${lastUpdated.id}`, lastUpdated)
+    ).data;
+
+    console.log("end of thunk");
+  };
+};
+
 export type LastUpdatedSchema = {
   id: null;
   answer: null;
