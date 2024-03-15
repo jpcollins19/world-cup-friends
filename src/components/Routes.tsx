@@ -11,7 +11,7 @@ import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
 import { Loading } from "./buffet";
 import PreSignIn from "./preSignIn/PreSignIn";
-import { useIsUserLoggedIn } from "../hooks";
+import { useGetLastUpdated, useIsUserLoggedIn } from "../hooks";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -20,9 +20,16 @@ const Routes = () => {
   React.useEffect(() => {
     (async () => {
       await dispatch(me());
-      await dispatch(loadLastUpdated());
     })();
   }, []);
+
+  const lastUpdated = useGetLastUpdated();
+
+  React.useEffect(() => {
+    (async () => {
+      await dispatch(loadLastUpdated());
+    })();
+  }, [lastUpdated]);
 
   const [loading, setLoading] = React.useState(true);
 
@@ -33,8 +40,6 @@ const Routes = () => {
       setLoading(false);
     }, 2000);
   }, [pathname]);
-
-  //const auth = useSelector((state) => state.auth);
 
   //const redirectHome = <Redirect to={routes.home} />;
 

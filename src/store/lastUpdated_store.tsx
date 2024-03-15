@@ -14,14 +14,13 @@ export const loadLastUpdated = () => {
   };
 };
 
-export const updateLastUpdated = (lastUpdated: any) => {
-  return async (dispatch: any) => {
-    console.log("thunk started");
-    lastUpdated = (
-      await axios.put(`/api/last-updated/${lastUpdated.id}`, lastUpdated)
-    ).data;
+export const updateLastUpdated = (answer: string) => {
+  return async () => {
+    const lastUpdatedId = (await axios.get("/api/last-updated")).data.id;
 
-    console.log("end of thunk");
+    const lastUpdated = { id: lastUpdatedId, answer };
+
+    (await axios.put(`/api/last-updated/${lastUpdatedId}`, lastUpdated)).data;
   };
 };
 

@@ -7,9 +7,7 @@ import { useGetLastUpdated } from "../../../hooks";
 import { TextField } from "../../buffet";
 
 export type LastUpdatedSchema = {
-  id: string | null;
   [lastUpdated: string]: any;
-  //lastUpdated: any;
 };
 
 export const LastUpdatedAdmin: React.FunctionComponent = () => {
@@ -38,13 +36,11 @@ export const LastUpdatedAdmin: React.FunctionComponent = () => {
 
     const answer = "answer" in lastUpdated ? lastUpdated.answer : null;
 
-    const onSubmit = async () => {
+    const onSubmit = async (values: LastUpdatedSchema) => {
       try {
         setEditing(false);
 
-        const answer = { id: values.id, answer: values.lastUpdated };
-
-        await dispatch(updateLastUpdated(answer));
+        await dispatch(updateLastUpdated(values.lastUpdated));
       } catch (err: any) {
         console.log(err);
       }
@@ -52,13 +48,12 @@ export const LastUpdatedAdmin: React.FunctionComponent = () => {
 
     const formik = useFormik<LastUpdatedSchema>({
       initialValues: {
-        id: lastUpdated.id,
         lastUpdated: answer,
       },
       onSubmit,
     });
 
-    const { handleSubmit, values, setFieldValue } = formik;
+    const { handleSubmit, setFieldValue } = formik;
 
     const onChange = (ev: any) => {
       setFieldValue("lastUpdated", ev.target.value);
