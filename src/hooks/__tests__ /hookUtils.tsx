@@ -1,9 +1,14 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { store } from "../../store";
+import { RootState, store, LastUpdatedSchema } from "../../store";
 
 export const updateStore = (thunk: any, data: any) => {
   store.dispatch(thunk(data));
+};
+
+export const getDataFromStore = (subStore: keyof RootState) => {
+  const storeData: RootState = store.getState();
+  return storeData[subStore];
 };
 
 export const getWrapper = () => {

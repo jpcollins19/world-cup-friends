@@ -24,7 +24,6 @@ export const PayoutData: React.FunctionComponent = () => {
   return shouldPayoutShow ? (
     <div
       data-testid={dataTestId}
-      // className={`${tw.flexBoth} shadow-2xl flex-col h-full cursor-default shadow-routesNotSelected`}
       className={`${tw.flexBoth} ${tw.shrinkTextBase} shadow-2xl flex-col h-full cursor-default py-6`}
     >
       <div className={`${tw.whiteTextMed} text-base`}>Payout</div>

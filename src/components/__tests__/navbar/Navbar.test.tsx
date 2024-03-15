@@ -26,19 +26,63 @@ describe("<Navbar/>", () => {
     expect(testId).toBeInTheDocument();
   });
 
-  it.todo("renders the default subcomponents - logo & Rules route dataTestIds");
+  it("renders the default subcomponents - logo & Rules route dataTestIds", async () => {
+    renderProvider(<Navbar />, true);
 
+    const logoTestId = await getTestIdTag("logo");
+    const rulesRouteTestId = await getTestIdTag("comp-route-rules");
+
+    expect(logoTestId).toBeInTheDocument();
+    expect(rulesRouteTestId).toBeInTheDocument();
+  });
+
+  ////NavbarComp
+  it.todo("renders the comp");
+  it.todo("renders correct routes when user is logged out");
+  it.todo("renders correct routes when user is logged in");
+
+  ////RouteComp
+  it.todo("renders the comp");
+  it.todo("href is correct");
+  it.todo("text is correct");
+  it.todo("class testing on isCurrentPage");
+
+  ////PayoutData
+  it.todo("test file with mocking hooks already created");
+  it.todo("does not render when useShouldPayoutShow is false");
+  it.todo("renders when useShouldPayoutShow is true");
   it.todo(
-    "NavBarComp -- new test file -- renders the RouteComp components and all routes based on applicable auth state",
+    "placement text and $ text and # of submitted picks is correct -- set up 3 test w diff user submitted #s",
   );
 
-  it.todo("RouteComp -- new test file");
+  ////EmailUpdates
+  it.todo("renders the comp");
+  it.todo("does not render when user is not logged in");
+  it.todo("does not render when user is admin");
+  it.todo("renders when user is logged in, but not admin");
+  it.todo("accurate href");
+  it.todo("accurate text shows based on user emailNotification");
 
-  it.todo("PayoutData -- test file with mocking hooks already created");
+  ////LastUpdatedContainer
+  it.todo("renders LastUpdatedAdmin when user is admin");
+  it.todo("renders LastUpdatedReadOnly when user is not admin");
+  it.todo("does not render when user is not logged in");
 
-  it.todo("EmailUpdates");
+  ////LastUpdatedReadOnly
+  it.todo("renders the comp");
+  it.todo("renders accurate lastUpdated text");
 
-  it.todo("LastUpdated");
+  ////LastUpdatedAdmin
+  it.todo("renders the comp");
+  //!editing
+  it.todo("renders LastUpdatedReadOnly");
+  it.todo("renders correct button");
+  //editing
+  it.todo("renders LastUpdatedEdit");
+  it.todo("renders correct button");
+  //LastUpdatedEdit
+  it.todo("TextField data is accurate");
+  it.todo("updating text updates the lastUpdated info in LastUpdatedReadOnly");
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {

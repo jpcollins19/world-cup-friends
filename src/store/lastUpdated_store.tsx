@@ -25,14 +25,14 @@ export const updateLastUpdated = (answer: string) => {
 };
 
 export type LastUpdatedSchema = {
-  id: null;
-  answer: null;
+  id: string;
+  answer: string;
 };
 
 export interface LastUpdatedState extends LastUpdatedSchema {}
 
 export default function (
-  state: LastUpdatedState = { id: null, answer: null },
+  state: LastUpdatedState = { id: "", answer: "" },
   action: any,
 ) {
   switch (action.type) {

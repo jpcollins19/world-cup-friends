@@ -22,8 +22,6 @@ export const EmailUpdates: React.FunctionComponent = () => {
 
   const isAdmin = useIsUserAdmin();
 
-  // const pageVerbiage = isMobile ? "Edit Notification Settings" : compVerbiage;
-
   const hoverClass = isHovered ? "" : "hidden";
 
   return useIsUserLoggedIn() && !isAdmin ? (
