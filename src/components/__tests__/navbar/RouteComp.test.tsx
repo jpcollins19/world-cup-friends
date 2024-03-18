@@ -3,8 +3,8 @@ import "@testing-library/jest-dom";
 import {
   getTestIdTag,
   mockWindowMobileView,
-  renderMemoryRouter,
-  renderProvider,
+  renderWithMemoryRouter,
+  renderWithProvider,
 } from "../../testingUtils";
 import RouteComp from "../../navbar/comp/RouteComp";
 import { routes, tw } from "../../../store";
@@ -17,7 +17,7 @@ describe("<RouteComp/>", () => {
   const poolPicksComponent = <RouteComp route={poolPicksRoute} />;
 
   it("should render the component", async () => {
-    renderProvider(poolPicksComponent, true);
+    renderWithProvider(poolPicksComponent);
 
     const testId = await getTestIdTag(routePoolPicksDataTestId);
 
@@ -31,7 +31,7 @@ describe("<RouteComp/>", () => {
     const routeCompLinkBaseClass = `${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2 my-2`;
 
     it("when isCurrentPage is true", async () => {
-      renderMemoryRouter(poolPicksComponent, routes.poolPicks);
+      renderWithMemoryRouter(poolPicksComponent, routes.poolPicks);
 
       const testId = await getTestIdTag(routePoolPicksDataTestId);
 
@@ -43,7 +43,7 @@ describe("<RouteComp/>", () => {
     });
 
     it("when isCurrentPage is false", async () => {
-      renderMemoryRouter(poolPicksComponent, routes.rules);
+      renderWithMemoryRouter(poolPicksComponent, routes.rules);
 
       const testId = await getTestIdTag(routePoolPicksDataTestId);
 
@@ -61,7 +61,7 @@ describe("<RouteComp/>", () => {
 
       const route = { path: routes.rules, icon: "" };
 
-      renderProvider(<RouteComp route={route} />, true);
+      renderWithProvider(<RouteComp route={route} />);
 
       const testId = await getTestIdTag("comp-route-rules-mobile");
 

@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import {
   getTestIdTag,
   mockWindowMobileView,
-  renderProvider,
+  renderWithProvider,
 } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
 
@@ -19,7 +19,7 @@ import Navbar from "../../navbar/Navbar";
 
 describe("<Navbar/>", () => {
   it("should render the component", async () => {
-    renderProvider(<Navbar />, true);
+    renderWithProvider(<Navbar />);
 
     const testId = await getTestIdTag("navbar");
 
@@ -27,7 +27,7 @@ describe("<Navbar/>", () => {
   });
 
   it("renders the default subcomponents - logo & Rules route dataTestIds", async () => {
-    renderProvider(<Navbar />, true);
+    renderWithProvider(<Navbar />);
 
     const logoTestId = await getTestIdTag("logo");
     const rulesRouteTestId = await getTestIdTag("comp-route-rules");
@@ -40,7 +40,7 @@ describe("<Navbar/>", () => {
     it("renders the mobile page", async () => {
       mockWindowMobileView(true);
 
-      renderProvider(<Navbar />, true);
+      renderWithProvider(<Navbar />);
 
       const testId = await getTestIdTag("navbar-mobile");
 

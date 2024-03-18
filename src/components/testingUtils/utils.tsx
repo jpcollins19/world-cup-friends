@@ -10,25 +10,36 @@ import {
 } from "../../hooks";
 import { Formik } from "formik";
 
-export const renderProvider = (component: any, withRouter?: boolean) => {
-  const providerToUse = withRouter ? (
-    <Provider store={store}>
-      <Router>{component}</Router>
-    </Provider>
-  ) : (
-    <Provider store={store}>{component}</Provider>
-  );
-
-  render(providerToUse);
+export const renderWithRouter = (component: any) => {
+  return render(<Router>{component}</Router>);
 };
 
-export const renderMemoryRouter = (component: any, initialEntries: string) => {
+export const renderWithProvider = (component: any) => {
+  // const providerToUse = withRouter ? (
+  //   <Provider store={store}>
+  //     <Router>{component}</Router>
+  //   </Provider>
+  // ) : (
+  //   <Provider store={store}>{component}</Provider>
+  // );
+
+  render(
+    <Provider store={store}>
+      <Router>{component}</Router>
+    </Provider>,
+  );
+};
+
+export const renderWithMemoryRouter = (
+  component: any,
+  initialEntries: string,
+) => {
   render(
     <MemoryRouter initialEntries={[initialEntries]}>{component}</MemoryRouter>,
   );
 };
 
-export const renderFormik = (
+export const renderWithFormik = (
   component: any,
   initialValues: any,
   onSubmit: any,

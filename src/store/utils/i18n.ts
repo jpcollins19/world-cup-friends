@@ -1,5 +1,6 @@
 export const en = {
   cancel: "Cancel",
+  confirmPassword: "confirm password",
   createAccount: "Create Account",
   edit: "Edit",
   email: "email",
@@ -9,6 +10,7 @@ export const en = {
     "Email notifications can be sent out to you each time the website is updated!",
   forgotPassword: "Forgot Password",
   invalidEmailOrPw: "Invalid Email Address and/or Password",
+  name: "name",
   password: "password",
   rules: "Rules/General Info",
   save: "Save",
@@ -19,6 +21,7 @@ export const en = {
 
 export type i18nOptionsTypes =
   | "cancel"
+  | "confirmPassword"
   | "createAccount"
   | "edit"
   | "email"
@@ -27,6 +30,7 @@ export type i18nOptionsTypes =
   | "emailNotificationsOptOut"
   | "forgotPassword"
   | "invalidEmailOrPw"
+  | "name"
   | "password"
   | "rules"
   | "save"

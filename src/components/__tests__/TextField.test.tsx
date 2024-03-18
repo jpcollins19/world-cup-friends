@@ -9,7 +9,7 @@ import {
   pw,
   elevateClass,
   mockWindowMobileView,
-  renderFormik,
+  renderWithFormik,
   queryTestIdTag,
 } from "../testingUtils";
 import { TextField } from "../buffet";
@@ -30,7 +30,7 @@ describe("<TextField/>", () => {
   it("should render the component", async () => {
     const component = <TextField label={email} onChange={onChange()} />;
 
-    renderFormik(component, initialValues, onSubmit);
+    renderWithFormik(component, initialValues, onSubmit);
 
     const pageTestId = await getTestIdTag("text-field");
     const inputTestId = await getTestIdTag("text-field-input-email");
@@ -42,7 +42,7 @@ describe("<TextField/>", () => {
   it("the default type is 'text'", async () => {
     const component = <TextField label={email} onChange={onChange()} />;
 
-    renderFormik(component, initialValues, onSubmit);
+    renderWithFormik(component, initialValues, onSubmit);
 
     const input = await getTestIdTag(emailInputTestId);
     expect(input).toHaveAttribute("type", "text");
@@ -51,7 +51,7 @@ describe("<TextField/>", () => {
   it("input type is password when passed in", async () => {
     const component = <TextField label={pw} type={pw} onChange={onChange()} />;
 
-    renderFormik(component, initialValues, onSubmit);
+    renderWithFormik(component, initialValues, onSubmit);
 
     const input = await getTestIdTag(pwInputTestId);
     expect(input).toHaveAttribute("type", pw);
@@ -60,7 +60,7 @@ describe("<TextField/>", () => {
   it("onChange changes the input value", async () => {
     const component = <TextField label={pw} type={pw} onChange={onChange()} />;
 
-    renderFormik(component, initialValues, onSubmit);
+    renderWithFormik(component, initialValues, onSubmit);
 
     const input = await getTestIdTag(pwInputTestId);
 
@@ -74,7 +74,7 @@ describe("<TextField/>", () => {
       it("defaults to true and renders the span label", async () => {
         const component = <TextField label={email} onChange={onChange()} />;
 
-        renderFormik(component, initialValues, onSubmit);
+        renderWithFormik(component, initialValues, onSubmit);
 
         const span = await getTestIdTag(spanLabelTestId);
 
@@ -85,7 +85,7 @@ describe("<TextField/>", () => {
       it("isRequired defaults to true and requiredSymbol renders", async () => {
         const component = <TextField label={email} onChange={onChange()} />;
 
-        renderFormik(component, initialValues, onSubmit);
+        renderWithFormik(component, initialValues, onSubmit);
 
         const spanRequiredSymbol = await getTestIdTag(spanRequiredSymbolTestId);
 
@@ -98,7 +98,7 @@ describe("<TextField/>", () => {
           <TextField label={email} onChange={onChange()} isRequired={false} />
         );
 
-        renderFormik(component, initialValues, onSubmit);
+        renderWithFormik(component, initialValues, onSubmit);
 
         const spanRequiredSymbol = await queryTestIdTag(
           spanRequiredSymbolTestId,
@@ -118,7 +118,7 @@ describe("<TextField/>", () => {
           />
         );
 
-        renderFormik(component, initialValues, onSubmit);
+        renderWithFormik(component, initialValues, onSubmit);
 
         const span = await queryTestIdTag(spanLabelTestId);
 
@@ -134,7 +134,7 @@ describe("<TextField/>", () => {
           />
         );
 
-        renderFormik(component, initialValues, onSubmit);
+        renderWithFormik(component, initialValues, onSubmit);
 
         const spanRequiredSymbol = await queryTestIdTag(
           spanRequiredSymbolTestId,
@@ -213,7 +213,7 @@ describe("<TextField/>", () => {
             <TextField label={pw} type={pw} onChange={onChange()} />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -231,7 +231,7 @@ describe("<TextField/>", () => {
             <TextField label={pw} type={pw} onChange={onChange()} />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -286,7 +286,7 @@ describe("<TextField/>", () => {
             />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -309,7 +309,7 @@ describe("<TextField/>", () => {
             />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -364,7 +364,7 @@ describe("<TextField/>", () => {
             />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -387,7 +387,7 @@ describe("<TextField/>", () => {
             />
           );
 
-          renderFormik(component, initialValues, onSubmit);
+          renderWithFormik(component, initialValues, onSubmit);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -404,7 +404,7 @@ describe("<TextField/>", () => {
         <TextField label={pw} type={pw} onChange={onChange()} />
       );
 
-      renderFormik(component, initialValues, onSubmit);
+      renderWithFormik(component, initialValues, onSubmit);
 
       const pageTestId = await getTestIdTag("text-field-mobile");
 

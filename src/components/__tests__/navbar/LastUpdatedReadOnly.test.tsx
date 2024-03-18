@@ -3,13 +3,13 @@ import "@testing-library/jest-dom";
 import {
   getTestIdTag,
   mockWindowMobileView,
-  renderProvider,
+  renderWithProvider,
 } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
 
 describe("<LastUpdatedReadOnly/>", () => {
   it("should render the component", async () => {
-    renderProvider(<Navbar />, true);
+    renderWithProvider(<Navbar />);
 
     const testId = await getTestIdTag("navbar");
 

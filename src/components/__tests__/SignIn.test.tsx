@@ -11,7 +11,7 @@ import {
   matchMediaWorkAround,
   mockWindowMobileView,
   pwInputTestId,
-  renderProvider,
+  renderWithProvider,
   submitLowerCase,
   submitUpperCase,
 } from "../testingUtils";
@@ -25,16 +25,16 @@ describe("<SignIn/>", () => {
   });
 
   it("should render the SignIn page", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
-    const pageTestId = await getTestIdTag("signIn-page");
+    const pageTestId = await getTestIdTag("sign-in-page");
 
     expect(pageTestId).toBeInTheDocument();
     expect(pageTestId).toHaveTextContent("Sign In");
   });
 
   it("toasterContainer renders", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
     const toasterContTestId = await getTestIdTag("toaster-cont");
 
@@ -42,7 +42,7 @@ describe("<SignIn/>", () => {
   });
 
   it("both TextFields render", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
     const emailInput = await getTestIdTag(emailInputTestId);
     const pwInput = await getTestIdTag(pwInputTestId);
@@ -54,7 +54,7 @@ describe("<SignIn/>", () => {
   });
 
   it("submit button renders as disabled", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
     const buttonTestId = await getButtonTestId(submitLowerCase);
 
@@ -68,7 +68,7 @@ describe("<SignIn/>", () => {
   });
 
   it("submit button being enabled", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
     const emailInput = await getTestIdTag(emailInputTestId);
     const pwInput = await getTestIdTag(pwInputTestId);
@@ -82,8 +82,8 @@ describe("<SignIn/>", () => {
   });
 
   it("view pw button works", async () => {
-    renderProvider(<SignIn />);
-    const viewPw = await getTestIdTag("signIn-view-pw");
+    renderWithProvider(<SignIn />);
+    const viewPw = await getTestIdTag("sign-in-view-pw");
 
     await click(viewPw);
 
@@ -93,7 +93,7 @@ describe("<SignIn/>", () => {
   });
 
   it("3 links at bottom of page have accurate text and take you to correct urls", async () => {
-    renderProvider(<SignIn />);
+    renderWithProvider(<SignIn />);
 
     const pwLinkTestId = await getTestIdTag("linkText-link-forgot-password");
     const createAccountLinkTestId = await getTestIdTag(
@@ -112,7 +112,7 @@ describe("<SignIn/>", () => {
   });
 
   describe("classTesting", () => {
-    const singInBase = "signIn-";
+    const singInBase = "sign-in-";
 
     const signInContainerClass = `${singInBase}cont`;
     const headerClass = `${singInBase}header`;
@@ -172,7 +172,7 @@ describe("<SignIn/>", () => {
         });
 
         it(`${test.testId}`, async () => {
-          renderProvider(<SignIn />);
+          renderWithProvider(<SignIn />);
 
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
@@ -187,7 +187,7 @@ describe("<SignIn/>", () => {
         });
 
         it(`${test.testId}`, async () => {
-          renderProvider(<SignIn />);
+          renderWithProvider(<SignIn />);
           const testId = await getTestIdTag(test.testId);
           expect(testId).toHaveClass(test.result);
         });
@@ -197,11 +197,11 @@ describe("<SignIn/>", () => {
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
-      renderProvider(<SignIn />);
+      renderWithProvider(<SignIn />);
 
       mockWindowMobileView(true);
 
-      const pageTestId = await getTestIdTag("signIn-page-mobile");
+      const pageTestId = await getTestIdTag("sign-in-page-mobile");
 
       expect(pageTestId).toBeInTheDocument();
       expect(pageTestId).toHaveTextContent("Sign In");

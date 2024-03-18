@@ -1,21 +1,27 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag, mockWindowMobileView } from "../testingUtils";
+import { BrowserRouter as Router } from "react-router-dom";
+import {
+  getTestIdTag,
+  mockWindowMobileView,
+  renderWithRouter,
+} from "../testingUtils";
 import { geti18n, routes } from "../../store";
 import { LinkText } from "../buffet";
 
 describe("<LinkText/>", () => {
   it("should render the component with accurate routing and text data", async () => {
-    render(
+    const component = (
       <LinkText
         input={{
           route: routes.createAccount,
           text: geti18n("forgotPassword"),
         }}
-      />,
+      />
     );
 
+    renderWithRouter(component);
     const pageTestId = await getTestIdTag("linkText-component");
     const linkTestId = await getTestIdTag("linkText-link-forgot-password");
 
@@ -47,14 +53,16 @@ describe("<LinkText/>", () => {
     describe("comp", () => {
       testsToRun.comp.forEach((test) => {
         it(`${test.testId}`, async () => {
-          render(
+          const component = (
             <LinkText
               input={{
                 route: routes.createAccount,
                 text: geti18n("forgotPassword"),
               }}
-            />,
+            />
           );
+
+          renderWithRouter(component);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -68,14 +76,16 @@ describe("<LinkText/>", () => {
         it(`${test.testId}`, async () => {
           mockWindowMobileView(true);
 
-          render(
+          const component = (
             <LinkText
               input={{
                 route: routes.createAccount,
                 text: geti18n("forgotPassword"),
               }}
-            />,
+            />
           );
+
+          renderWithRouter(component);
 
           const testId = await getTestIdTag(test.testId);
 
@@ -89,14 +99,16 @@ describe("<LinkText/>", () => {
     it("renders the mobile page", async () => {
       mockWindowMobileView(true);
 
-      render(
+      const component = (
         <LinkText
           input={{
             route: routes.createAccount,
             text: geti18n("forgotPassword"),
           }}
-        />,
+        />
       );
+
+      renderWithRouter(component);
 
       const pageTestId = await getTestIdTag("linkText-component-mobile");
       const linkTestId = await getTestIdTag(
