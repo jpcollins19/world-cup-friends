@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getTextFromUrl, tw } from "../../../store";
+import { getPageTestId, getTextFromUrl, tw } from "../../../store";
 
 export type RouteProps = {
   path: string;
@@ -22,7 +22,7 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
 
   const nakedRoute = routePath.split("/").pop();
 
-  const dataTestId = `comp-route-${nakedRoute}`;
+  const dataTestId = getPageTestId(`comp-route-${nakedRoute}`);
 
   const routeText = getTextFromUrl(routePath);
 

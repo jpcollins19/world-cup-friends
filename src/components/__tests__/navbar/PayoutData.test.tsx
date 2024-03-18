@@ -24,8 +24,8 @@ const user3: UserSchema = createUser(10);
 const users = [user1, user2, user3];
 
 describe("<PayoutTable/>", () => {
-  it("should render the component", async () => {
-    mockUseIsMobile(false);
+  it("renders when useShouldPayoutShow is true", async () => {
+    //mockUseIsMobile(false);
     mockUseGetActiveUsers(users);
     mockUseShouldPayoutShow(true);
 
@@ -36,11 +36,14 @@ describe("<PayoutTable/>", () => {
     expect(testId).toBeInTheDocument();
   });
 
-  it.todo("should not render the component");
+  it.todo("does not render when useShouldPayoutShow is false");
+  it.todo(
+    "placement text and $ text and # of submitted picks is correct -- set up 3 test w diff user submitted #s",
+  );
 
   // describe("mobile view", () => {
   //   it("renders the mobile page", async () => {
-  //     mockUseIsMobile(false);
+  //     mockUseIsMobile(true);
   //
   //     render(<PayoutData />);
   //

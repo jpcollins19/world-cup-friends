@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import store, { UserSchema } from "../../store";
 import * as React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
 import {
   useGetActiveUsers,
   useIsMobile,
@@ -22,11 +22,16 @@ export const renderProvider = (component: any, withRouter?: boolean) => {
   render(providerToUse);
 };
 
+export const renderMemoryRouter = (component: any, initialEntries: string) => {
+  render(
+    <MemoryRouter initialEntries={[initialEntries]}>{component}</MemoryRouter>,
+  );
+};
+
 export const renderFormik = (
   component: any,
   initialValues: any,
   onSubmit: any,
-  // onChange: any,
 ) => {
   render(
     <Formik initialValues={initialValues} onSubmit={onSubmit}>

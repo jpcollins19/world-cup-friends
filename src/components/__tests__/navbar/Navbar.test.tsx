@@ -36,54 +36,6 @@ describe("<Navbar/>", () => {
     expect(rulesRouteTestId).toBeInTheDocument();
   });
 
-  ////NavbarComp
-  it.todo("renders the comp");
-  it.todo("renders correct routes when user is logged out");
-  it.todo("renders correct routes when user is logged in");
-
-  ////RouteComp
-  it.todo("renders the comp");
-  it.todo("href is correct");
-  it.todo("text is correct");
-  it.todo("class testing on isCurrentPage");
-
-  ////PayoutData
-  it.todo("test file with mocking hooks already created");
-  it.todo("does not render when useShouldPayoutShow is false");
-  it.todo("renders when useShouldPayoutShow is true");
-  it.todo(
-    "placement text and $ text and # of submitted picks is correct -- set up 3 test w diff user submitted #s",
-  );
-
-  ////EmailUpdates
-  it.todo("renders the comp");
-  it.todo("does not render when user is not logged in");
-  it.todo("does not render when user is admin");
-  it.todo("renders when user is logged in, but not admin");
-  it.todo("accurate href");
-  it.todo("accurate text shows based on user emailNotification");
-
-  ////LastUpdatedContainer
-  it.todo("renders LastUpdatedAdmin when user is admin");
-  it.todo("renders LastUpdatedReadOnly when user is not admin");
-  it.todo("does not render when user is not logged in");
-
-  ////LastUpdatedReadOnly
-  it.todo("renders the comp");
-  it.todo("renders accurate lastUpdated text");
-
-  ////LastUpdatedAdmin
-  it.todo("renders the comp");
-  //!editing
-  it.todo("renders LastUpdatedReadOnly");
-  it.todo("renders correct button");
-  //editing
-  it.todo("renders LastUpdatedEdit");
-  it.todo("renders correct button");
-  //LastUpdatedEdit
-  it.todo("TextField data is accurate");
-  it.todo("updating text updates the lastUpdated info in LastUpdatedReadOnly");
-
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
       mockWindowMobileView(true);

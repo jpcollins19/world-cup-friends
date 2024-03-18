@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { RootState, store, LastUpdatedSchema } from "../../store";
 
 export const updateStore = (thunk: any, data: any) => {
-  store.dispatch(thunk(data));
+  return store.dispatch(thunk(data));
 };
 
 export const getDataFromStore = (subStore: keyof RootState) => {

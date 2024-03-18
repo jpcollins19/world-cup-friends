@@ -1,14 +1,10 @@
-//lastUpdated_store -- updateLastUpdated
-//RouteComp -- just how to render the hovering aspect
-//authStore
-//tourneyStageStore
 //PayoutData
 //NavbarComp
 //RouteComp
 //EmailUpdates
 //LastUpdatedContainer
 //LastUpdatedReadOnly
-//LastUpdatedAdmin
+//LastUpdatedAdmin - audit that updating lastUpdated works
 
 const express = require("express");
 const app = express();
