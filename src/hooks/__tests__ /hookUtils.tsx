@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { RootState, store, LastUpdatedSchema } from "../../store";
+import { RootState, store } from "../../store";
 
 export const updateStore = (thunk: any, data: any) => {
   return store.dispatch(thunk(data));

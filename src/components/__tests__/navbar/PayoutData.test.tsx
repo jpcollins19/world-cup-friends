@@ -18,8 +18,8 @@ jest.mock("../../../hooks", () => ({
 }));
 
 const user1: UserSchema = createUser();
-const user2: UserSchema = createUser(100);
-const user3: UserSchema = createUser(10);
+const user2: UserSchema = createUser({ tiebreaker: 100 });
+const user3: UserSchema = createUser({ tiebreaker: 10 });
 
 const users = [user1, user2, user3];
 

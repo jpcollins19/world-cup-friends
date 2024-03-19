@@ -152,6 +152,8 @@ export const SignIn: React.FunctionComponent = () => {
                 label={input.label}
                 type={input.type ?? null}
                 onChange={onChange}
+                showValue={true}
+                schema="signIn"
               />
             ))}
 

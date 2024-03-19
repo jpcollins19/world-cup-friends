@@ -1,7 +1,9 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useIsMobile } from "../../hooks";
+import { useGetUsers, useIsMobile } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
+import { useSelector } from "react-redux";
+import { RootState } from "../index";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -158,4 +160,15 @@ export const validateEmail = (email: string): boolean => {
   const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   return email.match(mailformat) ? true : false;
+};
+
+export const getSpecificKeyFromArray = (arr: any, key: string): any => {
+  return arr.map((obj: any) => obj[key]);
+};
+
+export const formatStrToLowerCase = (str: string): any => {
+  return str
+    .split("")
+    .map((letter: string) => letter.toLowerCase())
+    .join("");
 };

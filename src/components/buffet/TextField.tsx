@@ -106,35 +106,37 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
     return useFormikContext<LastUpdatedSchema>();
   }
 
-  // function assignSchema(schemaType: string | undefined) {
-  //   let assignedSchema;
-  //
-  //   // if (schemaType === "lastUpdated") {
-  //   //   assignedSchema = LastUpdatedSchema; // Replace with actual values
-  //   // } else if (schemaType === "signIn") {
-  //   //   // assignedSchema = { isLoading: false }; // Replace with actual values
-  //   // } else {
-  //   //   console.error("Unknown schema type");
-  //   //   return; // Exit the function or handle the error as needed
-  //   // }
-  //
-  //   // Now you can use 'assignedSchema' as your schema
-  //   //const { values } = useFormikContextWithType(assignedSchema);
-  //
-  //   const { values } = useFormikContext<LastUpdatedSchema>();
-  //   // console.log(values);
-  //
-  //   return values;
-  // }
+  function assignSchema(schemaType: string | undefined) {
+    let assignedSchema;
+
+    // if (schemaType === "lastUpdated") {
+    //   assignedSchema = LastUpdatedSchema; // Replace with actual values
+    // } else if (schemaType === "signIn") {
+    //   // assignedSchema = { isLoading: false }; // Replace with actual values
+    // } else {
+    //   console.error("Unknown schema type");
+    //   return; // Exit the function or handle the error as needed
+    // }
+
+    // Now you can use 'assignedSchema' as your schema
+    //const { values } = useFormikContextWithType(assignedSchema);
+
+    const { values } = useFormikContext<LastUpdatedSchema>();
+    // console.log(values);
+
+    return values;
+  }
 
   if (showValue) {
-    const { values } = useFormikContext<LastUpdatedSchema>();
+    const values = assignSchema(schema);
+
+    //const { values } = useFormikContext<LastUpdatedSchema>();
 
     inputAttributes.value = values[label];
     //as keyof LastUpdatedSchema];
   }
 
-  type AllSchemas = SignInSchema | LastUpdatedSchema;
+  // type AllSchemas = SignInSchema | LastUpdatedSchema;
 
   // let values;
   //

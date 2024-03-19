@@ -1,6 +1,5 @@
 import axios from "axios";
 import { routes } from "./utils";
-import { validateEmail } from "./utils";
 
 const TOKEN = "token";
 
@@ -79,11 +78,11 @@ export const createAuth = (auth: AddAuthProps, history: any) => {
     //validateEmail
     //"Error: Invalid Email Address"
 
-    //userEmails.includes(email)
+    //userEmails.includes(email) --useIsEmailInUse
     //"Error: Email already in use"
-    //"Error: Name already in use"
 
-    //userNames.includes(formatEmail(name))
+    //userNames.includes(formatEmail(name)) --useIsNameInUse
+    //"Error: Name already in use"
 
     //throw Error("nuggetErr");
     (await axios.post("/api/add/auth", auth)).data;

@@ -1,3 +1,5 @@
+//create tests for validating addAuth
+
 //PayoutData
 //NavbarComp
 //RouteComp

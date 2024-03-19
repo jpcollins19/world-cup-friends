@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import { useIsMobile } from "../../hooks";
 import {
-  authenticate,
   geti18n,
   getPageTestId,
   tDispatch,
@@ -19,7 +18,6 @@ import {
   Button,
   ErrorMessage,
   LinkText,
-  LinkTextInputProps,
   Loading,
   TextField,
   TextFieldInputProps,

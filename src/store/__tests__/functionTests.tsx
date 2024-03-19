@@ -1,6 +1,8 @@
 import * as funcs from "../utils";
-import { calcPayoutSchema, routes, validateEmail } from "../utils";
+import { calcPayoutSchema, routes } from "../utils";
 import { mockWindowMobileView } from "../../components/testingUtils";
+import { _loadUsers, UserSchema } from "../users_store";
+import { createUser } from "../../hooks/fixtures";
 
 describe("geti18n", () => {
   const testsToRun = [
@@ -205,7 +207,7 @@ describe("formatEmail ", () => {
   ];
 
   testsToRun.forEach((test) => {
-    it(`${test.email}`, () => {
+    it(test.email, () => {
       const result: string = funcs.formatEmail(test.email);
 
       expect(result).toBe(test.result);
@@ -224,10 +226,50 @@ describe("validateEmail ", () => {
   ];
 
   testsToRun.forEach((test) => {
-    it(`${test.email}`, () => {
+    it(test.email, () => {
       const result: boolean = funcs.validateEmail(test.email);
 
       expect(result).toBe(test.result);
+    });
+  });
+});
+
+describe("getSpecificKeyFromArray ", () => {
+  const user1: UserSchema = createUser();
+  const user2: UserSchema = createUser();
+  const user3: UserSchema = createUser();
+
+  const users = [user1, user2, user3];
+
+  const userEmails = users.map((user) => user.email);
+  const userNames = users.map((user) => user.name);
+
+  const testsToRun = [
+    { arr: users, key: "email", result: userEmails },
+    { arr: users, key: "name", result: userNames },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.key, () => {
+      const result: boolean = funcs.getSpecificKeyFromArray(test.arr, test.key);
+
+      expect(result).toEqual(test.result);
+    });
+  });
+});
+
+describe("formatStrToLowerCase ", () => {
+  const testsToRun = [
+    { str: "JoE", result: "joe" },
+    { str: "JOE", result: "joe" },
+    { str: "ThiSISAtEst", result: "thisisatest" },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.str, () => {
+      const result: boolean = funcs.formatStrToLowerCase(test.str);
+
+      expect(result).toEqual(test.result);
     });
   });
 });
