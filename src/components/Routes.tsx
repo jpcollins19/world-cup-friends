@@ -11,7 +11,7 @@ import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
 import { Loading } from "./buffet";
 import PreSignIn from "./preSignIn/PreSignIn";
-import { useGetLastUpdated, useIsUserLoggedIn } from "../hooks";
+import { useIsUserLoggedIn } from "../hooks";
 import CreateAccount from "./createAccount/CreateAccount";
 
 const Routes = () => {
@@ -24,18 +24,14 @@ const Routes = () => {
     })();
   }, []);
 
-  const lastUpdated = useGetLastUpdated();
-
-  React.useEffect(() => {
-    (async () => {
-      await dispatch(loadLastUpdated());
-    })();
-  }, [lastUpdated]);
-
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     setLoading(true);
+
+    (async () => {
+      await dispatch(loadLastUpdated());
+    })();
 
     setTimeout(() => {
       setLoading(false);

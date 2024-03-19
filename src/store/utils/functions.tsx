@@ -138,3 +138,24 @@ export const calcPayout = (users: any): calcPayoutSchema => {
 
   return result;
 };
+
+export const formatEmail = (email: string): string => {
+  const regex = /[a-zA-Z]/g;
+
+  email = email
+    .split("")
+    .map((letter) => {
+      if (letter.match(regex)) {
+        letter = letter.toLowerCase();
+      }
+      return letter;
+    })
+    .join("");
+  return email;
+};
+
+export const validateEmail = (email: string): boolean => {
+  const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  return email.match(mailformat) ? true : false;
+};

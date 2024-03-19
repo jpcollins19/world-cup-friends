@@ -1,5 +1,6 @@
 import axios from "axios";
 import { routes } from "./utils";
+import { validateEmail } from "./utils";
 
 const TOKEN = "token";
 
@@ -44,8 +45,6 @@ export const me = () => async (dispatch: any) => {
 
 export const authenticate =
   (email: string, password: string, history: any) => async (dispatch: any) => {
-    //(email: string | null, password: string | null, history: any) =>
-    // async (dispatch: any) => {
     try {
       const response = await axios.post("api/authorize", { email, password });
 
@@ -68,6 +67,30 @@ export const authenticate =
       );
     }
   };
+
+export type AddAuthProps = {
+  email: string;
+  name: string;
+  password: string;
+};
+
+export const createAuth = (auth: AddAuthProps, history: any) => {
+  return async () => {
+    //validateEmail
+    //"Error: Invalid Email Address"
+
+    //userEmails.includes(email)
+    //"Error: Email already in use"
+    //"Error: Name already in use"
+
+    //userNames.includes(formatEmail(name))
+
+    //throw Error("nuggetErr");
+    (await axios.post("/api/add/auth", auth)).data;
+
+    history.push(routes.accountCreated);
+  };
+};
 
 export const logout = (history: any) => {
   history.push(routes.signIn);

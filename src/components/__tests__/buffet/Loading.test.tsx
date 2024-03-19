@@ -1,8 +1,8 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag, mockWindowMobileView } from "../testingUtils";
-import Loading from "../buffet/Loading";
+import { getTestIdTag, mockWindowMobileView } from "../../testingUtils";
+import { Loading } from "../../buffet";
 
 describe("<Loading/>", () => {
   it("should render the component", async () => {

@@ -1,14 +1,12 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
 import {
   getTestIdTag,
   mockWindowMobileView,
   renderWithRouter,
-} from "../testingUtils";
-import { geti18n, routes } from "../../store";
-import { LinkText } from "../buffet";
+} from "../../testingUtils";
+import { geti18n, routes } from "../../../store";
+import { LinkText } from "../../buffet";
 
 describe("<LinkText/>", () => {
   it("should render the component with accurate routing and text data", async () => {

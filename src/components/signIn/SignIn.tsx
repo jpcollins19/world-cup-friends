@@ -29,14 +29,14 @@ export const SignIn: React.FunctionComponent = () => {
   const dispatch = tDispatch();
   const history = useHistory();
 
-  const pwString = geti18n("password");
-  const emailString = geti18n("email");
+  const pwStr = geti18n("password");
+  const emailStr = geti18n("email");
 
   const [invalidCredentials, setInvalidCredentials] = React.useState(false);
-  const [type, setType] = React.useState(pwString);
+  const [type, setType] = React.useState(pwStr);
 
   const showPwClick = () => {
-    const typeNeeded = type === pwString ? "text" : pwString;
+    const typeNeeded = type === pwStr ? "text" : pwStr;
 
     setType(typeNeeded);
   };
@@ -63,8 +63,8 @@ export const SignIn: React.FunctionComponent = () => {
   // const joe = findJoe(useSelector(( state ) => state.users));
 
   const textFieldInputs: TextFieldInputProps[] = [
-    { label: emailString },
-    { label: pwString, type },
+    { label: emailStr },
+    { label: pwStr, type },
   ];
 
   let linkTextInputs: LinkTextInputProps[] = [
@@ -100,14 +100,14 @@ export const SignIn: React.FunctionComponent = () => {
     formik;
 
   const onChange = (ev: any) => {
-    const isEmail = ev.target.name === emailString;
+    const isEmail = ev.target.name === emailStr;
 
     const value = ev.target.value;
 
     if (isEmail) {
-      setFieldValue(emailString, value);
+      setFieldValue(emailStr, value);
     } else {
-      setFieldValue(pwString, value);
+      setFieldValue(pwStr, value);
     }
   };
 

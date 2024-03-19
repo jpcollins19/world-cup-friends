@@ -5,9 +5,9 @@ import {
   getTestIdTag,
   invalidEmailAndOrPw,
   mockWindowMobileView,
-} from "../testingUtils";
-import { geti18n } from "../../store";
-import { ErrorMessage } from "../buffet";
+} from "../../testingUtils";
+import { geti18n } from "../../../store";
+import { ErrorMessage } from "../../buffet";
 
 describe("<Error/>", () => {
   it("should render the component with accurate text", async () => {

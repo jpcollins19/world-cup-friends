@@ -18,6 +18,16 @@ app.get("/api/me", async (req, res, next) => {
   }
 });
 
+app.post("/api/add/auth", async (req, res, next) => {
+  try {
+    const auth = await { ...req.body };
+    const user = await User.create(auth);
+    res.status(201).send(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500).send({ error: err.message });

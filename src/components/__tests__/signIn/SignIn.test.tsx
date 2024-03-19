@@ -14,8 +14,8 @@ import {
   renderWithProvider,
   submitLowerCase,
   submitUpperCase,
-} from "../testingUtils";
-import SignIn from "../signIn/SignIn";
+} from "../../testingUtils";
+import SignIn from "../../signIn/SignIn";
 
 //jest.mock("react-responsive");
 

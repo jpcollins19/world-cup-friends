@@ -12,6 +12,7 @@ export const en = {
   invalidEmailOrPw: "Invalid Email Address and/or Password",
   name: "name",
   password: "password",
+  passwordNoMatch: "Passwords do not match",
   rules: "Rules/General Info",
   save: "Save",
   signIn: "Sign In",
@@ -32,6 +33,7 @@ export type i18nOptionsTypes =
   | "invalidEmailOrPw"
   | "name"
   | "password"
+  | "passwordNoMatch"
   | "rules"
   | "save"
   | "signIn"

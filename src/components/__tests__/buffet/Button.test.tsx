@@ -11,8 +11,8 @@ import {
   flexBothClass,
   elevateClass,
   mockWindowMobileView,
-} from "../testingUtils";
-import { Button } from "../buffet";
+} from "../../testingUtils";
+import { Button } from "../../buffet";
 
 describe("<Button/>", () => {
   it("should render the component with accurate text and no form or type attributes", async () => {

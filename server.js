@@ -6,7 +6,7 @@
 //LastUpdatedReadOnly
 //LastUpdatedAdmin - audit that updating lastUpdated works
 
-//createAccountPage
+//CreateAccount
 
 const express = require("express");
 const app = express();

@@ -11,8 +11,8 @@ import {
   mockWindowMobileView,
   renderWithFormik,
   queryTestIdTag,
-} from "../testingUtils";
-import { TextField } from "../buffet";
+} from "../../testingUtils";
+import { TextField } from "../../buffet";
 
 //TextField - make labelSpan optional and default to true
 

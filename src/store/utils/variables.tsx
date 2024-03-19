@@ -1,4 +1,5 @@
 export const routes = {
+  accountCreated: "account-created",
   admin: "/admin",
   home: "/",
   createAccount: "/create-account",

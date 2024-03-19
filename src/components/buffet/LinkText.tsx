@@ -24,11 +24,6 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({ input }) => {
 
   return (
     <div data-testid={dataTestId} className={`${tw.flexBoth} w-full`}>
-      {/*{option.route === routes.signIn && (*/}
-      {/*    <h4 className="create-account-sign-in">Already have an*/}
-      {/*      account? </h4>*/}
-      {/*)}*/}
-      {/*<Router>*/}
       <Link
         data-testid={linkTestId}
         to={input.route}
@@ -36,7 +31,6 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({ input }) => {
       >
         {text}
       </Link>
-      {/*</Router>*/}
     </div>
   );
 };

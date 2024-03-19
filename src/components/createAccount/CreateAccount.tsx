@@ -11,6 +11,9 @@ import {
   loadingDefault,
   routes,
   tw,
+  createAuth,
+  AddAuthProps,
+  formatEmail,
 } from "../../store";
 import {
   Button,
@@ -23,50 +26,51 @@ import {
   ToasterContainer,
   ToasterMessage,
 } from "../buffet";
-import { CreateAccountSchema } from "./CreateAccountSchema";
+import {
+  CreateAccountSchema,
+  useCreateAccountSchema,
+} from "./CreateAccountSchema";
 
 export const CreateAccount: React.FunctionComponent = () => {
   const dispatch = tDispatch();
   const history = useHistory();
 
-  const pwString = geti18n("password");
-  const emailString = geti18n("email");
+  const pwStr = geti18n("password");
+  const emailStr = geti18n("email");
 
   const [invalidCredentials, setInvalidCredentials] = React.useState(false);
-  const [type, setType] = React.useState(pwString);
+  const [errorMessage, setErrorMessage]: string | null = React.useState(null);
+  const [type, setType] = React.useState(pwStr);
 
   const showPwClick = () => {
-    const typeNeeded = type === pwString ? "text" : pwString;
+    const typeNeeded = type === pwStr ? "text" : pwStr;
 
     setType(typeNeeded);
   };
 
-  // React.useEffect(() => {
-  //   toast.dismiss();
-  // }, []);
+  React.useEffect(() => {
+    toast.dismiss();
+  }, []);
 
-  // const errorMessageComponent = (
-  //   <ErrorMessage text={geti18n("invalidEmailOrPw")} />
-  // );
+  const errorMessageComponent = <ErrorMessage text={errorMessage} />;
 
-  // React.useEffect(() => {
-  //   if (invalidCredentials) {
-  //     ToasterMessage({ component: errorMessageComponent });
-  //
-  //     setTimeout(() => {
-  //       setInvalidCredentials(false);
-  //       // toast.dismiss();
-  //     }, 5000);
-  //   }
-  // }, [invalidCredentials]);
+  React.useEffect(() => {
+    if (invalidCredentials) {
+      ToasterMessage({ component: errorMessageComponent });
 
-  // const joe = findJoe(useSelector(( state ) => state.users));
+      setTimeout(() => {
+        setInvalidCredentials(false);
+      }, 5000);
+    }
+  }, [invalidCredentials]);
+
+  const confirmPwStr = geti18n("confirmPassword");
 
   const textFieldInputs: TextFieldInputProps[] = [
-    { label: emailString },
+    { label: emailStr },
     { label: geti18n("name") },
-    { label: pwString, type },
-    { label: geti18n("confirmPassword"), type },
+    { label: pwStr, type },
+    { label: confirmPwStr, type },
   ];
 
   // if (joe?.tourneyStage > 1) {
@@ -76,9 +80,20 @@ export const CreateAccount: React.FunctionComponent = () => {
 
   const onSubmit = async () => {
     try {
-      await dispatch(authenticate(values.email, values.password, history));
+      if (values.password !== values["confirm password"]) {
+        setErrorMessage(geti18n("passwordNoMatch"));
+        return setInvalidCredentials(true);
+      }
+
+      const auth: AddAuthProps = {
+        email: formatEmail(values.email),
+        name: values.name,
+        password: values.password,
+      };
+
+      await dispatch(createAuth(auth, history));
     } catch (err: any) {
-      resetForm({ values: { email: "", password: "" } });
+      console.log("byahError", err);
       setInvalidCredentials(true);
     }
   };
@@ -86,32 +101,25 @@ export const CreateAccount: React.FunctionComponent = () => {
   const formik = useFormik<CreateAccountSchema>({
     initialValues: {
       email: "",
+      name: "",
       password: "",
+      "confirm password": "",
     },
     onSubmit: onSubmit,
-    // validationSchema: useSignInSchema(),
+    validationSchema: useCreateAccountSchema(),
   });
 
-  const { handleSubmit, values, setFieldValue, resetForm, isValid, dirty } =
-    formik;
+  const { handleSubmit, values, setFieldValue, isValid, dirty } = formik;
 
   const onChange = (ev: any) => {
-    const isEmail = ev.target.name === emailString;
-
-    const value = ev.target.value;
-
-    if (isEmail) {
-      setFieldValue(emailString, value);
-    } else {
-      setFieldValue(pwString, value);
-    }
+    setFieldValue(ev.target.name, ev.target.value);
   };
 
-  const dataTestId = getPageTestId("signIn-page");
+  const dataTestId = getPageTestId("create-account-page");
 
   const isMobile = useIsMobile();
 
-  const toasterContainerClass = isMobile ? "mt-36" : "mt-7";
+  const toasterContainerClass = isMobile ? "mt-36" : "mt-3";
   const createAccountContainerClass = isMobile
     ? "h-3/6 w-8/12"
     : "h-fit w-4/12";
@@ -124,7 +132,7 @@ export const CreateAccount: React.FunctionComponent = () => {
   ) : (
     <div data-testid={dataTestId} className={`${tw.flexBoth} h-screen`}>
       <ToasterContainer
-        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-17vw`}
+        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-17vw w-72`}
       />
 
       <div

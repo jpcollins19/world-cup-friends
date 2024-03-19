@@ -15,28 +15,6 @@ export type TextFieldInputProps = {
   type?: string;
 };
 
-// interface ValueProps {
-//   schema: string;
-// }
-
-// type ShowValueProps = {
-//   showValue: true;
-//   schema: string;
-// };
-//
-// type HideValueProps = {
-//   showValue?: false;
-// };
-
-// type TextFieldProps = {
-//   label: string; //requiring label so the input testId is created/tracked
-//   type?: string | null;
-//   onChange?: (ev: any) => void | string;
-//   showSpan?: boolean;
-//   isRequired?: boolean;
-//   size?: string;
-// } & (HideValueProps | ShowValueProps);
-
 type TextFieldProps = {
   label: string; //requiring label so the input testId is created/tracked
   type?: string | null;
@@ -48,26 +26,6 @@ type TextFieldProps = {
   showValue?: boolean;
   schema?: string;
 };
-
-// type TextFieldProps =
-//   | (HideValueProps & {
-//       label: string; //requiring label so the input testId is created/tracked
-//       type?: string | null;
-//       onChange?: (ev: any) => void | string;
-//       showSpan?: boolean;
-//       isRequired?: boolean;
-//       size?: string;
-//     })
-//   | (ShowValueProps & {
-//       label: string; //requiring label so the input testId is created/tracked
-//       type?: string | null;
-//       onChange?: (ev: any) => void | string;
-//       showSpan?: boolean;
-//       isRequired?: boolean;
-//       size?: string;
-//       showValue: boolean;
-//       schema: string;
-//     });
 
 interface InputAttributes extends React.InputHTMLAttributes<HTMLInputElement> {
   "data-testid": string;

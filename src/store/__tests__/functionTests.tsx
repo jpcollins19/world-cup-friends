@@ -1,5 +1,5 @@
 import * as funcs from "../utils";
-import { calcPayoutSchema, routes } from "../utils";
+import { calcPayoutSchema, routes, validateEmail } from "../utils";
 import { mockWindowMobileView } from "../../components/testingUtils";
 
 describe("geti18n", () => {
@@ -187,6 +187,47 @@ describe("calcPayout", () => {
       expect(result.secondPlace).toBe(test.result.secondPlace);
       expect(result.thirdPlace).toBe(test.result.thirdPlace);
       expect(result.numOfPicks).toBe(test.result.numOfPicks);
+    });
+  });
+});
+
+describe("formatEmail ", () => {
+  const testsToRun = [
+    { email: "Joe@gmail.com", result: "joe@gmail.com" },
+    {
+      email: "JOE@gmail.com",
+      result: "joe@gmail.com",
+    },
+    {
+      email: "ThISIsATest@gmail.com",
+      result: "thisisatest@gmail.com",
+    },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(`${test.email}`, () => {
+      const result: string = funcs.formatEmail(test.email);
+
+      expect(result).toBe(test.result);
+    });
+  });
+});
+
+describe("validateEmail ", () => {
+  const testsToRun = [
+    { email: "Joe@gmail.com", result: true },
+    { email: "joe@gmail.com", result: true },
+    { email: "GoArseNAL@gmail.com", result: true },
+    { email: "Joegmail.com", result: false },
+    { email: "Joe@gmail@yahoo.com", result: false },
+    { email: "Joe@gmail", result: false },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(`${test.email}`, () => {
+      const result: boolean = funcs.validateEmail(test.email);
+
+      expect(result).toBe(test.result);
     });
   });
 });

@@ -20,7 +20,7 @@ export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
   const textTestId = getPageTestId("error-message-text");
 
   return (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} my-4`}>
+    <div data-testid={dataTestId} className={`${tw.flexBoth}  my-4`}>
       <Error style={{ fontSize }} />
       <div data-testid={textTestId} className={`${textSizeClass} ml-2`}>
         {text}

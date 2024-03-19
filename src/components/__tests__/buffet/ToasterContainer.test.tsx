@@ -1,8 +1,8 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import { getTestIdTag } from "../testingUtils";
-import { ToasterContainer } from "../buffet";
+import { getTestIdTag } from "../../testingUtils";
+import { ToasterContainer } from "../../buffet";
 
 describe("<ToasterContainer/>", () => {
   it("should render the component", async () => {

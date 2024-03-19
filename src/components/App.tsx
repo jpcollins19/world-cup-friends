@@ -1,18 +1,15 @@
 import * as React from "react";
-import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
-  getPageTestId,
   loadTourneyStage,
   loadUsers,
   me,
-  RootState,
   routes,
   tDispatch,
   tw,
 } from "../store";
 import Routes from "./Routes";
 import Navbar from "./navbar/Navbar";
-import { useSelector } from "react-redux";
 
 const App = () => {
   const dispatch = tDispatch();
