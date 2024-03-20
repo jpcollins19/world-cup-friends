@@ -67,24 +67,14 @@ export const authenticate =
     }
   };
 
-export type AddAuthProps = {
+export type CreateAuthProps = {
   email: string;
   name: string;
   password: string;
 };
 
-export const createAuth = (auth: AddAuthProps, history: any) => {
+export const createAuth = (auth: CreateAuthProps, history: any) => {
   return async () => {
-    //validateEmail
-    //"Error: Invalid Email Address"
-
-    //userEmails.includes(email) --useIsEmailInUse
-    //"Error: Email already in use"
-
-    //userNames.includes(formatEmail(name)) --useIsNameInUse
-    //"Error: Name already in use"
-
-    //throw Error("nuggetErr");
     (await axios.post("/api/add/auth", auth)).data;
 
     history.push(routes.accountCreated);

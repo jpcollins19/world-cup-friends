@@ -2,13 +2,14 @@ import * as React from "react";
 import { getPageTestId, tw } from "../../store";
 import Logo from "./Logo";
 import NavbarComp from "./comp/NavbarComp";
+import { useIsMobile } from "../../hooks";
 
 export const Navbar: React.FunctionComponent = () => {
-  const dataTestId = getPageTestId("navbar");
+  const testId = getPageTestId("navbar");
 
   return (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.flexBoth} shadow-2xl flex-col h-full`}
     >
       <Logo />

@@ -11,7 +11,7 @@ export const PayoutData: React.FunctionComponent = () => {
     setPayout(calcPayout(activeUsers));
   }, [activeUsers?.length]);
 
-  const dataTestId = getPageTestId("payoutData");
+  const testId = getPageTestId("payoutData");
 
   const borderClass = "border-solid border-gray-300";
   const boxShadow = "shadow-payoutBorder";
@@ -23,7 +23,7 @@ export const PayoutData: React.FunctionComponent = () => {
 
   return shouldPayoutShow ? (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.flexBoth} ${tw.shrinkTextBase} shadow-2xl flex-col h-full cursor-default py-6`}
     >
       <div className={`${tw.whiteTextMed} text-base`}>Payout</div>

@@ -21,10 +21,13 @@ export const colors = {
 };
 
 export const tw = {
+  argentinaFlagBackground:
+    "bg-gradient-to-b from-blue-300 via-white to-blue-300",
   bDodger: "border-solid border-4 border-blue-500",
   bPurple: "border-solid border-4 border-purple-700",
   bRed: "border-solid border-4 border-red-700",
   elevate: "shadow-xl hover:shadow-xl transition duration-300 ease-in-out",
+  errorMessageBackground: "bg-rose-200 text-rose-700",
   flexA: "flex items-center",
   flexBoth: "flex justify-center items-center",
   flexJ: "flex justify-center",

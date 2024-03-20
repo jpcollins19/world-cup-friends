@@ -58,7 +58,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
 
   const spanClass = isMobile ? "text-xl" : "text-xs";
 
-  const dataTestId = getPageTestId("text-field");
+  const testId = getPageTestId("text-field");
 
   const inputTestId = getPageTestId(
     `text-field-input-${createUrlFromText(label)}`,
@@ -153,7 +153,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
   //const { values } = useFormikContext<AllSchemas>();
 
   return (
-    <div data-testid={dataTestId} className={`relative ${textFieldContClass}`}>
+    <div data-testid={testId} className={`relative ${textFieldContClass}`}>
       <input {...inputAttributes} />
 
       {/*<input*/}

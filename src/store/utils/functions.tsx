@@ -1,6 +1,6 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useGetUsers, useIsMobile } from "../../hooks";
+import { useGetUsers, useIsEmailInUse, useIsMobile } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
 import { useSelector } from "react-redux";
 import { RootState } from "../index";

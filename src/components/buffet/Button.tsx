@@ -33,12 +33,12 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
 
   const buttonCont = smallButtonNeeded ? "my-1" : "my-5";
 
-  const dataTestId = getPageTestId(`button-cont-${createUrlFromText(text)}`);
+  const testId = getPageTestId(`button-cont-${createUrlFromText(text)}`);
   const buttonTestId = getPageTestId(`button-${createUrlFromText(text)}`);
 
   return (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.flexBoth} ${tw.elevate} rounded-lg w-fit ${buttonCont} ${buttonBackground}`}
     >
       <button

@@ -61,11 +61,11 @@ export const NavbarComp: React.FunctionComponent = () => {
 
   const bottomContClass = userIsLoggedIn ? "shadow-routesNotSelected" : "";
 
-  const dataTestId = getPageTestId("navbar-comp");
+  const testId = getPageTestId("navbar-comp");
 
   return (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.elevate} ${colors.navbarBackground} w-full h-4/5 flex flex-col justify-between`}
     >
       <div className="flex-1">

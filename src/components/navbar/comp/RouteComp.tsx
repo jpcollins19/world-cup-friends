@@ -22,7 +22,7 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
 
   const nakedRoute = routePath.split("/").pop();
 
-  const dataTestId = getPageTestId(`comp-route-${nakedRoute}`);
+  const testId = getPageTestId(`comp-route-${nakedRoute}`);
 
   const routeText = getTextFromUrl(routePath);
 
@@ -34,7 +34,7 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
 
   return (
     <Link
-      data-testid={dataTestId}
+      data-testid={testId}
       to={routePath}
       className={`${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2 my-2 ${currentPageClass}`}
     >

@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import {
   changeInputText,
   click,
+  elevateClass,
   emailInputTestId,
   getButton,
   getButtonTestId,
@@ -117,12 +118,12 @@ describe("<SignIn/>", () => {
     const signInContainerClass = `${singInBase}cont`;
     const headerClass = `${singInBase}header`;
     const viewPwClass = `${singInBase}view-pw`;
+    const linkTextContClass = `${singInBase}linkText-cont`;
     const linkTextClass = `${singInBase}linkText`;
 
-    const signInContainerClassBaseInfo =
-      "border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300";
+    const signInContainerClassBaseInfo = `bg-gradient-to-b from-blue-300 via-white to-blue-300 border-solid ${elevateClass} border-2 border-black rounded-2xl`;
 
-    const headerClassBaseInfo = "text-center";
+    const headerClassBaseInfo = "text-shadow-med text-white text-center";
 
     const viewPwClassBaseInfo = "text-center cursor-pointer";
 
@@ -138,39 +139,43 @@ describe("<SignIn/>", () => {
         },
         {
           testId: viewPwClass,
-          result: `${viewPwClassBaseInfo} text-base`,
+          result: `${viewPwClassBaseInfo} mt-5 mb-1 text-base`,
         },
         {
-          testId: viewPwClass,
-          result: `${viewPwClassBaseInfo} text-base`,
+          testId: linkTextContClass,
+          result: "mt-1",
+        },
+        {
+          testId: `${linkTextClass}-/`, //all divs have the same class info, so testing just for the home (/) route
+          result: "mt-4",
         },
       ],
       mobile: [
         {
-          testId: signInContainerClass,
-          result: `${signInContainerClassBaseInfo} h-3/6 w-8/12`,
+          testId: `${signInContainerClass}-mobile`,
+          result: `${signInContainerClassBaseInfo} h-2/5 w-8/12`,
         },
         {
-          testId: headerClass,
+          testId: `${headerClass}-mobile`,
           result: `${headerClassBaseInfo} text-6xl mt-20`,
         },
         {
-          testId: viewPwClass,
-          result: `${viewPwClassBaseInfo} text-2xl`,
+          testId: `${viewPwClass}-mobile`,
+          result: `${viewPwClassBaseInfo} mt-8 mb-3 text-2xl`,
         },
         {
-          testId: linkTextClass,
-          result: `mt-20`,
+          testId: `${linkTextContClass}-mobile`,
+          result: `mt-5`,
+        },
+        {
+          testId: `${linkTextClass}-mobile-/`, //all divs have the same class info, so testing just for the home (/) route
+          result: "mt-8",
         },
       ],
     };
 
     describe("comp", () => {
       testsToRun.comp.forEach((test) => {
-        beforeEach(() => {
-          mockWindowMobileView(false);
-        });
-
         it(`${test.testId}`, async () => {
           renderWithProvider(<SignIn />);
 

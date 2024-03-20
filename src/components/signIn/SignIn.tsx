@@ -111,31 +111,37 @@ export const SignIn: React.FunctionComponent = () => {
     }
   };
 
-  const dataTestId = getPageTestId("sign-in-page");
+  const testId = getPageTestId("sign-in-page");
+  const mainContTestId = getPageTestId("sign-in-cont");
+  const headerTestId = getPageTestId("sign-in-header");
+  const viewPwTestId = getPageTestId("sign-in-view-pw");
+  const linkTextContTestId = getPageTestId("sign-in-linkText-cont");
+  const linkTextTestId = getPageTestId("sign-in-linkText");
 
   const isMobile = useIsMobile();
 
   const toasterContainerClass = isMobile ? "mt-36" : "mt-7";
-  const signInContainerClass = isMobile ? "h-3/6 w-8/12" : "h-4/6 w-4/12";
+  const signInContainerClass = isMobile ? "h-2/5 w-8/12" : "h-4/6 w-4/12";
   const headerClass = isMobile ? "text-6xl mt-20" : "text-4xl mt-10";
-  const viewPwClass = isMobile ? "text-2xl" : "text-base";
-  const linkTextClass = isMobile ? "mt-20" : "";
+  const viewPwClass = isMobile ? "mt-8 mb-3 text-2xl" : "mt-5 mb-1 text-base";
+  const linkTextContClass = isMobile ? "mt-5" : "mt-1";
+  const linkTextClass = isMobile ? "mt-8" : "mt-4";
 
   return loadingDefault() ? (
     <Loading />
   ) : (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} h-screen`}>
+    <div data-testid={testId} className={`${tw.flexBoth} h-screen`}>
       <ToasterContainer
-        className={`${toasterContainerClass} bg-rose-200 text-rose-700 p-0 ml-17vw`}
+        className={`${tw.errorMessageBackground} p-0 ml-17vw${toasterContainerClass} `}
       />
 
       <div
-        data-testid="sign-in-cont"
-        className={`${signInContainerClass} ${tw.elevate} border-solid border-2 border-black rounded-2xl bg-gradient-to-b from-blue-300 via-white to-blue-300`}
+        data-testid={mainContTestId}
+        className={`${tw.argentinaFlagBackground} ${tw.elevate} border-solid border-2 border-black rounded-2xl ${signInContainerClass}`}
       >
         <h1
-          data-testid="sign-in-header"
-          className={`${headerClass} ${tw.whiteTextMed} text-center`}
+          data-testid={headerTestId}
+          className={`${tw.whiteTextMed} text-center ${headerClass} `}
         >
           {geti18n("signIn")}
         </h1>
@@ -158,24 +164,26 @@ export const SignIn: React.FunctionComponent = () => {
             ))}
 
             <div
-              data-testid="sign-in-view-pw"
-              className={`${viewPwClass} text-center cursor-pointer mt-5`}
+              data-testid={viewPwTestId}
+              className={`text-center cursor-pointer ${viewPwClass} `}
               onClick={() => showPwClick()}
             >
               {geti18n("viewPw")}
             </div>
 
-            <div className="h-24">
-              <Button
-                form="sign-in"
-                text={geti18n("submit")}
-                disabled={!isValid || !dirty}
-              />
-            </div>
+            <Button
+              form="sign-in"
+              text={geti18n("submit")}
+              disabled={!isValid || !dirty}
+            />
 
-            <div data-testid="sign-in-linkText" className={linkTextClass}>
+            <div data-testid={linkTextContTestId} className={linkTextContClass}>
               {linkTextInputs.map((input, idx) => (
-                <div key={idx} className="mt-4">
+                <div
+                  key={idx}
+                  data-testid={`${linkTextTestId}-${input.route}`}
+                  className={linkTextClass}
+                >
                   <LinkText key={idx} input={input} />
                 </div>
               ))}

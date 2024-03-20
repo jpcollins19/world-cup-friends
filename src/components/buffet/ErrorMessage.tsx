@@ -16,11 +16,11 @@ export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
 
   const textSizeClass = isMobile ? "text-2xl" : "";
 
-  const dataTestId = getPageTestId("error-message");
+  const testId = getPageTestId("error-message");
   const textTestId = getPageTestId("error-message-text");
 
   return (
-    <div data-testid={dataTestId} className={`${tw.flexBoth}  my-4`}>
+    <div data-testid={testId} className={`${tw.flexBoth}  my-4`}>
       <Error style={{ fontSize }} />
       <div data-testid={textTestId} className={`${textSizeClass} ml-2`}>
         {text}

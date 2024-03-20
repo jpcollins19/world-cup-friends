@@ -8,11 +8,11 @@ export const Loading: React.FunctionComponent = () => {
 
   const mobileSize = isMobile ? 200 : 100;
 
-  const dataTestId = getPageTestId("loading");
+  const testId = getPageTestId("loading");
 
   return (
     <div
-      data-testid={dataTestId}
+      data-testid={testId}
       className={`${tw.flexBoth} h-screen overflow-auto flex flex-col bg-gradient-to-bl from-gray-500 via-gray-600 to-gray-500`}
     >
       <RingLoader

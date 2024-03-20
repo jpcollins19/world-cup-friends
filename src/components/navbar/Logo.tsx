@@ -8,15 +8,11 @@ const worldCupImage =
 //  "https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup-900x720.png";
 
 export const Logo: React.FunctionComponent = () => {
-  const dataTestId = getPageTestId("logo");
+  const testId = getPageTestId("logo");
   const imageTestId = getPageTestId("logo-image");
 
   return (
-    <Link
-      data-testid={dataTestId}
-      to={routes.leaderboard}
-      className="w-full h-1/5"
-    >
+    <Link data-testid={testId} to={routes.leaderboard} className="w-full h-1/5">
       <img
         data-testid={imageTestId}
         src={worldCupImage}

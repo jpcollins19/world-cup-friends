@@ -10,7 +10,7 @@ import RouteComp from "../../navbar/comp/RouteComp";
 import { routes, tw } from "../../../store";
 
 describe("<RouteComp/>", () => {
-  const routePoolPicksDataTestId = "comp-route-pool-picks";
+  const routePoolPicksTestId = "comp-route-pool-picks";
 
   const poolPicksRoute = { path: routes.poolPicks, icon: "" };
 
@@ -19,7 +19,7 @@ describe("<RouteComp/>", () => {
   it("should render the component", async () => {
     renderWithProvider(poolPicksComponent);
 
-    const testId = await getTestIdTag(routePoolPicksDataTestId);
+    const testId = await getTestIdTag(routePoolPicksTestId);
 
     expect(testId).toBeInTheDocument();
   });
@@ -33,7 +33,7 @@ describe("<RouteComp/>", () => {
     it("when isCurrentPage is true", async () => {
       renderWithMemoryRouter(poolPicksComponent, routes.poolPicks);
 
-      const testId = await getTestIdTag(routePoolPicksDataTestId);
+      const testId = await getTestIdTag(routePoolPicksTestId);
 
       const currentPageClass = "shadow-routesSelected bg-sky-600";
 
@@ -45,7 +45,7 @@ describe("<RouteComp/>", () => {
     it("when isCurrentPage is false", async () => {
       renderWithMemoryRouter(poolPicksComponent, routes.rules);
 
-      const testId = await getTestIdTag(routePoolPicksDataTestId);
+      const testId = await getTestIdTag(routePoolPicksTestId);
 
       const currentPageClass = "shadow-routesNotSelected";
 

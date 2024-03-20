@@ -15,7 +15,7 @@ type LinkTextProps = {
 export const LinkText: React.FunctionComponent<LinkTextProps> = ({ input }) => {
   const text = input.text;
 
-  const dataTestId = getPageTestId("linkText-component");
+  const testId = getPageTestId("linkText-component");
   const linkTestId = getPageTestId(`linkText-link-${createUrlFromText(text)}`);
 
   const isMobile = useIsMobile();
@@ -23,7 +23,7 @@ export const LinkText: React.FunctionComponent<LinkTextProps> = ({ input }) => {
   const linkClass = isMobile ? "text-2xl" : "";
 
   return (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} w-full`}>
+    <div data-testid={testId} className={`${tw.flexBoth} w-full`}>
       <Link
         data-testid={linkTestId}
         to={input.route}

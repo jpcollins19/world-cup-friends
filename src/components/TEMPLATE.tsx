@@ -46,12 +46,12 @@ export const TEMPLATE: React.FunctionComponent = () => {
   //   }
   // };
 
-  const dataTestId = getPageTestId("signIn-page");
+  const testId = getPageTestId("signIn-page");
 
   return loadingDefault() ? (
     <Loading />
   ) : (
-    <div data-testid={dataTestId} className={`${tw.flexBoth} h-full`}>
+    <div data-testid={testId} className={`${tw.flexBoth} h-full`}>
       {/*<FormikProvider value={formik}>*/}
       {/*  <Form*/}
       {/*    onSubmit={handleSubmit}*/}
