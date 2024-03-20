@@ -1,5 +1,4 @@
-//create tests for validating addAuth
-
+//CreateAccount
 //PayoutData
 //NavbarComp
 //RouteComp
@@ -7,8 +6,6 @@
 //LastUpdatedContainer
 //LastUpdatedReadOnly
 //LastUpdatedAdmin - audit that updating lastUpdated works
-
-//CreateAccount
 
 const express = require("express");
 const app = express();

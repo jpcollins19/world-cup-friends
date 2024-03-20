@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import store, { UserSchema } from "../../store";
 import * as React from "react";
@@ -59,6 +59,10 @@ export const queryTestIdTag = (testId: string) => {
   return screen.queryByTestId(testId as any);
 };
 
+export const getTextFieldTag = async (label: string) => {
+  return await getTestIdTag(`text-field-input-${label}`);
+};
+
 export const getText = (text: string) => {
   return screen.queryByText(text as any);
 };
@@ -71,9 +75,11 @@ export const click = async (input: any) => {
   fireEvent.click(input);
 };
 
-export const submit = async (input: any) => {
-  fireEvent.submit(input);
-};
+// export const submit = async (input: any) => {
+//   // act(() => {
+//   fireEvent.submit(input);
+//   // });
+// };
 
 export const matchMediaWorkAround = () => {
   return Object.defineProperty(window, "matchMedia", {

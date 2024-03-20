@@ -4,14 +4,14 @@ import {
   changeInputText,
   click,
   elevateClass,
-  emailInputTestId,
   getButton,
   getButtonTestId,
   getTestIdTag,
   getText,
+  getTextFieldTag,
   matchMediaWorkAround,
   mockWindowMobileView,
-  pwInputTestId,
+  queryTestIdTag,
   renderWithProvider,
   submitLowerCase,
   submitUpperCase,
@@ -25,11 +25,13 @@ describe("<SignIn/>", () => {
     matchMediaWorkAround();
   });
 
-  it("should render the SignIn page", async () => {
+  it("should render the component", async () => {
     renderWithProvider(<SignIn />);
 
     const pageTestId = await getTestIdTag("sign-in-page");
+    const errorMessageCont = await queryTestIdTag("error-message");
 
+    expect(errorMessageCont).not.toBeInTheDocument();
     expect(pageTestId).toBeInTheDocument();
     expect(pageTestId).toHaveTextContent("Sign In");
   });
@@ -45,8 +47,8 @@ describe("<SignIn/>", () => {
   it("both TextFields render", async () => {
     renderWithProvider(<SignIn />);
 
-    const emailInput = await getTestIdTag(emailInputTestId);
-    const pwInput = await getTestIdTag(pwInputTestId);
+    const emailInput = await getTextFieldTag("email");
+    const pwInput = await getTextFieldTag("password");
 
     expect(emailInput).toBeInTheDocument();
     expect(pwInput).toBeInTheDocument();
@@ -71,8 +73,8 @@ describe("<SignIn/>", () => {
   it("submit button being enabled", async () => {
     renderWithProvider(<SignIn />);
 
-    const emailInput = await getTestIdTag(emailInputTestId);
-    const pwInput = await getTestIdTag(pwInputTestId);
+    const emailInput = await getTextFieldTag("email");
+    const pwInput = await getTextFieldTag("password");
 
     await changeInputText(emailInput, "joe@gmail.com");
     await changeInputText(pwInput, "fakePassword");
@@ -88,7 +90,7 @@ describe("<SignIn/>", () => {
 
     await click(viewPw);
 
-    const pwInput = await getTestIdTag(pwInputTestId);
+    const pwInput = await getTextFieldTag("password");
 
     expect(pwInput).toHaveAttribute("type", "text");
   });

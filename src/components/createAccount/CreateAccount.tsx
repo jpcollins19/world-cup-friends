@@ -38,7 +38,7 @@ export const CreateAccount: React.FunctionComponent = () => {
   const emailStr = geti18n("email");
 
   const [invalidCredentials, setInvalidCredentials] = React.useState(false);
-  const [errorMessage, setErrorMessage]: string | null = React.useState(null);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [type, setType] = React.useState(pwStr);
 
   const showPwClick = () => {
@@ -79,6 +79,8 @@ export const CreateAccount: React.FunctionComponent = () => {
 
   const onSubmit = async () => {
     try {
+      setErrorMessage("");
+
       const authEmail = formatEmail(values.email);
 
       if (!validateEmail(authEmail)) {

@@ -3,14 +3,13 @@ import "@testing-library/jest-dom";
 import {
   changeInputText,
   getTestIdTag,
-  emailInputTestId,
-  pwInputTestId,
   email,
   pw,
   elevateClass,
   mockWindowMobileView,
   renderWithFormik,
   queryTestIdTag,
+  getTextFieldTag,
 } from "../../testingUtils";
 import { TextField } from "../../buffet";
 
@@ -33,7 +32,7 @@ describe("<TextField/>", () => {
     renderWithFormik(component, initialValues, onSubmit);
 
     const pageTestId = await getTestIdTag("text-field");
-    const inputTestId = await getTestIdTag("text-field-input-email");
+    const inputTestId = await getTextFieldTag("email");
 
     expect(pageTestId).toBeInTheDocument();
     expect(inputTestId).toBeInTheDocument();
@@ -44,7 +43,7 @@ describe("<TextField/>", () => {
 
     renderWithFormik(component, initialValues, onSubmit);
 
-    const input = await getTestIdTag(emailInputTestId);
+    const input = await getTextFieldTag("email");
     expect(input).toHaveAttribute("type", "text");
   });
 
@@ -53,7 +52,8 @@ describe("<TextField/>", () => {
 
     renderWithFormik(component, initialValues, onSubmit);
 
-    const input = await getTestIdTag(pwInputTestId);
+    const input = await getTextFieldTag("password");
+
     expect(input).toHaveAttribute("type", pw);
   });
 
@@ -62,7 +62,7 @@ describe("<TextField/>", () => {
 
     renderWithFormik(component, initialValues, onSubmit);
 
-    const input = await getTestIdTag(pwInputTestId);
+    const input = await getTextFieldTag("password");
 
     await changeInputText(input, email);
 
@@ -408,9 +408,7 @@ describe("<TextField/>", () => {
 
       const pageTestId = await getTestIdTag("text-field-mobile");
 
-      const inputTestId = await getTestIdTag(
-        "text-field-input-password-mobile",
-      );
+      const inputTestId = await getTextFieldTag("password-mobile");
 
       expect(pageTestId).toBeInTheDocument();
 

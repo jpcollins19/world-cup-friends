@@ -14,8 +14,6 @@ import {
   ignoreReactDOMRenderError,
   updateStore,
 } from "./hookUtils";
-import * as funcs from "../../store/utils";
-import { useIsEmailInUse } from "../";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();

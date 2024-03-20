@@ -11,6 +11,7 @@ import {
 import Routes from "./Routes";
 import Navbar from "./navbar/Navbar";
 import { useIsMobile } from "../hooks";
+import { useSelector } from "react-redux";
 
 const App = () => {
   const dispatch = tDispatch();
@@ -31,6 +32,11 @@ const App = () => {
   const navbarClass = "bg-white";
 
   const isMobile = useIsMobile();
+
+  console.log(
+    "byah",
+    useSelector((state) => state.auth),
+  );
 
   return (
     <div
