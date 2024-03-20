@@ -7,12 +7,13 @@ import {
   Redirect,
 } from "react-router-dom";
 import { loadLastUpdated, me, routes, tDispatch } from "../store";
+import { useIsUserLoggedIn } from "../hooks";
+import { Loading } from "./buffet";
 import SignIn from "./signIn/SignIn";
 import Leaderboard from "./leaderboard/Leaderboard";
-import { Loading } from "./buffet";
 import PreSignIn from "./preSignIn/PreSignIn";
-import { useIsUserLoggedIn } from "../hooks";
 import CreateAccount from "./createAccount/CreateAccount";
+import NoMatch from "./noMatch/NoMatch";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -43,26 +44,55 @@ const Routes = () => {
   const userIsLoggedIn = useIsUserLoggedIn();
 
   const noAuthRoutes = [
+    { path: routes.home, component: PreSignIn },
     { path: routes.signIn, component: SignIn },
     { path: routes.createAccount, component: CreateAccount },
   ];
+
+  const redirectHome = <Redirect to={routes.home} />;
+
+  const authRoutes = [{ path: routes.leaderboard, component: Leaderboard }];
 
   return loading ? (
     <Loading />
   ) : (
     <Switch>
-      {!userIsLoggedIn ? (
-        noAuthRoutes.map((route, key) => (
+      {!userIsLoggedIn &&
+        noAuthRoutes.map((route, idx) => (
           <Route
             exact
-            key={key}
+            key={idx}
             path={route.path}
             component={route.component}
           />
-        ))
-      ) : (
-        <Route exact path={routes.leaderboard} component={Leaderboard} />
+        ))}
+
+      {!userIsLoggedIn &&
+        authRoutes.map((route, idx) => (
+          <Route exact key={idx} path={route.path}>
+            {redirectHome}
+          </Route>
+        ))}
+
+      {userIsLoggedIn && (
+        <Route exact path={routes.home}>
+          <Redirect to={routes.leaderboard} />
+        </Route>
       )}
+
+      {userIsLoggedIn &&
+        authRoutes.map((route, idx) => (
+          <Route
+            exact
+            key={idx}
+            path={route.path}
+            component={route.component}
+          />
+        ))}
+
+      <Route path={routes.noMatch}>
+        <NoMatch />
+      </Route>
     </Switch>
   );
 };

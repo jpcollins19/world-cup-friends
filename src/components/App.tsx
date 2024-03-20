@@ -33,11 +33,6 @@ const App = () => {
 
   const isMobile = useIsMobile();
 
-  console.log(
-    "byah",
-    useSelector((state) => state.auth),
-  );
-
   return (
     <div
       // data-testid={testId}

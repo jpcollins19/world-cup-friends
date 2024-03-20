@@ -12,7 +12,7 @@ export const Logo: React.FunctionComponent = () => {
   const imageTestId = getPageTestId("logo-image");
 
   return (
-    <Link data-testid={testId} to={routes.leaderboard} className="w-full h-1/5">
+    <Link data-testid={testId} to={routes.home} className="w-full h-1/5">
       <img
         data-testid={imageTestId}
         src={worldCupImage}

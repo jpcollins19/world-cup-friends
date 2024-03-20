@@ -8,6 +8,7 @@ export const routes = {
   editProfileEmailNotifications: "/edit-profile-email-notifications",
   leaderboard: "/leaderboard",
   myPicks: "/my-picks",
+  noMatch: "*",
   poolPicks: "/pool-picks",
   rules: "/rules",
   signIn: "/sign-in",
@@ -23,6 +24,7 @@ export const colors = {
 export const tw = {
   argentinaFlagBackground:
     "bg-gradient-to-b from-blue-300 via-white to-blue-300",
+  backgroundImage: "min-h-screen bg-cover bg-center",
   bDodger: "border-solid border-4 border-blue-500",
   bPurple: "border-solid border-4 border-purple-700",
   bRed: "border-solid border-4 border-red-700",

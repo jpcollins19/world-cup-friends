@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/dist", express.static(path.join(__dirname, "dist")));
 
 // app.use("/public/css", express.static(path.join(__dirname, "public/css")));
-// app.use("/public/pics", express.static(path.join(__dirname, "public/pics")));
+app.use("/public/pics", express.static(path.join(__dirname, "public/pics")));
 
 app.use("/", require("./server/api/lastUpdated.js"));
 app.use("/", require("./server/api/tourneyStage.js"));

@@ -34,7 +34,7 @@ describe("<Logo/>", () => {
 
     const testId = await getTestIdTag("logo");
 
-    expect(testId).toHaveAttribute("href", "/leaderboard");
+    expect(testId).toHaveAttribute("href", "/");
   });
 
   describe("classTesting", () => {
