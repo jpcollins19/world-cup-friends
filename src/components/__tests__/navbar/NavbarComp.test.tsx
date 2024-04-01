@@ -30,18 +30,6 @@ describe("<NavbarComp/>", () => {
   const poolPicksTestId = "comp-route-pool-picks";
   const groupDetailsTestId = "comp-route-group-details";
 
-  const getRouteTestIds = async () => {
-    const rules = await getTestIdTag(rulesTestId);
-    // const leaderboard = await getTestIdTag(leaderboardTestId);
-    // const myPicks = await getTestIdTag(myPicksTestId);
-    // const poolPicks = await getTestIdTag(poolPicksTestId);
-    // const groupDetails = await getTestIdTag(groupDetailsTestId);
-
-    // return { rules, leaderboard, myPicks, poolPicks, groupDetails };
-
-    return { rules };
-  };
-
   const queryRouteTestIds = async () => {
     const admin = await queryTestIdTag(adminTestId);
     const leaderboard = await queryTestIdTag(leaderboardTestId);

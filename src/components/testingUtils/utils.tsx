@@ -19,14 +19,6 @@ export const renderWithRouter = (component: any) => {
 };
 
 export const renderWithProvider = (component: any) => {
-  // const providerToUse = withRouter ? (
-  //   <Provider store={store}>
-  //     <Router>{component}</Router>
-  //   </Provider>
-  // ) : (
-  //   <Provider store={store}>{component}</Provider>
-  // );
-
   render(
     <Provider store={store}>
       <Router>{component}</Router>
@@ -75,15 +67,15 @@ export const changeInputText = async (input: any, text: string) => {
   fireEvent.change(input, { target: { value: text } });
 };
 
-export const click = async (input: any) => {
+export const click = (input: any) => {
   fireEvent.click(input);
 };
 
-// export const submit = async (input: any) => {
-//   // act(() => {
-//   fireEvent.submit(input);
-//   // });
-// };
+export const submit = async (input: any) => {
+  act(() => {
+    fireEvent.submit(input);
+  });
+};
 
 export const matchMediaWorkAround = () => {
   return Object.defineProperty(window, "matchMedia", {

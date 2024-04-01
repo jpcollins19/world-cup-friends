@@ -5,35 +5,43 @@ import {
   mockWindowMobileView,
   renderWithProvider,
 } from "../../testingUtils";
-import Navbar from "../../navbar/Navbar";
-
-// jest.mock("../../../hooks", () => ({
-//   // useIsMobile: jest.fn(),
-//   // useIsUserAdmin: jest.fn(),
-//   // useIsUserLoggedIn: jest.fn(),
-//   // useGetLastUpdated: jest.fn(),
-// }));
+import LastUpdatedReadOnly from "../../navbar/lastUpdated/LastUpdatedReadOnly";
+import { updateStore } from "../../../hooks/__tests__ /hookUtils";
+import { _loadLastUpdated } from "../../../store";
+import { createLastUpdated } from "../../../hooks/fixtures/LastUpdated";
 
 describe("<LastUpdatedReadOnly/>", () => {
   it("should render the component", async () => {
-    renderWithProvider(<Navbar />);
+    renderWithProvider(<LastUpdatedReadOnly />);
 
-    const testId = await getTestIdTag("navbar");
+    const testId = await getTestIdTag("last-updated-read-only");
 
     expect(testId).toBeTruthy();
   });
 
-  it.todo("renders accurate lastUpdated text");
+  it("renders accurate lastUpdated text", async () => {
+    const lastUpdatedAnswer = "Tuesday, March 1, 2022";
 
-  // describe("mobile view", () => {
-  //   it("renders the mobile page", async () => {
-  //     mockWindowMobileView(true);
-  //
-  //     renderProvider(<Navbar />, true);
-  //
-  //     const testId = await getTestIdTag("navbar-mobile");
-  //
-  //     expect(testId).toBeTruthy();
-  //   });
-  // });
+    const lastUpdated = createLastUpdated(lastUpdatedAnswer);
+
+    updateStore(_loadLastUpdated, lastUpdated);
+
+    renderWithProvider(<LastUpdatedReadOnly />);
+
+    const testId = await getTestIdTag("last-updated-answer");
+
+    expect(testId.textContent).toEqual(lastUpdatedAnswer);
+  });
+
+  describe("mobile view", () => {
+    it("renders the mobile page", async () => {
+      mockWindowMobileView(true);
+
+      renderWithProvider(<LastUpdatedReadOnly />);
+
+      const testId = await getTestIdTag("last-updated-read-only-mobile");
+
+      expect(testId).toBeTruthy();
+    });
+  });
 });

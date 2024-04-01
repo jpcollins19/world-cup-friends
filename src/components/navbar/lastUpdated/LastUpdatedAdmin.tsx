@@ -67,26 +67,30 @@ export const LastUpdatedAdmin: React.FunctionComponent = () => {
       setFieldValue("lastUpdated", ev.target.value);
     };
 
-    return (
-      <FormikProvider value={formik}>
-        <Form
-          onSubmit={handleSubmit}
-          id="last-updated"
-          className={`${updateContClass} m-0`}
-        >
-          <TextField
-            label="lastUpdated"
-            onChange={onChange}
-            showHelperText={false}
-            height="short"
-            width="large"
-            showValue={true}
-            schema="lastUpdated"
-          />
+    const testId = getPageTestId("last-updated-edit");
 
-          <SaveButton />
-        </Form>
-      </FormikProvider>
+    return (
+      <div data-testid={testId}>
+        <FormikProvider value={formik}>
+          <Form
+            onSubmit={handleSubmit}
+            id="last-updated"
+            className={`${updateContClass} m-0`}
+          >
+            <TextField
+              label="lastUpdated"
+              onChange={onChange}
+              showHelperText={false}
+              height="short"
+              width="large"
+              showValue={true}
+              schema="lastUpdated"
+            />
+
+            <SaveButton />
+          </Form>
+        </FormikProvider>
+      </div>
     );
   };
 

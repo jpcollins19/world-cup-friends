@@ -15,7 +15,7 @@ export const LastUpdatedReadOnly: React.FunctionComponent = () => {
       className={`${tw.flexBoth} ${tw.whiteTextSm} ${tw.pointer} flex-col text-sm `}
     >
       <div>Last Updated:</div>
-      <div>{answer}</div>
+      <div data-testid="last-updated-answer">{answer}</div>
     </div>
   );
 };
