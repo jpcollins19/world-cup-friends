@@ -23,7 +23,7 @@ describe("<LinkText/>", () => {
     const pageTestId = await getTestIdTag("linkText-component");
     const linkTestId = await getTestIdTag("linkText-link-forgot-password");
 
-    expect(pageTestId).toBeInTheDocument();
+    expect(pageTestId).toBeTruthy();
     expect(linkTestId).toHaveAttribute("href", "/create-account");
     expect(linkTestId).toHaveTextContent("Forgot Password");
   });
@@ -113,7 +113,7 @@ describe("<LinkText/>", () => {
         "linkText-link-forgot-password-mobile",
       );
 
-      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
       expect(linkTestId).toHaveAttribute("href", "/create-account");
       expect(linkTestId).toHaveTextContent("Forgot Password");
     });

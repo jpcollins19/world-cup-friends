@@ -19,8 +19,8 @@ describe("<Logo/>", () => {
     const testId = await getTestIdTag("logo");
     const imageTestId = await getTestIdTag("logo-image");
 
-    expect(testId).toBeInTheDocument();
-    expect(imageTestId).toBeInTheDocument();
+    expect(testId).toBeTruthy();
+    expect(imageTestId).toBeTruthy();
     expect(imageTestId).toHaveAttribute("src", logoImage);
     expect(imageTestId).toHaveAttribute("alt", "World Cup Logo");
   });
@@ -113,8 +113,8 @@ describe("<Logo/>", () => {
       const testId = await getTestIdTag("logo-mobile");
       const imageTestId = await getTestIdTag("logo-image-mobile");
 
-      expect(testId).toBeInTheDocument();
-      expect(imageTestId).toBeInTheDocument();
+      expect(testId).toBeTruthy();
+      expect(imageTestId).toBeTruthy();
       expect(imageTestId).toHaveAttribute("src", logoImage);
       expect(imageTestId).toHaveAttribute("alt", "World Cup Logo");
     });

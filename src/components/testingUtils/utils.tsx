@@ -1,11 +1,15 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { Provider } from "react-redux";
-import store, { UserSchema } from "../../store";
+import store, { AuthState, LastUpdatedSchema, UserSchema } from "../../store";
 import * as React from "react";
 import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
 import {
   useGetActiveUsers,
+  useGetLastUpdated,
+  useGetUser,
   useIsMobile,
+  useIsUserAdmin,
+  useIsUserLoggedIn,
   useShouldPayoutShow,
 } from "../../hooks";
 import { Formik } from "formik";
@@ -109,6 +113,20 @@ export const getButton = async (str: string, isMobile?: boolean) => {
   return testId.querySelector("button");
 };
 
+export const getEmailTextInput = async () => {
+  return await getTextFieldTag("email");
+};
+
+export const getPwTextInput = async () => {
+  return await getTextFieldTag("password");
+};
+
+export const getRouteTestId = async (route: string) => {
+  const routeTestId = `comp-route-${route}`;
+
+  return await getTestIdTag(routeTestId);
+};
+
 export const mockWindowMobileView = (boolean: boolean) => {
   return require("react-responsive").useMediaQuery.mockReturnValue(boolean);
 };
@@ -129,4 +147,20 @@ export const mockUseGetActiveUsers = (users: UserSchema[]) => {
 
 export const mockUseShouldPayoutShow = (boolean: boolean) => {
   mockReturnedValue(useShouldPayoutShow, boolean);
+};
+
+export const mockUseIsUserLoggedIn = (boolean: boolean) => {
+  mockReturnedValue(useIsUserLoggedIn, boolean);
+};
+
+export const mockUseIsUserAdmin = (boolean: boolean) => {
+  mockReturnedValue(useIsUserAdmin, boolean);
+};
+
+export const mockUseGetLastUpdated = (lastUpdated: LastUpdatedSchema) => {
+  mockReturnedValue(useGetLastUpdated, lastUpdated);
+};
+
+export const mockUseGetUser = (user: any) => {
+  mockReturnedValue(useGetUser, user);
 };

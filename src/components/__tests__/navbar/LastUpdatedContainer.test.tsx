@@ -2,33 +2,84 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import {
   getTestIdTag,
-  mockWindowMobileView,
+  mockUseGetLastUpdated,
+  mockUseIsMobile,
+  mockUseIsUserAdmin,
+  mockUseIsUserLoggedIn,
+  queryTestIdTag,
   renderWithProvider,
 } from "../../testingUtils";
-import Navbar from "../../navbar/Navbar";
+import LastUpdatedContainer from "../../navbar/lastUpdated/LastUpdatedContainer";
+
+jest.mock("../../../hooks", () => ({
+  useIsMobile: jest.fn(),
+  useIsUserAdmin: jest.fn(),
+  useIsUserLoggedIn: jest.fn(),
+  useGetLastUpdated: jest.fn(),
+}));
 
 describe("<LastUpdatedContainer/>", () => {
-  it("should render the component", async () => {
-    renderWithProvider(<Navbar />);
+  const lastUpdated = { id: "1234", answer: "today" };
 
-    const testId = await getTestIdTag("navbar");
+  const adminTestId = "last-updated-admin";
+  const readOnlyTestId = "last-updated-read-only";
 
-    expect(testId).toBeInTheDocument();
+  it("when the user is not logged in, the component returns null", async () => {
+    mockUseIsUserLoggedIn(false);
+
+    renderWithProvider(<LastUpdatedContainer />);
+
+    const adminView = await queryTestIdTag(adminTestId);
+    const readOnlyView = await queryTestIdTag(readOnlyTestId);
+
+    expect(adminView).toBeFalsy();
+    expect(readOnlyView).toBeFalsy();
   });
 
-  it.todo("renders LastUpdatedAdmin when user is admin");
-  it.todo("renders LastUpdatedReadOnly when user is not admin");
-  it.todo("does not render when user is not logged in");
+  describe("when the user is logged in", () => {
+    beforeEach(() => {
+      mockUseIsUserLoggedIn(true);
+      mockUseGetLastUpdated(lastUpdated);
+    });
 
-  // describe("mobile view", () => {
-  //   it("renders the mobile page", async () => {
-  //     mockWindowMobileView(true);
-  //
-  //     renderProvider(<Navbar />, true);
-  //
-  //     const testId = await getTestIdTag("navbar-mobile");
-  //
-  //     expect(testId).toBeInTheDocument();
-  //   });
-  // });
+    it("user is admin", async () => {
+      mockUseIsUserAdmin(true);
+
+      renderWithProvider(<LastUpdatedContainer />);
+
+      const adminView = await getTestIdTag(adminTestId);
+      const readOnlyView = await getTestIdTag(readOnlyTestId);
+
+      expect(adminView).toBeTruthy();
+      expect(readOnlyView).toBeTruthy();
+    });
+
+    it("user is not admin", async () => {
+      mockUseIsUserAdmin(false);
+
+      renderWithProvider(<LastUpdatedContainer />);
+
+      const adminView = await queryTestIdTag(adminTestId);
+      const readOnlyView = await getTestIdTag(readOnlyTestId);
+
+      expect(adminView).toBeFalsy();
+      expect(readOnlyView).toBeTruthy();
+    });
+  });
+
+  describe("mobile view", () => {
+    it("renders the mobile page", async () => {
+      mockUseIsUserLoggedIn(true);
+      mockUseGetLastUpdated(lastUpdated);
+      mockUseIsMobile(true);
+
+      renderWithProvider(<LastUpdatedContainer />);
+
+      const adminView = await queryTestIdTag(`${adminTestId}-mobile`);
+      const readOnlyView = await getTestIdTag(`${readOnlyTestId}-mobile`);
+
+      expect(adminView).toBeFalsy();
+      expect(readOnlyView).toBeTruthy();
+    });
+  });
 });

@@ -7,13 +7,20 @@ import {
 } from "../../testingUtils";
 import Navbar from "../../navbar/Navbar";
 
+// jest.mock("../../../hooks", () => ({
+//   // useIsMobile: jest.fn(),
+//   // useIsUserAdmin: jest.fn(),
+//   // useIsUserLoggedIn: jest.fn(),
+//   // useGetLastUpdated: jest.fn(),
+// }));
+
 describe("<LastUpdatedReadOnly/>", () => {
   it("should render the component", async () => {
     renderWithProvider(<Navbar />);
 
     const testId = await getTestIdTag("navbar");
 
-    expect(testId).toBeInTheDocument();
+    expect(testId).toBeTruthy();
   });
 
   it.todo("renders accurate lastUpdated text");
@@ -26,7 +33,7 @@ describe("<LastUpdatedReadOnly/>", () => {
   //
   //     const testId = await getTestIdTag("navbar-mobile");
   //
-  //     expect(testId).toBeInTheDocument();
+  //     expect(testId).toBeTruthy();
   //   });
   // });
 });

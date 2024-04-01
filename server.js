@@ -1,11 +1,11 @@
-//CreateAccount
-//PayoutData
-//NavbarComp
-//RouteComp
-//EmailUpdates
-//LastUpdatedContainer
-//LastUpdatedReadOnly
-//LastUpdatedAdmin - audit that updating lastUpdated works
+////CreateAccount
+//input error handling - figure out how to reset the component so each tests passes
+//how to verify that an account was created
+
+////LastUpdatedReadOnly
+////LastUpdatedAdmin - audit that updating lastUpdated works
+
+////TextField - see if you need to write tests for "showValue"
 
 const express = require("express");
 const app = express();

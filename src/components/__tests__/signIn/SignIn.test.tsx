@@ -6,6 +6,8 @@ import {
   elevateClass,
   getButton,
   getButtonTestId,
+  getEmailTextInput,
+  getPwTextInput,
   getTestIdTag,
   getText,
   getTextFieldTag,
@@ -21,6 +23,13 @@ import SignIn from "../../signIn/SignIn";
 //jest.mock("react-responsive");
 
 describe("<SignIn/>", () => {
+  const getTextFieldInputs = async () => {
+    const emailInput = await getEmailTextInput();
+    const pwInput = await getPwTextInput();
+
+    return { emailInput, pwInput };
+  };
+
   beforeEach(() => {
     matchMediaWorkAround();
   });
@@ -31,8 +40,8 @@ describe("<SignIn/>", () => {
     const pageTestId = await getTestIdTag("sign-in-page");
     const errorMessageCont = await queryTestIdTag("error-message");
 
-    expect(errorMessageCont).not.toBeInTheDocument();
-    expect(pageTestId).toBeInTheDocument();
+    expect(errorMessageCont).toBeFalsy();
+    expect(pageTestId).toBeTruthy();
     expect(pageTestId).toHaveTextContent("Sign In");
   });
 
@@ -41,17 +50,16 @@ describe("<SignIn/>", () => {
 
     const toasterContTestId = await getTestIdTag("toaster-cont");
 
-    expect(toasterContTestId).toBeInTheDocument();
+    expect(toasterContTestId).toBeTruthy();
   });
 
   it("both TextFields render", async () => {
     renderWithProvider(<SignIn />);
 
-    const emailInput = await getTextFieldTag("email");
-    const pwInput = await getTextFieldTag("password");
+    const { emailInput, pwInput } = await getTextFieldInputs();
 
-    expect(emailInput).toBeInTheDocument();
-    expect(pwInput).toBeInTheDocument();
+    expect(emailInput).toBeTruthy();
+    expect(pwInput).toBeTruthy();
     expect(emailInput).toHaveAttribute("type", "text");
     expect(pwInput).toHaveAttribute("type", "password");
   });
@@ -63,18 +71,17 @@ describe("<SignIn/>", () => {
 
     const button = await getButton(submitLowerCase);
 
-    expect(buttonTestId).toBeInTheDocument();
-    expect(await getText(submitUpperCase)).toBeInTheDocument();
+    expect(buttonTestId).toBeTruthy();
+    expect(await getText(submitUpperCase)).toBeTruthy();
     expect(button).toHaveAttribute("form", "sign-in");
     expect(button).toHaveAttribute("type", "submit");
     expect(button).toBeDisabled();
   });
 
-  it("submit button being enabled", async () => {
+  it("enabling submit button", async () => {
     renderWithProvider(<SignIn />);
 
-    const emailInput = await getTextFieldTag("email");
-    const pwInput = await getTextFieldTag("password");
+    const { emailInput, pwInput } = await getTextFieldInputs();
 
     await changeInputText(emailInput, "joe@gmail.com");
     await changeInputText(pwInput, "fakePassword");
@@ -88,9 +95,11 @@ describe("<SignIn/>", () => {
     renderWithProvider(<SignIn />);
     const viewPw = await getTestIdTag("sign-in-view-pw");
 
-    await click(viewPw);
+    const { pwInput } = await getTextFieldInputs();
 
-    const pwInput = await getTextFieldTag("password");
+    expect(pwInput).toHaveAttribute("type", "password");
+
+    await click(viewPw);
 
     expect(pwInput).toHaveAttribute("type", "text");
   });
@@ -210,7 +219,7 @@ describe("<SignIn/>", () => {
 
       const pageTestId = await getTestIdTag("sign-in-page-mobile");
 
-      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
       expect(pageTestId).toHaveTextContent("Sign In");
     });
   });

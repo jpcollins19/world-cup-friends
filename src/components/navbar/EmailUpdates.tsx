@@ -1,6 +1,14 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { colors, geti18n, me, routes, tDispatch, tw } from "../../store";
+import {
+  colors,
+  geti18n,
+  getPageTestId,
+  me,
+  routes,
+  tDispatch,
+  tw,
+} from "../../store";
 import { useGetUser, useIsUserAdmin, useIsUserLoggedIn } from "../../hooks";
 
 export const EmailUpdates: React.FunctionComponent = () => {
@@ -24,8 +32,11 @@ export const EmailUpdates: React.FunctionComponent = () => {
 
   const hoverClass = isHovered ? "" : "hidden";
 
+  const testId = getPageTestId("email-updates");
+
   return useIsUserLoggedIn() && !isAdmin ? (
     <Link
+      data-testid={testId}
       to={routes.editProfileEmailNotifications}
       className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkTextSm}`}
       onMouseEnter={() => setIsHovered(true)}

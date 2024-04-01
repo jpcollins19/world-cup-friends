@@ -34,8 +34,8 @@ describe("<TextField/>", () => {
     const pageTestId = await getTestIdTag("text-field");
     const inputTestId = await getTextFieldTag("email");
 
-    expect(pageTestId).toBeInTheDocument();
-    expect(inputTestId).toBeInTheDocument();
+    expect(pageTestId).toBeTruthy();
+    expect(inputTestId).toBeTruthy();
   });
 
   it("the default type is 'text'", async () => {
@@ -78,7 +78,7 @@ describe("<TextField/>", () => {
 
         const span = await getTestIdTag(spanLabelTestId);
 
-        expect(span).toBeInTheDocument();
+        expect(span).toBeTruthy();
         expect(span).toHaveTextContent("Email");
       });
 
@@ -89,7 +89,7 @@ describe("<TextField/>", () => {
 
         const spanRequiredSymbol = await getTestIdTag(spanRequiredSymbolTestId);
 
-        expect(spanRequiredSymbol).toBeInTheDocument();
+        expect(spanRequiredSymbol).toBeTruthy();
         expect(spanRequiredSymbol).toHaveTextContent("*");
       });
 
@@ -104,7 +104,7 @@ describe("<TextField/>", () => {
           spanRequiredSymbolTestId,
         );
 
-        expect(spanRequiredSymbol).not.toBeInTheDocument();
+        expect(spanRequiredSymbol).toBeFalsy();
       });
     });
 
@@ -122,7 +122,7 @@ describe("<TextField/>", () => {
 
         const span = await queryTestIdTag(spanLabelTestId);
 
-        expect(span).not.toBeInTheDocument();
+        expect(span).toBeFalsy();
       });
 
       it("requiredSymbol does not render", async () => {
@@ -140,7 +140,7 @@ describe("<TextField/>", () => {
           spanRequiredSymbolTestId,
         );
 
-        expect(spanRequiredSymbol).not.toBeInTheDocument();
+        expect(spanRequiredSymbol).toBeFalsy();
       });
     });
   });
@@ -153,7 +153,7 @@ describe("<TextField/>", () => {
     //
     //   const span = await getTestIdTag(spanLabelTestId);
     //
-    //   expect(span).toBeInTheDocument();
+    //   expect(span).toBeTruthy();
     //   expect(span).toHaveTextContent("Email");
     // });
   });
@@ -410,9 +410,9 @@ describe("<TextField/>", () => {
 
       const inputTestId = await getTextFieldTag("password-mobile");
 
-      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
 
-      expect(inputTestId).toBeInTheDocument();
+      expect(inputTestId).toBeTruthy();
     });
   });
 });

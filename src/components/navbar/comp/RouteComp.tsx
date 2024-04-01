@@ -40,7 +40,12 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
     >
       <div className={`${tw.flexA} w-full`}>
         <div className="ml-5">{route.icon}</div>
-        <div className={`${tw.shrinkTextBase} w-full ml-6`}>{routeText}</div>
+        <div
+          data-testid="route-comp-text"
+          className={`${tw.shrinkTextBase} w-full ml-6`}
+        >
+          {routeText}
+        </div>
       </div>
     </Link>
   );

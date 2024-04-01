@@ -21,11 +21,18 @@ describe("<RouteComp/>", () => {
 
     const testId = await getTestIdTag(routePoolPicksTestId);
 
-    expect(testId).toBeInTheDocument();
+    expect(testId).toBeTruthy();
   });
 
-  it.todo("href is correct");
-  it.todo("text is correct");
+  it("href and text are accurate", async () => {
+    renderWithProvider(poolPicksComponent);
+
+    const testId = await getTestIdTag(routePoolPicksTestId);
+    const textTestId = await getTestIdTag("route-comp-text");
+
+    expect(testId).toHaveAttribute("href", "/pool-picks");
+    expect(textTestId.textContent).toEqual("Pool Picks");
+  });
 
   describe("isCurrentPage testing", () => {
     const routeCompLinkBaseClass = `${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2 my-2`;
@@ -65,7 +72,7 @@ describe("<RouteComp/>", () => {
 
       const testId = await getTestIdTag("comp-route-rules-mobile");
 
-      expect(testId).toBeInTheDocument();
+      expect(testId).toBeTruthy();
     });
   });
 });

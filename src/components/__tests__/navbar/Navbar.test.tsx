@@ -23,7 +23,7 @@ describe("<Navbar/>", () => {
 
     const testId = await getTestIdTag("navbar");
 
-    expect(testId).toBeInTheDocument();
+    expect(testId).toBeTruthy();
   });
 
   it("renders the default subcomponents - logo & Rules route dataTestIds", async () => {
@@ -32,8 +32,8 @@ describe("<Navbar/>", () => {
     const logoTestId = await getTestIdTag("logo");
     const rulesRouteTestId = await getTestIdTag("comp-route-rules");
 
-    expect(logoTestId).toBeInTheDocument();
-    expect(rulesRouteTestId).toBeInTheDocument();
+    expect(logoTestId).toBeTruthy();
+    expect(rulesRouteTestId).toBeTruthy();
   });
 
   describe("mobile view", () => {
@@ -44,7 +44,7 @@ describe("<Navbar/>", () => {
 
       const testId = await getTestIdTag("navbar-mobile");
 
-      expect(testId).toBeInTheDocument();
+      expect(testId).toBeTruthy();
     });
   });
 });

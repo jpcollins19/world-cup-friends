@@ -2,6 +2,7 @@ export const en = {
   cancel: "Cancel",
   confirmPassword: "confirm password",
   createAccount: "Create Account",
+  createAnAccount: "Create An Account",
   edit: "Edit",
   email: "email",
   emailAlreadyInUse: "Email already in use",
@@ -27,6 +28,7 @@ export type i18nOptionsTypes =
   | "cancel"
   | "confirmPassword"
   | "createAccount"
+  | "createAnAccount"
   | "edit"
   | "email"
   | "emailAlreadyInUse"

@@ -39,8 +39,6 @@ const Routes = () => {
     }, 2000);
   }, [pathname]);
 
-  //const redirectHome = <Redirect to={routes.home} />;
-
   const userIsLoggedIn = useIsUserLoggedIn();
 
   const noAuthRoutes = [

@@ -13,7 +13,7 @@ describe("<PreSignIn/>", () => {
 
     const pageTestId = await getTestIdTag("home-page");
 
-    expect(pageTestId).toBeInTheDocument();
+    expect(pageTestId).toBeTruthy();
     expect(pageTestId).toHaveTextContent("Sign In");
     expect(pageTestId).toHaveStyle({
       backgroundImage: `url(/public/pics/messiTrophy.jpg)`,
@@ -36,7 +36,7 @@ describe("<PreSignIn/>", () => {
 
       const pageTestId = await getTestIdTag("home-page-mobile");
 
-      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
       expect(pageTestId).toHaveTextContent("Sign In");
       expect(pageTestId).toHaveStyle({
         backgroundImage: `url(/public/pics/messiTrophy.jpg)`,

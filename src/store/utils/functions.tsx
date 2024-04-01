@@ -1,9 +1,7 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useGetUsers, useIsEmailInUse, useIsMobile } from "../../hooks";
+import { useIsMobile } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
-import { useSelector } from "react-redux";
-import { RootState } from "../index";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];

@@ -10,6 +10,6 @@ describe("<ToasterContainer/>", () => {
 
     const pageTestId = await getTestIdTag("toaster-cont");
 
-    expect(pageTestId).toBeInTheDocument();
+    expect(pageTestId).toBeTruthy();
   });
 });

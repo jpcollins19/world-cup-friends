@@ -169,7 +169,7 @@ export const CreateAccount: React.FunctionComponent = () => {
           data-testid={headerTestId}
           className={`${tw.whiteTextMed} text-center ${headerClass} `}
         >
-          {geti18n("createAccount")}
+          {geti18n("createAnAccount")}
         </h1>
 
         <FormikProvider value={formik}>
@@ -202,7 +202,10 @@ export const CreateAccount: React.FunctionComponent = () => {
             />
 
             <div data-testid={linkTextContTestId} className={linkTextClass}>
-              <div className={`${tw.flexBoth} mt-2`}>
+              <div
+                data-testid="already-have-an-account"
+                className={`${tw.flexBoth} mt-2`}
+              >
                 <div className={`${tw.whiteTextSm} flex-2 mr-1 mb-0.5`}>
                   Already have an account?
                 </div>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   geti18n,
+  getPageTestId,
   loadLastUpdated,
   me,
   tDispatch,
@@ -89,8 +90,10 @@ export const LastUpdatedAdmin: React.FunctionComponent = () => {
     );
   };
 
+  const testId = getPageTestId("last-updated-admin");
+
   return (
-    <div className={updateContClass}>
+    <div data-testid={testId} className={updateContClass}>
       {editing ? <LastUpdatedEdit /> : <LastUpdatedReadOnly />}
 
       <div className={`${tw.flexBoth} w-20`}>{!editing && <EditButton />}</div>

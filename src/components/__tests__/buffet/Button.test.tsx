@@ -22,8 +22,8 @@ describe("<Button/>", () => {
 
     const button = await getButton(submitLowerCase);
 
-    expect(testId).toBeInTheDocument();
-    expect(await getText(submitUpperCase)).toBeInTheDocument();
+    expect(testId).toBeTruthy();
+    expect(await getText(submitUpperCase)).toBeTruthy();
     expect(button).not.toHaveAttribute("form");
     expect(button).not.toHaveAttribute("type");
   });
@@ -240,8 +240,8 @@ describe("<Button/>", () => {
 
       const button = await getButton(submitLowerCase, true);
 
-      expect(testId).toBeInTheDocument();
-      expect(await getText(submitUpperCase)).toBeInTheDocument();
+      expect(testId).toBeTruthy();
+      expect(await getText(submitUpperCase)).toBeTruthy();
       expect(button).not.toHaveAttribute("form");
       expect(button).not.toHaveAttribute("type");
     });

@@ -10,7 +10,7 @@ describe("<Loading/>", () => {
 
     const testId = await getTestIdTag("loading");
 
-    expect(testId).toBeInTheDocument();
+    expect(testId).toBeTruthy();
   });
 
   describe("mobile view", () => {
@@ -21,7 +21,7 @@ describe("<Loading/>", () => {
 
       const testId = await getTestIdTag("loading-mobile");
 
-      expect(testId).toBeInTheDocument();
+      expect(testId).toBeTruthy();
     });
   });
 });

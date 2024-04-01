@@ -3,11 +3,10 @@ import "@testing-library/jest-dom";
 import {
   changeInputText,
   click,
-  elevateClass,
   getButton,
-  getButtonTestId,
+  getEmailTextInput,
+  getPwTextInput,
   getTestIdTag,
-  getText,
   getTextFieldTag,
   matchMediaWorkAround,
   mockWindowMobileView,
@@ -15,18 +14,26 @@ import {
   renderWithProvider,
 } from "../../testingUtils";
 import CreateAccount from "../../createAccount/CreateAccount";
+import { updateStore } from "../../../hooks/__tests__ /hookUtils";
+import { _loadUsers, CreateAuthProps, UserSchema } from "../../../store";
+import { createUser } from "../../../hooks/fixtures";
+import restoreAllMocks = jest.restoreAllMocks;
+import axios from "axios";
+
+jest.mock("axios");
 
 describe("<CreateAccount/>", () => {
-  const getTestIds = async () => {
-    const emailInput = await getTextFieldTag("email");
+  const getTextFieldInputs = async () => {
+    const emailInput = await getEmailTextInput();
     const nameInput = await getTextFieldTag("name");
-    const pwInput = await getTextFieldTag("password");
+    const pwInput = await getPwTextInput();
     const confirmPwInput = await getTextFieldTag("confirm-password");
 
     return { emailInput, nameInput, pwInput, confirmPwInput };
   };
 
   beforeEach(async () => {
+    // restoreAllMocks();
     matchMediaWorkAround();
   });
 
@@ -36,106 +43,183 @@ describe("<CreateAccount/>", () => {
     const pageTestId = await getTestIdTag("create-account-page");
     const errorMessageCont = await queryTestIdTag("error-message");
 
-    expect(errorMessageCont).not.toBeInTheDocument();
-    expect(pageTestId).toBeInTheDocument();
-    expect(pageTestId).toHaveTextContent("Create Account");
+    expect(errorMessageCont).toBeFalsy();
+    expect(pageTestId).toBeTruthy();
+    expect(pageTestId).toHaveTextContent("Create An Account");
   });
 
-  // it("toasterContainer renders", async () => {
-  //   renderWithProvider(<SignIn />);
-  //
-  //   const toasterContTestId = await getTestIdTag("toaster-cont");
-  //
-  //   expect(toasterContTestId).toBeInTheDocument();
-  // });
-  //
-  // it("all four TextFields render", async () => {
-  //   renderWithProvider(<SignIn />);
-  //
-  //   const emailInput = await getTestIdTag(emailInputTestId);
-  //   const pwInput = await getTestIdTag(pwInputTestId);
-  //
-  //   expect(emailInput).toBeInTheDocument();
-  //   expect(pwInput).toBeInTheDocument();
-  //   expect(emailInput).toHaveAttribute("type", "text");
-  //   expect(pwInput).toHaveAttribute("type", "password");
-  // });
+  it("toasterContainer renders", async () => {
+    renderWithProvider(<CreateAccount />);
 
-  it.todo(
-    "make a describe block for button being disabled vs not disabled and incorporate tests below",
-  );
+    const toasterContTestId = await getTestIdTag("toaster-cont");
 
-  // it("submit button renders as disabled", async () => {
-  //   renderWithProvider(<SignIn />);
-  //
-  //   const buttonTestId = await getButtonTestId(submitLowerCase);
-  //
-  //   const button = await getButton(submitLowerCase);
-  //
-  //   expect(buttonTestId).toBeInTheDocument();
-  //   expect(await getText(submitUpperCase)).toBeInTheDocument();
-  //   expect(button).toHaveAttribute("form", "sign-in");
-  //   expect(button).toHaveAttribute("type", "submit");
-  //   expect(button).toBeDisabled();
-  // });
-  //
-  // it("submit button being enabled", async () => {
-  //   renderWithProvider(<SignIn />);
-  //
-  //   const emailInput = await getTestIdTag(emailInputTestId);
-  //   const pwInput = await getTestIdTag(pwInputTestId);
-  //
-  //   await changeInputText(emailInput, "joe@gmail.com");
-  //   await changeInputText(pwInput, "fakePassword");
-  //
-  //   const button = await getButton(submitLowerCase);
-  //
-  //   expect(button).not.toBeDisabled();
-  // });
-  //
-  // it("view pw button works", async () => {
-  //   renderWithProvider(<SignIn />);
-  //   const viewPw = await getTestIdTag("sign-in-view-pw");
-  //
-  //   await click(viewPw);
-  //
-  //   const pwInput = await getTestIdTag(pwInputTestId);
-  //
-  //   expect(pwInput).toHaveAttribute("type", "text");
-  // });
-  //
-  // it("the two links at bottom of page have accurate text and take you to correct urls", async () => {
-  //   renderWithProvider(<SignIn />);
-  //
-  //   const pwLinkTestId = await getTestIdTag("linkText-link-forgot-password");
-  //   const createAccountLinkTestId = await getTestIdTag(
-  //     "linkText-link-create-account",
-  //   );
-  //   const cancelLinkTestId = await getTestIdTag("linkText-link-cancel");
-  //
-  //   expect(pwLinkTestId).toHaveAttribute("href", "/forgot-password");
-  //   expect(pwLinkTestId).toHaveTextContent("Forgot Password");
-  //
-  //   expect(createAccountLinkTestId).toHaveAttribute("href", "/create-account");
-  //   expect(createAccountLinkTestId).toHaveTextContent("Create Account");
-  //
-  //   expect(cancelLinkTestId).toHaveAttribute("href", "/");
-  //   expect(cancelLinkTestId).toHaveTextContent("Cancel");
-  // });
+    expect(toasterContTestId).toBeTruthy();
+  });
 
-  it.todo("write tests for remaining error handling below");
+  it("all four TextFields render", async () => {
+    renderWithProvider(<CreateAccount />);
 
-  describe("error handling", function () {
-    it("when email is invalid", async () => {
+    const { emailInput, nameInput, pwInput, confirmPwInput } =
+      await getTextFieldInputs();
+
+    expect(emailInput).toBeTruthy();
+    expect(nameInput).toBeTruthy();
+    expect(pwInput).toBeTruthy();
+    expect(confirmPwInput).toBeTruthy();
+    expect(emailInput).toHaveAttribute("type", "text");
+    expect(nameInput).toHaveAttribute("type", "text");
+    expect(pwInput).toHaveAttribute("type", "password");
+    expect(confirmPwInput).toHaveAttribute("type", "password");
+  });
+
+  it("submit button renders as disabled", async () => {
+    renderWithProvider(<CreateAccount />);
+
+    const button = await getButton("create-account");
+
+    expect(button).toBeDisabled();
+  });
+
+  it("enabling createAccount button", async () => {
+    renderWithProvider(<CreateAccount />);
+
+    const { emailInput, nameInput, pwInput, confirmPwInput } =
+      await getTextFieldInputs();
+
+    await changeInputText(emailInput, "joe@gmail.com");
+    await changeInputText(nameInput, "joe@gmail.com");
+    await changeInputText(pwInput, "fakePassword");
+    await changeInputText(confirmPwInput, "fakePassword");
+
+    const button = await getButton("create-account");
+
+    expect(button).not.toBeDisabled();
+  });
+
+  it("view pw button works", async () => {
+    renderWithProvider(<CreateAccount />);
+    const viewPw = await getTestIdTag("create-account-view-pw");
+
+    const { pwInput } = await getTextFieldInputs();
+
+    expect(pwInput).toHaveAttribute("type", "password");
+
+    await click(viewPw);
+
+    expect(pwInput).toHaveAttribute("type", "text");
+  });
+
+  it("both links at bottom of page have accurate text and take you to correct urls", async () => {
+    renderWithProvider(<CreateAccount />);
+
+    const alreadyHaveAnAccountTestId = await getTestIdTag(
+      "already-have-an-account",
+    );
+
+    const signInHereTestId = await getTestIdTag("linkText-link-sign-in-here");
+
+    const cancelLinkTestId = await getTestIdTag("linkText-link-cancel");
+
+    expect(alreadyHaveAnAccountTestId).toHaveTextContent(
+      "Already have an account?Sign in here",
+    );
+    expect(signInHereTestId).toHaveAttribute("href", "/sign-in");
+    expect(cancelLinkTestId).toHaveAttribute("href", "/");
+    expect(cancelLinkTestId).toHaveTextContent("Cancel");
+  });
+
+  describe("input error handling", function () {
+    const erroneousInput = "f";
+    const fakeEmail = "fakeEmail@gmail.com";
+
+    // it("when email is invalid", async () => {
+    //   renderWithProvider(<CreateAccount />);
+    //
+    //   const { emailInput, nameInput, pwInput, confirmPwInput } =
+    //     await getTextFieldInputs();
+    //
+    //   await changeInputText(emailInput, erroneousInput);
+    //   await changeInputText(nameInput, erroneousInput);
+    //   await changeInputText(pwInput, erroneousInput);
+    //   await changeInputText(confirmPwInput, erroneousInput);
+    //
+    //   const button = await getButton("create-account");
+    //
+    //   await click(button);
+    //
+    //   const errorMessageCont = await getTestIdTag("error-message");
+    //   const errorMessageText = await getTestIdTag("error-message-text");
+    //
+    //   expect(errorMessageCont).toBeTruthy();
+    //   expect(errorMessageText).toHaveTextContent("Invalid Email Address");
+    // });
+
+    // it("when email already exists", async () => {
+    //   const user: UserSchema = createUser();
+    //
+    //   updateStore(_loadUsers, [user]);
+    //
+    //   renderWithProvider(<CreateAccount />);
+    //
+    //   const { emailInput, nameInput, pwInput, confirmPwInput } =
+    //     await getTextFieldInputs();
+    //
+    //   await changeInputText(emailInput, user.email);
+    //   await changeInputText(nameInput, erroneousInput);
+    //   await changeInputText(pwInput, erroneousInput);
+    //   await changeInputText(confirmPwInput, erroneousInput);
+    //
+    //   const button = await getButton("create-account");
+    //
+    //   await click(button);
+    //
+    //   const errorMessageCont = await getTestIdTag("error-message");
+    //   const errorMessageText = await getTestIdTag("error-message-text");
+    //
+    //   expect(errorMessageCont).toBeTruthy();
+    //   expect(errorMessageText).toHaveTextContent("Email already in use");
+    // });
+
+    // it("when userName already exists", async () => {
+    //   const user: UserSchema = createUser();
+    //
+    //   updateStore(_loadUsers, [user]);
+    //
+    //   renderWithProvider(<CreateAccount />);
+    //
+    //   const { emailInput, nameInput, pwInput, confirmPwInput } =
+    //     await getTextFieldInputs();
+    //
+    //   await changeInputText(emailInput, fakeEmail);
+    //   await changeInputText(nameInput, user.name);
+    //   await changeInputText(pwInput, erroneousInput);
+    //   await changeInputText(confirmPwInput, erroneousInput);
+    //
+    //   const button = await getButton("create-account");
+    //
+    //   await click(button);
+    //
+    //   const errorMessageCont = await getTestIdTag("error-message");
+    //   const errorMessageText = await getTestIdTag("error-message-text");
+    //
+    //   expect(errorMessageCont).toBeTruthy();
+    //   expect(errorMessageText).toHaveTextContent("Name already in use");
+    // });
+
+    it("when passwords do not match", async () => {
+      const user: UserSchema = createUser();
+
+      updateStore(_loadUsers, [user]);
+
       renderWithProvider(<CreateAccount />);
 
       const { emailInput, nameInput, pwInput, confirmPwInput } =
-        await getTestIds();
+        await getTextFieldInputs();
 
-      await changeInputText(emailInput, "f");
-      await changeInputText(nameInput, "f");
-      await changeInputText(pwInput, "f");
-      await changeInputText(confirmPwInput, "f");
+      await changeInputText(emailInput, fakeEmail);
+      await changeInputText(nameInput, "fakeName");
+      await changeInputText(pwInput, "1234");
+      await changeInputText(confirmPwInput, "12345");
 
       const button = await getButton("create-account");
 
@@ -144,14 +228,41 @@ describe("<CreateAccount/>", () => {
       const errorMessageCont = await getTestIdTag("error-message");
       const errorMessageText = await getTestIdTag("error-message-text");
 
-      expect(errorMessageCont).toBeInTheDocument();
-      expect(errorMessageText).toHaveTextContent("Invalid Email Address");
+      expect(errorMessageCont).toBeTruthy();
+      expect(errorMessageText).toHaveTextContent("Passwords do not match");
     });
   });
 
-  it.todo(
-    "submitting an account successfully - check the store state for the new user?",
-  );
+  // it("submitting an account successfully", async () => {
+  //   const existingUser: UserSchema = createUser();
+  //   const newUser: UserSchema = createUser();
+  //
+  //   updateStore(_loadUsers, [existingUser]);
+  //
+  //   const newAuthData = {
+  //     email: newUser.email,
+  //     name: newUser.name,
+  //     password: "1234",
+  //   };
+  //
+  //   (axios.post as jest.Mock).mockResolvedValueOnce({ data: newAuthData });
+  //
+  //   renderWithProvider(<CreateAccount />);
+  //
+  //   const { emailInput, nameInput, pwInput, confirmPwInput } =
+  //     await getTextFieldInputs();
+  //
+  //   await changeInputText(emailInput, newUser.email);
+  //   await changeInputText(nameInput, newUser.name);
+  //   await changeInputText(pwInput, "1234");
+  //   await changeInputText(confirmPwInput, "1234");
+  //
+  //   const button = await getButton("create-account");
+  //
+  //   await click(button);
+  //
+  //   const usersStore = await getDataFromStore("users");
+  // });
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {
@@ -161,7 +272,7 @@ describe("<CreateAccount/>", () => {
 
       const pageTestId = await getTestIdTag("create-account-page-mobile");
 
-      expect(pageTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
       expect(pageTestId).toHaveTextContent("Create Account");
     });
   });

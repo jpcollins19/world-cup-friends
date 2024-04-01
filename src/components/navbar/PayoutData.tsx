@@ -39,13 +39,16 @@ export const PayoutData: React.FunctionComponent = () => {
         </div>
 
         <div className={`${tw.flexBoth} flex-col`}>
-          <div className={moneyColumnClass}>
+          <div data-testid={"payout-first-place"} className={moneyColumnClass}>
             ${payout.firstPlace.toFixed(2)}
           </div>
-          <div className={`${moneyColumnClass} border-y`}>
+          <div
+            data-testid={"payout-second-place"}
+            className={`${moneyColumnClass} border-y`}
+          >
             ${payout.secondPlace.toFixed(2)}
           </div>
-          <div className={moneyColumnClass}>
+          <div data-testid={"payout-third-place"} className={moneyColumnClass}>
             ${payout.thirdPlace.toFixed(2)}
           </div>
         </div>

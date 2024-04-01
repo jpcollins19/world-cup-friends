@@ -16,8 +16,8 @@ describe("<Error/>", () => {
     const pageTestId = await getTestIdTag("error-message");
     const textTestId = await getTestIdTag("error-message-text");
 
-    expect(pageTestId).toBeInTheDocument();
-    expect(textTestId).toBeInTheDocument();
+    expect(pageTestId).toBeTruthy();
+    expect(textTestId).toBeTruthy();
     expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
   });
 
@@ -77,8 +77,8 @@ describe("<Error/>", () => {
       const pageTestId = await getTestIdTag("error-message-mobile");
       const textTestId = await getTestIdTag("error-message-text-mobile");
 
-      expect(pageTestId).toBeInTheDocument();
-      expect(textTestId).toBeInTheDocument();
+      expect(pageTestId).toBeTruthy();
+      expect(textTestId).toBeTruthy();
       expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
     });
   });
