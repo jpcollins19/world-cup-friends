@@ -80,9 +80,11 @@ User.authenticate = async ({ email, password }) => {
       },
     });
 
+    const fiveDaysInSeconds = 5 * 24 * 60 * 60;
+
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ id: user.id }, process.env.JWT, {
-        expiresIn: 30 * 60,
+        expiresIn: fiveDaysInSeconds,
       });
       return token;
     }

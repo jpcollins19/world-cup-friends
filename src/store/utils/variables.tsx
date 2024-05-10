@@ -1,3 +1,8 @@
+//export const tourneyStartDate = "6/14/2024";
+export const stage1DueDate = "2/15/24";
+export const lastDayOfGroupStage = "2/16/24";
+export const firstDayOfKoStage = "2/17/24";
+
 export const routes = {
   accountCreated: "account-created",
   admin: "/admin",

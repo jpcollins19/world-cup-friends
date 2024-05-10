@@ -6,7 +6,6 @@ import {
   getPageTestId,
   tw,
 } from "../../store";
-import { SignInSchema } from "../signIn/SignInSchema";
 import { useIsMobile } from "../../hooks";
 import { LastUpdatedSchema } from "../navbar/lastUpdated/LastUpdatedAdmin";
 

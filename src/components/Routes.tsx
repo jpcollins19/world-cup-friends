@@ -14,6 +14,7 @@ import Leaderboard from "./leaderboard/Leaderboard";
 import PreSignIn from "./preSignIn/PreSignIn";
 import CreateAccount from "./createAccount/CreateAccount";
 import NoMatch from "./noMatch/NoMatch";
+import Rules from "./rules/Rules";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -45,6 +46,7 @@ const Routes = () => {
     { path: routes.home, component: PreSignIn },
     { path: routes.signIn, component: SignIn },
     { path: routes.createAccount, component: CreateAccount },
+    { path: routes.rules, component: Rules },
   ];
 
   const redirectHome = <Redirect to={routes.home} />;

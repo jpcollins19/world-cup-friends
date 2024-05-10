@@ -10,18 +10,9 @@ import {
   getButtonTestId,
 } from "../../testingUtils";
 import LastUpdatedAdmin from "../../navbar/lastUpdated/LastUpdatedAdmin";
-
-// jest.mock("../../../hooks", () => ({
-//   // useIsMobile: jest.fn(),
-//   // useIsUserAdmin: jest.fn(),
-//   // useIsUserLoggedIn: jest.fn(),
-//   // useGetLastUpdated: jest.fn(),
-// }));
-
-// jest.mock("react", () => ({
-//   ...jest.requireActual("react"),
-//   useState: jest.fn(),
-// }));
+import { createLastUpdated } from "../../../hooks/fixtures/LastUpdated";
+import { updateStore } from "../../../hooks/__tests__ /hookUtils";
+import { _loadLastUpdated } from "../../../store";
 
 describe("<LastUpdatedAdmin/>", () => {
   const editButtonTestId = "button-cont-edit";
@@ -64,39 +55,52 @@ describe("<LastUpdatedAdmin/>", () => {
       click(editButton);
     };
 
-    it("renders LastUpdatedEdit", async () => {
-      renderWithProvider(<LastUpdatedAdmin />);
-
-      await clickEditButton();
-
-      const readOnlyTestId = await queryTestIdTag("last-updated-read-only");
-      const editTestId = await getTestIdTag("last-updated-edit");
-
-      expect(readOnlyTestId).toBeFalsy();
-      expect(editTestId).toBeTruthy();
-    });
-
     it("renders the save button, and not the edit button", async () => {
       renderWithProvider(<LastUpdatedAdmin />);
 
       await clickEditButton();
 
-      const editButton = await queryTestIdTag("edit");
+      const editButton = await queryTestIdTag(editButtonTestId);
       const saveButton = await getButtonTestId("save");
 
       expect(editButton).toBeFalsy();
       expect(saveButton).toBeTruthy();
     });
 
-    //LastUpdatedEdit
-    it.todo("TextField data is accurate");
-    it.todo(
-      "updating text updates the lastUpdated info in LastUpdatedReadOnly",
-    );
-  });
+    describe("LastUpdatedEdit", () => {
+      const lastUpdatedAnswer = "Tuesday, March 1, 2022";
 
-  //overall
-  it.todo("audit that updating lastUpdated works");
+      beforeEach(() => {
+        const lastUpdated = createLastUpdated(lastUpdatedAnswer);
+
+        updateStore(_loadLastUpdated, lastUpdated);
+      });
+
+      it("renders LastUpdatedEdit", async () => {
+        renderWithProvider(<LastUpdatedAdmin />);
+
+        await clickEditButton();
+
+        const readOnlyTestId = await queryTestIdTag("last-updated-read-only");
+        const editTestId = await getTestIdTag("last-updated-edit");
+
+        expect(readOnlyTestId).toBeFalsy();
+        expect(editTestId).toBeTruthy();
+      });
+
+      it("TextField data is accurate upon render", async () => {
+        renderWithProvider(<LastUpdatedAdmin />);
+
+        await clickEditButton();
+
+        const textFieldTestId = await getTestIdTag(
+          "text-field-input-lastupdated",
+        );
+
+        expect(textFieldTestId).toHaveValue(lastUpdatedAnswer);
+      });
+    });
+  });
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {

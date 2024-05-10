@@ -1,5 +1,3 @@
-export const invalidEmailAndOrPw = "Invalid Email Address and/or Password";
-
 export const submitUpperCase = "Submit";
 export const submitLowerCase = "submit";
 

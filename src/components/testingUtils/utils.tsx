@@ -68,6 +68,10 @@ export const changeInputText = async (input: any, text: string) => {
 };
 
 export const click = (input: any) => {
+  // act(() => {
+  //   fireEvent.click(input);
+  // });
+
   fireEvent.click(input);
 };
 

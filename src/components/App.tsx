@@ -11,7 +11,6 @@ import {
 import Routes from "./Routes";
 import Navbar from "./navbar/Navbar";
 import { useIsMobile } from "../hooks";
-import { useSelector } from "react-redux";
 
 const App = () => {
   const dispatch = tDispatch();

@@ -114,13 +114,13 @@ describe("<SignIn/>", () => {
     const cancelLinkTestId = await getTestIdTag("linkText-link-cancel");
 
     expect(pwLinkTestId).toHaveAttribute("href", "/forgot-password");
-    expect(pwLinkTestId).toHaveTextContent("Forgot Password");
+    expect(pwLinkTestId.textContent).toEqual("Forgot Password");
 
     expect(createAccountLinkTestId).toHaveAttribute("href", "/create-account");
-    expect(createAccountLinkTestId).toHaveTextContent("Create Account");
+    expect(createAccountLinkTestId.textContent).toEqual("Create Account");
 
     expect(cancelLinkTestId).toHaveAttribute("href", "/");
-    expect(cancelLinkTestId).toHaveTextContent("Cancel");
+    expect(cancelLinkTestId.textContent).toEqual("Cancel");
   });
 
   describe("classTesting", () => {

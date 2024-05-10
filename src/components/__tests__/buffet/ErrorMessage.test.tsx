@@ -1,11 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
-import {
-  getTestIdTag,
-  invalidEmailAndOrPw,
-  mockWindowMobileView,
-} from "../../testingUtils";
+import { getTestIdTag, mockWindowMobileView } from "../../testingUtils";
 import { geti18n } from "../../../store";
 import { ErrorMessage } from "../../buffet";
 
@@ -18,7 +14,9 @@ describe("<Error/>", () => {
 
     expect(pageTestId).toBeTruthy();
     expect(textTestId).toBeTruthy();
-    expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
+    expect(textTestId.textContent).toEqual(
+      "Invalid Email Address and/or Password",
+    );
   });
 
   describe("classTesting", () => {
@@ -79,7 +77,9 @@ describe("<Error/>", () => {
 
       expect(pageTestId).toBeTruthy();
       expect(textTestId).toBeTruthy();
-      expect(textTestId).toHaveTextContent(invalidEmailAndOrPw);
+      expect(textTestId.textContent).toEqual(
+        "Invalid Email Address and/or Password",
+      );
     });
   });
 });

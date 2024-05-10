@@ -13,8 +13,6 @@ import {
 } from "../../testingUtils";
 import { TextField } from "../../buffet";
 
-//TextField - make labelSpan optional and default to true
-
 describe("<TextField/>", () => {
   const onSubmit = jest.fn();
   const onChange = () => jest.fn();
@@ -79,7 +77,7 @@ describe("<TextField/>", () => {
         const span = await getTestIdTag(spanLabelTestId);
 
         expect(span).toBeTruthy();
-        expect(span).toHaveTextContent("Email");
+        expect(span.textContent).toEqual("Email*");
       });
 
       it("isRequired defaults to true and requiredSymbol renders", async () => {
@@ -90,7 +88,7 @@ describe("<TextField/>", () => {
         const spanRequiredSymbol = await getTestIdTag(spanRequiredSymbolTestId);
 
         expect(spanRequiredSymbol).toBeTruthy();
-        expect(spanRequiredSymbol).toHaveTextContent("*");
+        expect(spanRequiredSymbol.textContent).toEqual("*");
       });
 
       it("when isRequired is false, requiredSymbol does not render", async () => {
@@ -146,16 +144,46 @@ describe("<TextField/>", () => {
   });
 
   describe("showValue", () => {
-    // it("defaults to false", async () => {
-    //   const component = <TextField label={email} onChange={onChange()} />;
-    //
-    //   renderFormik(component, initialValues, onSubmit);
-    //
-    //   const span = await getTestIdTag(spanLabelTestId);
-    //
-    //   expect(span).toBeTruthy();
-    //   expect(span).toHaveTextContent("Email");
-    // });
+    const lastUpdated = "Tuesday, March 1, 2022";
+
+    const lastUpdatedInitialValues = {
+      lastUpdated,
+    };
+
+    it("defaults to false", async () => {
+      const component = (
+        <TextField
+          label="lastUpdated"
+          onChange={onChange()}
+          schema="lastUpdated"
+        />
+      );
+
+      renderWithFormik(component, lastUpdatedInitialValues, onSubmit);
+
+      const inputTestId = await getTextFieldTag("lastupdated");
+
+      expect(inputTestId).toBeTruthy();
+      expect(inputTestId).toHaveValue("");
+    });
+
+    it("when true, defaultValue text shows", async () => {
+      const component = (
+        <TextField
+          label="lastUpdated"
+          onChange={onChange()}
+          schema="lastUpdated"
+          showValue={true}
+        />
+      );
+
+      renderWithFormik(component, lastUpdatedInitialValues, onSubmit);
+
+      const inputTestId = await getTextFieldTag("lastupdated");
+
+      expect(inputTestId).toBeTruthy();
+      expect(inputTestId).toHaveValue(lastUpdated);
+    });
   });
 
   describe("classTesting", () => {

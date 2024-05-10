@@ -25,7 +25,7 @@ describe("<LinkText/>", () => {
 
     expect(pageTestId).toBeTruthy();
     expect(linkTestId).toHaveAttribute("href", "/create-account");
-    expect(linkTestId).toHaveTextContent("Forgot Password");
+    expect(linkTestId.textContent).toEqual("Forgot Password");
   });
 
   describe("classTesting", () => {
@@ -115,7 +115,7 @@ describe("<LinkText/>", () => {
 
       expect(pageTestId).toBeTruthy();
       expect(linkTestId).toHaveAttribute("href", "/create-account");
-      expect(linkTestId).toHaveTextContent("Forgot Password");
+      expect(linkTestId.textContent).toEqual("Forgot Password");
     });
   });
 });

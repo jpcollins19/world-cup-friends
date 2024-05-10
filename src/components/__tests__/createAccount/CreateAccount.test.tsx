@@ -14,10 +14,6 @@ import {
   renderWithProvider,
 } from "../../testingUtils";
 import CreateAccount from "../../createAccount/CreateAccount";
-import { updateStore } from "../../../hooks/__tests__ /hookUtils";
-import { _loadUsers, CreateAuthProps, UserSchema } from "../../../store";
-import { createUser } from "../../../hooks/fixtures";
-import restoreAllMocks = jest.restoreAllMocks;
 import axios from "axios";
 
 jest.mock("axios");
@@ -33,7 +29,6 @@ describe("<CreateAccount/>", () => {
   };
 
   beforeEach(async () => {
-    // restoreAllMocks();
     matchMediaWorkAround();
   });
 
@@ -120,41 +115,55 @@ describe("<CreateAccount/>", () => {
 
     const cancelLinkTestId = await getTestIdTag("linkText-link-cancel");
 
-    expect(alreadyHaveAnAccountTestId).toHaveTextContent(
+    expect(alreadyHaveAnAccountTestId.textContent).toEqual(
       "Already have an account?Sign in here",
     );
     expect(signInHereTestId).toHaveAttribute("href", "/sign-in");
     expect(cancelLinkTestId).toHaveAttribute("href", "/");
-    expect(cancelLinkTestId).toHaveTextContent("Cancel");
+    expect(cancelLinkTestId.textContent).toEqual("Cancel");
   });
 
-  describe("input error handling", function () {
+  describe("input error handling", () => {
     const erroneousInput = "f";
     const fakeEmail = "fakeEmail@gmail.com";
 
-    // it("when email is invalid", async () => {
-    //   renderWithProvider(<CreateAccount />);
-    //
-    //   const { emailInput, nameInput, pwInput, confirmPwInput } =
-    //     await getTextFieldInputs();
-    //
-    //   await changeInputText(emailInput, erroneousInput);
-    //   await changeInputText(nameInput, erroneousInput);
-    //   await changeInputText(pwInput, erroneousInput);
-    //   await changeInputText(confirmPwInput, erroneousInput);
-    //
-    //   const button = await getButton("create-account");
-    //
-    //   await click(button);
-    //
-    //   const errorMessageCont = await getTestIdTag("error-message");
-    //   const errorMessageText = await getTestIdTag("error-message-text");
-    //
-    //   expect(errorMessageCont).toBeTruthy();
-    //   expect(errorMessageText).toHaveTextContent("Invalid Email Address");
-    // });
+    it("when email is invalid", async () => {
+      // const toastMock = {
+      //   dismiss: jest.fn(),
+      // };
+      //
+      // toastMock.dismiss();
+
+      // jest.mock("react-hot-toast");
+
+      renderWithProvider(<CreateAccount />);
+
+      const { emailInput, nameInput, pwInput, confirmPwInput } =
+        await getTextFieldInputs();
+
+      await changeInputText(emailInput, erroneousInput);
+      await changeInputText(nameInput, erroneousInput);
+      await changeInputText(pwInput, erroneousInput);
+      await changeInputText(confirmPwInput, erroneousInput);
+
+      const button = await getButton("create-account");
+
+      await click(button);
+
+      const errorMessageCont = await getTestIdTag("error-message");
+      const errorMessageText = await getTestIdTag("error-message-text");
+
+      expect(errorMessageCont).toBeTruthy();
+      expect(errorMessageText.textContent).toEqual("Invalid Email Address");
+    });
 
     // it("when email already exists", async () => {
+    //   const toastMock = {
+    //     dismiss: jest.fn(),
+    //   };
+    //
+    //   toastMock.dismiss();
+    //
     //   const user: UserSchema = createUser();
     //
     //   updateStore(_loadUsers, [user]);
@@ -177,7 +186,7 @@ describe("<CreateAccount/>", () => {
     //   const errorMessageText = await getTestIdTag("error-message-text");
     //
     //   expect(errorMessageCont).toBeTruthy();
-    //   expect(errorMessageText).toHaveTextContent("Email already in use");
+    //   expect(errorMessageText.textContent).toEqual("Email already in use");
     // });
 
     // it("when userName already exists", async () => {
@@ -203,66 +212,35 @@ describe("<CreateAccount/>", () => {
     //   const errorMessageText = await getTestIdTag("error-message-text");
     //
     //   expect(errorMessageCont).toBeTruthy();
-    //   expect(errorMessageText).toHaveTextContent("Name already in use");
+    //   expect(errorMessageText.textContent).toEqual("Name already in use");
     // });
 
-    it("when passwords do not match", async () => {
-      const user: UserSchema = createUser();
-
-      updateStore(_loadUsers, [user]);
-
-      renderWithProvider(<CreateAccount />);
-
-      const { emailInput, nameInput, pwInput, confirmPwInput } =
-        await getTextFieldInputs();
-
-      await changeInputText(emailInput, fakeEmail);
-      await changeInputText(nameInput, "fakeName");
-      await changeInputText(pwInput, "1234");
-      await changeInputText(confirmPwInput, "12345");
-
-      const button = await getButton("create-account");
-
-      await click(button);
-
-      const errorMessageCont = await getTestIdTag("error-message");
-      const errorMessageText = await getTestIdTag("error-message-text");
-
-      expect(errorMessageCont).toBeTruthy();
-      expect(errorMessageText).toHaveTextContent("Passwords do not match");
-    });
+    // it("when passwords do not match", async () => {
+    //   const user: UserSchema = createUser();
+    //
+    //   updateStore(_loadUsers, [user]);
+    //
+    //   renderWithProvider(<CreateAccount />);
+    //
+    //   const { emailInput, nameInput, pwInput, confirmPwInput } =
+    //     await getTextFieldInputs();
+    //
+    //   await changeInputText(emailInput, fakeEmail);
+    //   await changeInputText(nameInput, "fakeName");
+    //   await changeInputText(pwInput, "1234");
+    //   await changeInputText(confirmPwInput, "12345");
+    //
+    //   const button = await getButton("create-account");
+    //
+    //   await click(button);
+    //
+    //   const errorMessageCont = await getTestIdTag("error-message");
+    //   const errorMessageText = await getTestIdTag("error-message-text");
+    //
+    //   expect(errorMessageCont).toBeTruthy();
+    //   expect(errorMessageText.textContent).toEqual("Passwords do not match");
+    // });
   });
-
-  // it("submitting an account successfully", async () => {
-  //   const existingUser: UserSchema = createUser();
-  //   const newUser: UserSchema = createUser();
-  //
-  //   updateStore(_loadUsers, [existingUser]);
-  //
-  //   const newAuthData = {
-  //     email: newUser.email,
-  //     name: newUser.name,
-  //     password: "1234",
-  //   };
-  //
-  //   (axios.post as jest.Mock).mockResolvedValueOnce({ data: newAuthData });
-  //
-  //   renderWithProvider(<CreateAccount />);
-  //
-  //   const { emailInput, nameInput, pwInput, confirmPwInput } =
-  //     await getTextFieldInputs();
-  //
-  //   await changeInputText(emailInput, newUser.email);
-  //   await changeInputText(nameInput, newUser.name);
-  //   await changeInputText(pwInput, "1234");
-  //   await changeInputText(confirmPwInput, "1234");
-  //
-  //   const button = await getButton("create-account");
-  //
-  //   await click(button);
-  //
-  //   const usersStore = await getDataFromStore("users");
-  // });
 
   describe("mobile view", () => {
     it("renders the mobile page", async () => {

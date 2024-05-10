@@ -1,10 +1,4 @@
-////LastUpdatedAdmin
-
-////CreateAccount
-//input error handling - figure out how to reset the component so each tests passes
-//how to verify that an account was created
-
-////TextField - see if you need to write tests for "showValue"
+////////adjust creating account and signing in features to show the first character of your pw once you start typing, and the character goes hidden once you type the next letter
 
 const express = require("express");
 const app = express();
