@@ -12,8 +12,8 @@ import { Loading } from "../buffet";
 export const PreSignIn: React.FunctionComponent = () => {
   const messi = "/public/pics/messiTrophy.jpg";
 
-  const testId = getPageTestId("home-page");
-  const linkTestId = getPageTestId("home-page-link");
+  const testId = getPageTestId("pre-sign-in-page");
+  const linkTestId = getPageTestId("pre-sign-in-page-link");
 
   return loadingDefault() ? (
     <Loading />

@@ -7,8 +7,9 @@ import {
   stage1DueDate,
   lastDayOfGroupStage,
   firstDayOfKoStage,
+  geti18n,
 } from "../../store";
-import { Loading } from "../buffet";
+import { Loading, LinkText } from "../buffet";
 
 export const Rules: React.FunctionComponent = () => {
   const testId = getPageTestId("rules-page");
@@ -18,10 +19,16 @@ export const Rules: React.FunctionComponent = () => {
   const scoringClass = "text-lg";
   const toDo = "text-red-600";
 
+  const signInProps = { route: routes.signIn, text: geti18n("signIn") };
+
   return loadingDefault() ? (
     <Loading />
   ) : (
     <div data-testid={testId} className="h-full flex flex-col pl-10 pr-96">
+      <div className="absolute right-10 top-5 text-2xl">
+        <LinkText input={signInProps} />
+      </div>
+
       <div className={stageClass}>Stage 1:</div>
 
       <ul className={listClass}>
@@ -30,10 +37,10 @@ export const Rules: React.FunctionComponent = () => {
           group
         </li>
         <li className="italic">
-          **Note that you will need to select four 3rd place teams to advance
+          **Note that you will need to select eight 3rd place teams to advance
           out of their respective group as well**
         </li>
-        <li>Due date for stage 1 picks is</li>
+        <li>Stage 1 picks must be submitted before the first game starts on</li>
         <li className={toDo}> {stage1DueDate}</li>
       </ul>
 
@@ -42,18 +49,19 @@ export const Rules: React.FunctionComponent = () => {
       <ul className={listClass}>
         <li>5 pts for predicting the correct country to win the group</li>
         <li>
-          4 pts for predicting the correct country to take 2nd in the group
+          4 pts for predicting the correct country to finish 2nd in the group
         </li>
         <li>
-          3 pts for predicting the correct country to take 3rd in in the group
+          3 pts for predicting the correct country to finish 3rd in the group
           and advance to the knockout stage
         </li>
         <li>
-          2 pts for predicting a country to advance out of the group, but you
-          did not rank them in the correct 1/2/3 spot
+          2 pts for predicting a country to advance to the knockout stage, but
+          you did not rank them in the correct 1/2/3 position
         </li>
         <li>
-          1 pt for predicting the correct country to take 3rd in the group
+          1 pt for predicting the correct country to finish 3rd in the group
+          where team did not advance to the knockout stage
         </li>
         <li>
           1 pt for predicting the correct country to take 4th in the group
@@ -65,7 +73,7 @@ export const Rules: React.FunctionComponent = () => {
       <ul className={listClass}>
         <li>Complete a bracket for the knockout stage</li>
         <li>
-          We won't know every team that is advancing to the round of 16 until
+          We won't know every team that is advancing to the round of 32 until
           the afternoon of
         </li>
         <li className={toDo}>{lastDayOfGroupStage}</li>
@@ -89,24 +97,24 @@ export const Rules: React.FunctionComponent = () => {
 
       <ul className={listClass}>
         <li>
-          2 pts for each team you correctly select to advance out of the round
-          of 16
+          1 pt for each team you correctly select to advance to the round of 16
         </li>
         <li>
-          4 pts for each team you correctly select to advance out of the elite
-          eight
+          2 pts for each team you correctly select to advance to the elite eight
         </li>
         <li>
-          6 pts for each team you correctly select to advance out of the final
-          four
+          4 pts for each team you correctly select to advance to the final four
         </li>
-        <li>10 pts for selecting the correct Euro winner</li>
+        <li>
+          6 pts for each team you correctly select to advance to the final
+        </li>
+        <li>10 pts for selecting the correct World Cup winner</li>
       </ul>
 
       <div className={stageClass}>Tiebreaker:</div>
 
       <ul className={listClass}>
-        <li>Total number of goals in the tourney - Price is Right rules.</li>
+        <li>Total number of goals in the tourney - Price is Right rules</li>
         <li>
           If the tiebreaker comes into play and all applicable tiebreaker
           numbers are over the total goals scored, the closest tiebreaker to the

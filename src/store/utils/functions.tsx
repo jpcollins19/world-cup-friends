@@ -2,6 +2,7 @@ import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
+import { tourneyStartDate } from "./variables";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -169,4 +170,8 @@ export const formatStrToLowerCase = (str: string): any => {
     .split("")
     .map((letter: string) => letter.toLowerCase())
     .join("");
+};
+
+export const createPreTourneyDataNotAvailableYetMessage = (page: string) => {
+  return `${page} ${geti18n("pageNotAvailableUntilTourneyStarts")}`;
 };

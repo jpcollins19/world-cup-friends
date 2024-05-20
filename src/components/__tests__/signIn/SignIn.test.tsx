@@ -10,7 +10,6 @@ import {
   getPwTextInput,
   getTestIdTag,
   getText,
-  getTextFieldTag,
   matchMediaWorkAround,
   mockWindowMobileView,
   queryTestIdTag,

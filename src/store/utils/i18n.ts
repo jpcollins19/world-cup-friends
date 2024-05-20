@@ -1,3 +1,5 @@
+import { tourneyStartDate } from "./variables";
+
 export const en = {
   cancel: "Cancel",
   confirmPassword: "confirm password",
@@ -15,6 +17,7 @@ export const en = {
   invalidEmailOrPw: "Invalid Email Address and/or Password",
   name: "name",
   nameAlreadyInUse: "Name already in use",
+  pageNotAvailableUntilTourneyStarts: `will not be viewable until the tournament commences on ${tourneyStartDate}`,
   password: "password",
   passwordNoMatch: "Passwords do not match",
   rules: "Rules/General Info",
@@ -40,6 +43,7 @@ export type i18nOptionsTypes =
   | "invalidEmailOrPw"
   | "name"
   | "nameAlreadyInUse"
+  | "pageNotAvailableUntilTourneyStarts"
   | "password"
   | "passwordNoMatch"
   | "rules"

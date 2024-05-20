@@ -1,4 +1,4 @@
-//export const tourneyStartDate = "6/14/2024";
+export const tourneyStartDate = "6/14/2024";
 export const stage1DueDate = "2/15/24";
 export const lastDayOfGroupStage = "2/16/24";
 export const firstDayOfKoStage = "2/17/24";
@@ -40,6 +40,7 @@ export const tw = {
   flexJ: "flex justify-center",
   pointer: "cursor-default",
   shrinkTextBase: "text-vwBase",
+  shrinkTextLarge: "text-vwLarge",
   shrinkTextSm: "text-vwSm",
   textShadowSmWhite: "text-shadow-smWhite",
   whiteTextMed: "text-shadow-med text-white", //3px shadow

@@ -1,5 +1,3 @@
-////////adjust creating account and signing in features to show the first character of your pw once you start typing, and the character goes hidden once you type the next letter
-
 const express = require("express");
 const app = express();
 const syncAndSeed = require("./server/script/seed");

@@ -1,5 +1,10 @@
 import * as funcs from "../utils";
-import { calcPayoutSchema, routes } from "../utils";
+import {
+  calcPayoutSchema,
+  createPreTourneyDataNotAvailableYetMessage,
+  routes,
+  tourneyStartDate,
+} from "../utils";
 import { mockWindowMobileView } from "../../components/testingUtils";
 import { _loadUsers, UserSchema } from "../users_store";
 import { createUser } from "../../hooks/fixtures";
@@ -268,6 +273,32 @@ describe("formatStrToLowerCase ", () => {
   testsToRun.forEach((test) => {
     it(test.str, () => {
       const result: boolean = funcs.formatStrToLowerCase(test.str);
+
+      expect(result).toEqual(test.result);
+    });
+  });
+});
+
+describe("createPreTourneyDataNotAvailableYetMessage ", () => {
+  const leaderboard = "Leaderboard";
+  const poolPicks = "Pool Picks";
+
+  const testsToRun = [
+    {
+      page: leaderboard,
+      result: `${leaderboard} will not be viewable until the tournament commences on ${tourneyStartDate}`,
+    },
+    {
+      page: poolPicks,
+      result: `${poolPicks} will not be viewable until the tournament commences on ${tourneyStartDate}`,
+    },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.page, () => {
+      const result: string = funcs.createPreTourneyDataNotAvailableYetMessage(
+        test.page,
+      );
 
       expect(result).toEqual(test.result);
     });

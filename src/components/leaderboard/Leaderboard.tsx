@@ -1,8 +1,18 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
-import { tDispatch, logout, loadingDefault } from "../../store";
+import {
+  tDispatch,
+  logout,
+  loadingDefault,
+  getPageTestId,
+  tw,
+  createPreTourneyDataNotAvailableYetMessage,
+  geti18n,
+} from "../../store";
 import { Loading } from "../buffet";
+import { useFindTourneyStage } from "../../hooks";
+import Button from "../buffet/Button";
 // import {Link} from "react-router-dom";
 // import { useAppDispatch } from "../hooks";
 // import Sign_In_Options from "../Sign_In_Options";
@@ -43,11 +53,34 @@ export const Leaderboard: React.FunctionComponent = () => {
   const dispatch = tDispatch();
   const history = useHistory();
 
+  const testId = getPageTestId("leaderboard-page");
+
+  const zidane =
+    "https://as01.epimg.net/futbol/imagenes/2020/04/10/primera/1586529604_835391_1586529700_noticia_normal.jpg";
+
+  const tourneyStage = useFindTourneyStage();
+
+  const PreTourney: React.FunctionComponent = () => {
+    return (
+      <div
+        data-testid="leaderboard-pre-tourney-header"
+        className={`${tw.whiteTextMed} ${tw.shrinkTextLarge} pt-28 w-5/8 text-center`}
+      >
+        {createPreTourneyDataNotAvailableYetMessage("Leaderboard")}
+      </div>
+    );
+  };
+
   return loadingDefault() ? (
     <Loading />
   ) : (
-    <div data-testid="leaderboard-page" className="pb-10">
-      leaderboard page
+    <div
+      data-testid={testId}
+      className={`${tw.backgroundImage} ${tw.flexJ}`}
+      style={{ backgroundImage: `url(${zidane})` }}
+    >
+      <PreTourney />
+
       {/*{!isMobile && showPayout && <Payout />}*/}
       {/*{joe?.tourneyStage === 1 ? (*/}
       {/*  <h1 className="pre-tourney-header">*/}
@@ -58,7 +91,13 @@ export const Leaderboard: React.FunctionComponent = () => {
       {/*) : (*/}
       {/*  ""*/}
       {/*)}*/}
-      <button onClick={async () => dispatch(logout(history))}>sign out</button>
+
+      <button
+        className="text-white absolute right-10 top-5"
+        onClick={async () => dispatch(logout(history))}
+      >
+        sign out
+      </button>
     </div>
   );
 };
