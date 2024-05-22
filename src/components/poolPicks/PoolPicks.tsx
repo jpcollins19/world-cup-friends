@@ -1,14 +1,6 @@
 import * as React from "react";
-import { useHistory } from "react-router-dom";
-import {
-  tDispatch,
-  logout,
-  loadingDefault,
-  getPageTestId,
-  tw,
-} from "../../store";
+import { loadingDefault, getPageTestId, tw } from "../../store";
 import { Loading, PreTourneyHeader } from "../buffet";
-import { useFindTourneyStage } from "../../hooks";
 // import {Link} from "react-router-dom";
 // import { useAppDispatch } from "../hooks";
 // import Sign_In_Options from "../Sign_In_Options";
@@ -16,8 +8,7 @@ import { useFindTourneyStage } from "../../hooks";
 // import toast, {Toaster} from "react-hot-toast";
 // import Error from "@mui/icons-material/ErrorOutline";
 
-//const SignIn = () => {
-export const Leaderboard: React.FunctionComponent = () => {
+export const PoolPicks: React.FunctionComponent = () => {
   // const dispatch = useDispatch();
   //
   // const [loading, setLoading] = useState(true);
@@ -46,15 +37,14 @@ export const Leaderboard: React.FunctionComponent = () => {
   //
   // const isMobile = getScreenWidth("max", 65);
 
-  const dispatch = tDispatch();
-  const history = useHistory();
+  // const dispatch = tDispatch();
+  // const history = useHistory();
 
-  const testId = getPageTestId("leaderboard-page");
+  const testId = getPageTestId("pool-picks-page");
 
-  const zidane =
-    "https://as01.epimg.net/futbol/imagenes/2020/04/10/primera/1586529604_835391_1586529700_noticia_normal.jpg";
+  const jaime = "https://i.ytimg.com/vi/3jKj1_aI1EI/maxresdefault.jpg";
 
-  const tourneyStage = useFindTourneyStage();
+  // const tourneyStage = useFindTourneyStage();
 
   return loadingDefault() ? (
     <Loading />
@@ -62,29 +52,11 @@ export const Leaderboard: React.FunctionComponent = () => {
     <div
       data-testid={testId}
       className={`${tw.backgroundImage} ${tw.flexJ}`}
-      style={{ backgroundImage: `url(${zidane})` }}
+      style={{ backgroundImage: `url(${jaime})` }}
     >
-      <PreTourneyHeader page="Leaderboard" />
-
-      {/*{!isMobile && showPayout && <Payout />}*/}
-      {/*{joe?.tourneyStage === 1 ? (*/}
-      {/*  <h1 className="pre-tourney-header">*/}
-      {/*    {createPreTourneyDataNotAvailableYetMessage("Leaderboard")}*/}
-      {/*  </h1>*/}
-      {/*) : user?.tiebreaker ? (*/}
-      {/*  <Leaderboard_Cont joe={joe} rankInfo={rankInfo} />*/}
-      {/*) : (*/}
-      {/*  ""*/}
-      {/*)}*/}
-
-      <button
-        className="text-white absolute right-10 top-5"
-        onClick={async () => dispatch(logout(history))}
-      >
-        sign out
-      </button>
+      <PreTourneyHeader page="Pool Picks" />
     </div>
   );
 };
 
-export default Leaderboard;
+export default PoolPicks;

@@ -15,6 +15,7 @@ import PreSignIn from "./preSignIn/PreSignIn";
 import CreateAccount from "./createAccount/CreateAccount";
 import NoMatch from "./noMatch/NoMatch";
 import Rules from "./rules/Rules";
+import PoolPicks from "./poolPicks/PoolPicks";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -42,16 +43,26 @@ const Routes = () => {
 
   const userIsLoggedIn = useIsUserLoggedIn();
 
+  const preSignInRoute = { path: routes.home, component: PreSignIn };
+  const signInRoute = { path: routes.signIn, component: SignIn };
+  const createAccountRoute = {
+    path: routes.createAccount,
+    component: CreateAccount,
+  };
+  const rulesRoute = { path: routes.rules, component: Rules };
+  const leaderboardRoute = { path: routes.leaderboard, component: Leaderboard };
+  const poolPicksRoute = { path: routes.poolPicks, component: PoolPicks };
+
   const noAuthRoutes = [
-    { path: routes.home, component: PreSignIn },
-    { path: routes.signIn, component: SignIn },
-    { path: routes.createAccount, component: CreateAccount },
-    { path: routes.rules, component: Rules },
+    preSignInRoute,
+    signInRoute,
+    createAccountRoute,
+    rulesRoute,
   ];
 
-  const redirectHome = <Redirect to={routes.home} />;
+  const authRoutes = [leaderboardRoute, poolPicksRoute];
 
-  const authRoutes = [{ path: routes.leaderboard, component: Leaderboard }];
+  const redirectHome = <Redirect to={routes.home} />;
 
   return loading ? (
     <Loading />

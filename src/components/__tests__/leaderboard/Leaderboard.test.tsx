@@ -17,7 +17,7 @@ describe("<Leaderboard/>", () => {
   it("stage 1", async () => {
     renderWithProvider(<Leaderboard />);
 
-    const headerTestId = await getTestIdTag("leaderboard-pre-tourney-header");
+    const headerTestId = await getTestIdTag("pre-tourney-header-leaderboard");
 
     expect(headerTestId).toHaveTextContent(
       `Leaderboard will not be viewable until the tournament commences on ${tourneyStartDate}`,
