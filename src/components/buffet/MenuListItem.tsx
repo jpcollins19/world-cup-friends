@@ -1,28 +1,37 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { getPageTestId } from "../../store";
-import { MenuOptionProps } from "./MenuChevron";
+import {
+  getPageTestId,
+  getTextFromUrl,
+  navbarMenuListClass,
+  removeForwardSlashFromRoute,
+  tw,
+} from "../../store";
 
 type MenuListItemProps = {
-  option: MenuOptionProps;
+  testId: string;
+  route: string;
   onClick: () => void;
 };
 
 export const MenuListItem: React.FunctionComponent<MenuListItemProps> = ({
-  option,
+  route,
+  testId,
   onClick,
 }) => {
-  const testId = getPageTestId(`menu-list-item-${option}`);
+  const menuItemTestId = getPageTestId(
+    `menu-list-item-${testId}-${removeForwardSlashFromRoute(route)}`,
+  );
 
   return (
     <Link
-      data-testid={testId}
-      to={option.route}
-      //className=""
-      className="dropdown-option"
+      data-testid={menuItemTestId}
+      to={route}
+      id="menuListItem"
+      className={`${navbarMenuListClass} ${tw.flexJ} shadow-routesNotSelected px-8`}
       onClick={() => onClick()}
     >
-      {option.text}
+      {getTextFromUrl(route)}
     </Link>
   );
 };

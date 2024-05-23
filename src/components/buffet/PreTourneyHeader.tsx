@@ -15,7 +15,7 @@ export const PreTourneyHeader: React.FunctionComponent<
   return (
     <div
       data-testid={`pre-tourney-header-${createUrlFromText(page)}`}
-      className={`${tw.whiteTextMed} ${tw.shrinkTextLarge} pt-40 w-5/8 text-center`}
+      className={`${tw.whiteTextMed} ${tw.shrinkTextLarge} pt-48 w-5/8 text-center`}
     >
       {createPreTourneyDataNotAvailableYetMessage(page)}
     </div>

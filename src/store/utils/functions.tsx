@@ -1,6 +1,6 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useIsMobile } from "../../hooks";
+import { useIsMobile, useIsUserLoggedIn } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
@@ -20,14 +20,18 @@ export const createUrlFromText = (str: string): string => {
     .join("");
 };
 
-export const getTextFromUrl = (url: string | undefined): string => {
+export const removeForwardSlashFromRoute = (route: string): string => {
+  return route.split("/").pop()!!;
+};
+
+export const getTextFromUrl = (url: string): string => {
   const string = url && url.split("/").pop();
 
   const words = string && string.split("-");
 
   if (words) {
     return words.reduce((a, word, idx) => {
-      // if (word === "in" && userIsLoggedIn) {
+      // if (word === "in" && useIsUserLoggedIn()) {
       //   a += "Out";
       //
       //   return a;

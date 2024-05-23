@@ -1,28 +1,43 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
-import { getTestIdTag, renderWithProvider } from "../../testingUtils";
+import { getTestIdTag, renderWithProvider, click } from "../../testingUtils";
 import axios from "axios";
-import Leaderboard from "../../leaderboard/Leaderboard";
-import { tourneyStartDate } from "../../../store";
+import { routes, tourneyStartDate } from "../../../store";
+import MenuListItem from "../../buffet/MenuListItem";
 
 jest.mock("axios");
 
-describe("<Leaderboard/>", () => {
-  it("should render the component", async () => {
-    renderWithProvider(<Leaderboard />);
+describe("<MenuListItem/>", () => {
+  const onClickMock = jest.fn();
 
-    await getTestIdTag("leaderboard-page");
+  it("should render the component w accurate text and route", async () => {
+    renderWithProvider(
+      <MenuListItem
+        testId="user-profile"
+        route={routes.myProfile}
+        onClick={onClickMock}
+      />,
+    );
+
+    const testId = await getTestIdTag("menu-list-item-user-profile-my-profile");
+
+    expect(testId).toHaveTextContent("My Profile");
+    expect(testId).toHaveAttribute("href", routes.myProfile);
   });
 
-  it("stage 1", async () => {
-    renderWithProvider(<Leaderboard />);
-
-    const headerTestId = await getTestIdTag("pre-tourney-header-leaderboard");
-
-    expect(headerTestId).toHaveTextContent(
-      `Leaderboard will not be viewable until the tournament commences on ${tourneyStartDate}`,
+  it("onClick works", async () => {
+    renderWithProvider(
+      <MenuListItem
+        testId="user-profile"
+        route={routes.myProfile}
+        onClick={onClickMock}
+      />,
     );
+
+    const testId = await getTestIdTag("menu-list-item-user-profile-my-profile");
+
+    click(testId);
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });
-
-//list item shows with accurate text and url

@@ -18,12 +18,13 @@ export const routes = {
   poolPicks: "/pool-picks",
   rules: "/rules",
   signIn: "/sign-in",
+  signOut: "/sign-out",
 };
 
 export const colors = {
   black: "#020617",
-  navbarBackground: "bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700",
-  navbarIconColor: "#cbd5e1", //gray-300
+  lightGrey: "#cbd5e1", //grey-300
+  darkGrey: "#424242", //grey-800
   red: "#b91c1c",
 };
 
@@ -48,3 +49,7 @@ export const tw = {
   whiteTextMed: "text-shadow-med text-white", //3px shadow
   whiteTextSm: "text-shadow-sm text-white", //1.5px shadow
 };
+
+export const navbarBackground = `bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`;
+
+export const navbarMenuListClass = `${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2`;

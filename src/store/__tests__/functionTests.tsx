@@ -1,12 +1,7 @@
 import * as funcs from "../utils";
-import {
-  calcPayoutSchema,
-  createPreTourneyDataNotAvailableYetMessage,
-  routes,
-  tourneyStartDate,
-} from "../utils";
+import { calcPayoutSchema, routes, tourneyStartDate } from "../utils";
 import { mockWindowMobileView } from "../../components/testingUtils";
-import { _loadUsers, UserSchema } from "../users_store";
+import { UserSchema } from "../users_store";
 import { createUser } from "../../hooks/fixtures";
 
 describe("geti18n", () => {
@@ -101,6 +96,8 @@ describe("getTextFromUrl ", () => {
     { url: routes.poolPicks, result: "Pool Picks" },
     { url: routes.groupDetails, result: "Group Details" },
     { url: routes.rules, result: "Rules/General Info" },
+    { url: routes.signIn, result: "Sign In" },
+    { url: routes.signOut, result: "Sign Out" },
   ];
 
   testsToRun.forEach((test) => {
@@ -299,6 +296,22 @@ describe("createPreTourneyDataNotAvailableYetMessage ", () => {
       const result: string = funcs.createPreTourneyDataNotAvailableYetMessage(
         test.page,
       );
+
+      expect(result).toEqual(test.result);
+    });
+  });
+});
+
+describe("removeForwardSlashFromRoute ", () => {
+  const testsToRun = [
+    { route: routes.myProfile, result: "my-profile" },
+    { route: routes.poolPicks, result: "pool-picks" },
+    { route: routes.leaderboard, result: "leaderboard" },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.route, () => {
+      const result: string = funcs.removeForwardSlashFromRoute(test.route);
 
       expect(result).toEqual(test.result);
     });

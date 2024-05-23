@@ -1,33 +1,28 @@
 import * as React from "react";
-import { getPageTestId, tw } from "../../store";
+import { getPageTestId, navbarBackground, tw } from "../../store";
 import MenuListItem from "./MenuListItem";
-
-export type MenuOptionProps = {
-  text: string;
-  route: string;
-};
+import { LegacyRef } from "react";
 
 type MenuChevronProps = {
   testId: string;
-  chevronPlacement: string;
   chevron: any;
-  menuOptionsPlacement: string;
-  menuOptions: MenuOptionProps[];
+  menuRoutes: string[];
+  isMobile?: boolean;
 };
 
 export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
   testId,
-  chevronPlacement,
   chevron,
-  menuOptionsPlacement,
-  menuOptions,
+  menuRoutes,
+  isMobile,
 }) => {
   const [click, setClick] = React.useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  let ref = React.useRef();
+  //let ref = React.useRef();
+  let ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     return handleChevronClick(ref, closeMobileMenu);
@@ -41,7 +36,7 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
       if (
         ref.current &&
         !ref.current.contains(event.target as Node) &&
-        (event.target as HTMLElement).className !== "dropdown-option"
+        (event.target as HTMLElement).id !== "menuListItem"
       ) {
         closeMobileMenu();
       }
@@ -57,10 +52,17 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
   };
 
   const dataTestId = getPageTestId(`menu-chevron-${testId}`);
+  const iconTestId = getPageTestId(`menu-chevron-icon-${testId}`);
+  const chevronPlacement = isMobile ? "" : "h-24 fixed right-10 top-10";
+  const menuOptionsPlacement = isMobile ? "" : "fixed right-10 top-15";
+
+  const border =
+    "border-solid border-gray-300 border-2 rounded-br-md rounded-bl-md rounded-tl-md shadow-2xl";
 
   return (
     <div data-testid={dataTestId} className={chevronPlacement}>
       <div
+        data-testid={iconTestId}
         className={`${tw.cursorFingerPointer}`}
         onClick={handleClick}
         ref={ref}
@@ -70,10 +72,15 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
 
       {click && (
         <div
-          className={`${tw.bDodger} ${tw.flexBoth} ${menuOptionsPlacement} flex-col`}
+          className={`${tw.flexBoth} ${navbarBackground} ${menuOptionsPlacement} ${border} flex-col`}
         >
-          {menuOptions.map((option, idx) => (
-            <MenuListItem key={idx} option={option} onClick={closeMobileMenu} />
+          {menuRoutes.map((route, idx) => (
+            <MenuListItem
+              key={idx}
+              testId={testId}
+              route={route}
+              onClick={closeMobileMenu}
+            />
           ))}
         </div>
       )}

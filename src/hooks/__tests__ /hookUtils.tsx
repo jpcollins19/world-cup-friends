@@ -25,6 +25,7 @@ export const ignoreReactDOMRenderError = () => {
     if (args[0] && args[0].startsWith("Warning: ReactDOM.render")) {
       return;
     }
+
     error.apply(console, args);
   };
 };

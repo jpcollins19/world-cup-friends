@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {
-  colors,
   geti18n,
   getPageTestId,
   me,
-  routes,
   tDispatch,
   tw,
+  navbarBackground,
+  routes,
 } from "../../store";
 import { useGetUser, useIsUserAdmin, useIsUserLoggedIn } from "../../hooks";
 
@@ -44,7 +44,7 @@ export const EmailUpdates: React.FunctionComponent = () => {
     >
       {compVerbiage}
       <p
-        className={`${colors.navbarBackground} ${hoverClass} text-center fixed top-65 left-72 p-2 border border-black border-solid rounded-md max-w-xs`}
+        className={`${navbarBackground} ${hoverClass} text-center fixed top-65 left-72 p-2 border border-black border-solid rounded-md max-w-xs`}
       >
         {geti18n("emailNotificationExplanation")}
       </p>

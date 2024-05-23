@@ -1,6 +1,11 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getPageTestId, getTextFromUrl, tw } from "../../../store";
+import {
+  getPageTestId,
+  getTextFromUrl,
+  navbarMenuListClass,
+  tw,
+} from "../../../store";
 
 export type RouteProps = {
   path: string;
@@ -36,7 +41,7 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
     <Link
       data-testid={testId}
       to={routePath}
-      className={`${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2 my-2 ${currentPageClass}`}
+      className={`${navbarMenuListClass} ${currentPageClass} my-2`}
     >
       <div className={`${tw.flexA} w-full`}>
         <div className="ml-5">{route.icon}</div>

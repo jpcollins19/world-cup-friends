@@ -5,7 +5,13 @@ import PoolPicks from "@mui/icons-material/People";
 import MyPicks from "@mui/icons-material/DnsRounded";
 import Admin from "@mui/icons-material/SettingsAccessibility";
 import GolferOdds from "@mui/icons-material/BarChart";
-import { colors, getPageTestId, routes, tw } from "../../../store";
+import {
+  colors,
+  getPageTestId,
+  navbarBackground,
+  routes,
+  tw,
+} from "../../../store";
 import RouteComp, { RouteProps } from "./RouteComp";
 import { useIsUserAdmin, useIsUserLoggedIn } from "../../../hooks";
 import PayoutData from "../PayoutData";
@@ -13,35 +19,35 @@ import EmailUpdates from "../EmailUpdates";
 import LastUpdatedContainer from "../lastUpdated/LastUpdatedContainer";
 
 export const NavbarComp: React.FunctionComponent = () => {
-  const color = colors.navbarIconColor;
+  const iconColor = colors.lightGrey;
   const iconFontSize = "large";
 
   const rules: RouteProps = {
     path: routes.rules,
-    icon: <Rules sx={{ color }} fontSize={iconFontSize} />,
+    icon: <Rules sx={{ color: iconColor }} fontSize={iconFontSize} />,
   };
 
   const admin: RouteProps = {
     path: routes.admin,
-    icon: <Admin sx={{ color }} fontSize={iconFontSize} />,
+    icon: <Admin sx={{ color: iconColor }} fontSize={iconFontSize} />,
   };
 
   const loggedInRoutes: RouteProps[] = [
     {
       path: routes.leaderboard,
-      icon: <Scorecard sx={{ color }} fontSize={iconFontSize} />,
+      icon: <Scorecard sx={{ color: iconColor }} fontSize={iconFontSize} />,
     },
     {
       path: routes.myPicks,
-      icon: <MyPicks sx={{ color }} fontSize={iconFontSize} />,
+      icon: <MyPicks sx={{ color: iconColor }} fontSize={iconFontSize} />,
     },
     {
       path: routes.poolPicks,
-      icon: <PoolPicks sx={{ color }} fontSize={iconFontSize} />,
+      icon: <PoolPicks sx={{ color: iconColor }} fontSize={iconFontSize} />,
     },
     {
       path: routes.groupDetails,
-      icon: <GolferOdds sx={{ color }} fontSize={iconFontSize} />,
+      icon: <GolferOdds sx={{ color: iconColor }} fontSize={iconFontSize} />,
     },
   ];
 
@@ -66,7 +72,7 @@ export const NavbarComp: React.FunctionComponent = () => {
   return (
     <div
       data-testid={testId}
-      className={`${tw.elevate} ${colors.navbarBackground} w-full h-4/5 flex flex-col justify-between`}
+      className={`${tw.elevate} ${navbarBackground} w-full h-4/5 flex flex-col justify-between`}
     >
       <div className="flex-1">
         {routesToUse.map((route, idx) => (
