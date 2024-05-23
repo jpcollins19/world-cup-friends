@@ -2,7 +2,6 @@ import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile } from "../../hooks";
 import { calcPayoutSchema } from "./functionSchemas";
-import { tourneyStartDate } from "./variables";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];

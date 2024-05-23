@@ -12,7 +12,7 @@ export const LastUpdatedReadOnly: React.FunctionComponent = () => {
   return (
     <div
       data-testid={testId}
-      className={`${tw.flexBoth} ${tw.whiteTextSm} ${tw.pointer} flex-col text-sm `}
+      className={`${tw.flexBoth} ${tw.whiteTextSm} ${tw.cursorArrow} flex-col text-sm `}
     >
       <div>Last Updated:</div>
       <div data-testid="last-updated-answer">{answer}</div>

@@ -78,7 +78,7 @@ export const Leaderboard: React.FunctionComponent = () => {
       {/*)}*/}
 
       <button
-        className="text-white absolute right-10 top-5"
+        className="text-white absolute right-60 top-5"
         onClick={async () => dispatch(logout(history))}
       >
         sign out

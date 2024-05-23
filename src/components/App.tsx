@@ -10,7 +10,8 @@ import {
 } from "../store";
 import Routes from "./Routes";
 import Navbar from "./navbar/Navbar";
-import { useIsMobile } from "../hooks";
+import { useIsMobile, useIsUserLoggedIn } from "../hooks";
+import UserProfileChevron from "./userProfile/UserProfileChevron";
 
 const App = () => {
   const dispatch = tDispatch();
@@ -32,12 +33,16 @@ const App = () => {
 
   const isMobile = useIsMobile();
 
+  const userIsLoggedIn = useIsUserLoggedIn();
+
   return (
     <div
       // data-testid={testId}
       className="flex bg-gradient-to-bl from-gray-200 via-neutral-400 to-gray-200 h-screen w-screen"
     >
       <Router>
+        {userIsLoggedIn && <UserProfileChevron />}
+
         <div className={`${navbarClass} ${tw.elevate} h-screen w-1/5`}>
           <Route path={routes.home} component={Navbar} />
         </div>

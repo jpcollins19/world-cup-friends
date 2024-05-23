@@ -15,6 +15,7 @@ export const en = {
   forgotPassword: "Forgot Password",
   invalidEmail: "Invalid Email Address",
   invalidEmailOrPw: "Invalid Email Address and/or Password",
+  myProfile: "My Profile",
   name: "name",
   nameAlreadyInUse: "Name already in use",
   pageNotAvailableUntilTourneyStarts: `will not be viewable until the tournament commences on ${tourneyStartDate}`,
@@ -23,6 +24,7 @@ export const en = {
   rules: "Rules/General Info",
   save: "Save",
   signIn: "Sign In",
+  signOut: "Sign Out",
   submit: "Submit",
   viewPw: "View password",
 };
@@ -41,6 +43,7 @@ export type i18nOptionsTypes =
   | "forgotPassword"
   | "invalidEmail"
   | "invalidEmailOrPw"
+  | "myProfile"
   | "name"
   | "nameAlreadyInUse"
   | "pageNotAvailableUntilTourneyStarts"
@@ -49,5 +52,6 @@ export type i18nOptionsTypes =
   | "rules"
   | "save"
   | "signIn"
+  | "signOut"
   | "submit"
   | "viewPw";
