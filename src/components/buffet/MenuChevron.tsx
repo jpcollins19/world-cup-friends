@@ -1,7 +1,6 @@
 import * as React from "react";
 import { getPageTestId, navbarBackground, tw } from "../../store";
 import MenuListItem from "./MenuListItem";
-import { LegacyRef } from "react";
 
 type MenuChevronProps = {
   testId: string;
@@ -21,7 +20,6 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  //let ref = React.useRef();
   let ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -53,6 +51,8 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
 
   const dataTestId = getPageTestId(`menu-chevron-${testId}`);
   const iconTestId = getPageTestId(`menu-chevron-icon-${testId}`);
+  const menuItemsTestId = getPageTestId(`menu-items-container-${testId}`);
+
   const chevronPlacement = isMobile ? "" : "h-24 fixed right-10 top-10";
   const menuOptionsPlacement = isMobile ? "" : "fixed right-10 top-15";
 
@@ -72,6 +72,7 @@ export const MenuChevron: React.FunctionComponent<MenuChevronProps> = ({
 
       {click && (
         <div
+          data-testid={menuItemsTestId}
           className={`${tw.flexBoth} ${navbarBackground} ${menuOptionsPlacement} ${border} flex-col`}
         >
           {menuRoutes.map((route, idx) => (

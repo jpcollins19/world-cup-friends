@@ -30,7 +30,7 @@ describe("<NoMatch/>", () => {
   });
 
   describe("mobile view", () => {
-    it("renders the mobile page", async () => {
+    it("renders the mobile view", async () => {
       renderWithProvider(<NoMatch />);
 
       mockWindowMobileView(true);

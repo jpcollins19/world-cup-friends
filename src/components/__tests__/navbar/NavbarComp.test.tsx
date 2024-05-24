@@ -122,7 +122,7 @@ describe("<NavbarComp/>", () => {
   });
 
   describe("mobile view", () => {
-    it("renders the mobile page", async () => {
+    it("renders the mobile view", async () => {
       mockUseIsMobile(true);
 
       renderWithProvider(<NavbarComp />);

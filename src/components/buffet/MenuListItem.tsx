@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import {
   getPageTestId,
   getTextFromUrl,
+  logout,
   navbarMenuListClass,
   removeForwardSlashFromRoute,
+  routes,
   tw,
 } from "../../store";
 
@@ -19,9 +22,18 @@ export const MenuListItem: React.FunctionComponent<MenuListItemProps> = ({
   testId,
   onClick,
 }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const menuItemTestId = getPageTestId(
     `menu-list-item-${testId}-${removeForwardSlashFromRoute(route)}`,
   );
+
+  // const onClicks = () => {
+  //   closeMobileMenu();
+  //
+  //   route === routes.signOut && dispatch(logout(history));
+  // };
 
   return (
     <Link

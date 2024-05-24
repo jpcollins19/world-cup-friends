@@ -425,7 +425,7 @@ describe("<TextField/>", () => {
   });
 
   describe("mobile view", () => {
-    it("renders the mobile page", async () => {
+    it("renders the mobile view", async () => {
       mockWindowMobileView(true);
 
       const component = (

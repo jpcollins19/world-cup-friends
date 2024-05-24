@@ -68,7 +68,7 @@ describe("<LastUpdatedContainer/>", () => {
   });
 
   describe("mobile view", () => {
-    it("renders the mobile page", async () => {
+    it("renders the mobile view", async () => {
       mockUseIsUserLoggedIn(true);
       mockUseGetLastUpdated(lastUpdated);
       mockUseIsMobile(true);
