@@ -24,6 +24,7 @@ import {
 import { thunk, ThunkDispatch, ThunkAction } from "redux-thunk";
 import auth, { AuthState } from "./auth_store";
 import users, { UsersState } from "./users_store";
+import teams, { TeamsState } from "./teams_store";
 import tourneyStage, { TourneyStageSchema } from "./tourneyStage_store";
 import lastUpdated, { LastUpdatedSchema } from "./lastUpdated_store";
 
@@ -31,6 +32,7 @@ import lastUpdated, { LastUpdatedSchema } from "./lastUpdated_store";
 export interface RootState {
   auth: AuthState;
   users: UsersState;
+  teams: TeamsState;
   tourneyStage: TourneyStageSchema;
   lastUpdated: LastUpdatedSchema;
 }
@@ -38,6 +40,7 @@ export interface RootState {
 export const reducer: Reducer<RootState> = combineReducers({
   auth,
   users,
+  teams,
   tourneyStage,
   lastUpdated,
 });
@@ -78,6 +81,7 @@ export const tDispatch = () => useDispatch<TypedDispatch>();
 export default store;
 export * from "./auth_store";
 export * from "./users_store";
+export * from "./teams_store";
 export * from "./tourneyStage_store";
 export * from "./lastUpdated_store";
 export * from "./utils/index";

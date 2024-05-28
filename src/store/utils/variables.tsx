@@ -53,3 +53,18 @@ export const tw = {
 export const navbarBackground = `bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`;
 
 export const navbarMenuListClass = `${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2`;
+
+export const groupLetters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+];

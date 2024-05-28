@@ -16,7 +16,6 @@ import { useFindTourneyStage } from "../../hooks";
 // import toast, {Toaster} from "react-hot-toast";
 // import Error from "@mui/icons-material/ErrorOutline";
 
-//const SignIn = () => {
 export const Leaderboard: React.FunctionComponent = () => {
   // const dispatch = useDispatch();
   //
