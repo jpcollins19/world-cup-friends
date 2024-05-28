@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getPageTestId,
   getTextFromUrl,
@@ -23,25 +23,28 @@ export const MenuListItem: React.FunctionComponent<MenuListItemProps> = ({
   onClick,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const menuItemTestId = getPageTestId(
     `menu-list-item-${testId}-${removeForwardSlashFromRoute(route)}`,
   );
 
-  // const onClicks = () => {
-  //   closeMobileMenu();
-  //
-  //   route === routes.signOut && dispatch(logout(history));
-  // };
+  const isSignOutRoute = route === routes.signOut;
+
+  const signOut = () => {
+    dispatch(logout());
+
+    onClick();
+  };
+
+  const onClickToUse = isSignOutRoute ? signOut : onClick;
 
   return (
     <Link
       data-testid={menuItemTestId}
-      to={route}
+      to={isSignOutRoute ? routes.signIn : route}
       id="menuListItem"
       className={`${navbarMenuListClass} ${tw.flexJ} shadow-routesNotSelected px-8`}
-      onClick={() => onClick()}
+      onClick={() => onClickToUse()}
     >
       {getTextFromUrl(route)}
     </Link>

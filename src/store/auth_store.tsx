@@ -81,8 +81,7 @@ export const createAuth = (auth: CreateAuthProps, history: any) => {
   };
 };
 
-export const logout = (history: any) => {
-  history.push(routes.signIn);
+export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   return {
     type: SET_AUTH,

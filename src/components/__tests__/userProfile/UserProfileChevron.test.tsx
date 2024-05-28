@@ -75,7 +75,7 @@ describe("<UserProfileChevron/>", () => {
       expect(myProfileRoute).toHaveAttribute("href", routes.myProfile);
 
       expect(signOutRoute).toHaveTextContent("Sign Out");
-      expect(signOutRoute).toHaveAttribute("href", routes.signOut);
+      expect(signOutRoute).toHaveAttribute("href", routes.signIn);
     });
 
     describe("mobile view", () => {
