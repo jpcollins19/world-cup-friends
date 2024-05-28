@@ -38,8 +38,26 @@ const User = db.define("users", {
     type: BOOLEAN,
     defaultValue: false,
   },
+  paid: {
+    type: BOOLEAN,
+    defaultValue: false,
+  },
   tiebreaker: {
     type: INTEGER,
+    defaultValue: null,
+  },
+  tempPassword: {
+    type: UUID,
+    defaultValue: null,
+    //defaultValue: UUIDV4,  --previous apps have this as the defaultValue.  Need to look into when you do the forgotPw work
+  },
+  passwordResetURL: {
+    type: UUID,
+    defaultValue: null,
+    //defaultValue: UUIDV4, --previous apps have this as the defaultValue.  Need to look into when you do the forgotPw work
+  },
+  passwordUpdated: {
+    type: STRING,
     defaultValue: null,
   },
   emailNotifications: {

@@ -13,6 +13,8 @@ app.use("/public/pics", express.static(path.join(__dirname, "public/pics")));
 app.use("/", require("./server/api/lastUpdated.js"));
 app.use("/", require("./server/api/tourneyStage.js"));
 app.use("/", require("./server/api/users.js"));
+app.use("/", require("./server/api/teams.js"));
+app.use("/", require("./server/api/groupPicks.js"));
 app.use("/", require("./server/api/auth.js"));
 app.use("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "html/main.html")),
