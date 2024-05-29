@@ -8,7 +8,7 @@ import {
   tw,
 } from "../../store";
 import { Loading, PreTourneyHeader } from "../buffet";
-import { useFindTourneyStage } from "../../hooks";
+import { useFindTourneyStage, useHasTourneyStarted } from "../../hooks";
 // import {Link} from "react-router-dom";
 // import { useAppDispatch } from "../hooks";
 // import Sign_In_Options from "../Sign_In_Options";
@@ -48,12 +48,15 @@ export const Leaderboard: React.FunctionComponent = () => {
   const dispatch = tDispatch();
   const history = useHistory();
 
-  const testId = getPageTestId("leaderboard-page");
-
   const zidane =
     "https://as01.epimg.net/futbol/imagenes/2020/04/10/primera/1586529604_835391_1586529700_noticia_normal.jpg";
 
-  const tourneyStage = useFindTourneyStage();
+  const hasTourneyStarted = useHasTourneyStarted();
+
+  const testId = getPageTestId("leaderboard-page");
+  const payoutTestId = getPageTestId("payout-cont");
+  const userColorTableTestId = getPageTestId("user-color-table");
+  const resultsTestId = getPageTestId("leaderboard-results");
 
   return loadingDefault() ? (
     <Loading />
@@ -66,6 +69,19 @@ export const Leaderboard: React.FunctionComponent = () => {
       <PreTourneyHeader page="Leaderboard" />
 
       {/*{!isMobile && showPayout && <Payout />}*/}
+      {hasTourneyStarted && (
+        <div data-testid={payoutTestId}>payout container</div>
+      )}
+
+      {/*create a hook to decide if you should show data if the tourneyHasStarted -- apply it to the userColorTable and resultsTable*/}
+      {hasTourneyStarted && (
+        <div data-testid={userColorTableTestId}>user color table</div>
+      )}
+
+      {hasTourneyStarted && (
+        <div data-testid={resultsTestId}>results container</div>
+      )}
+
       {/*{joe?.tourneyStage === 1 ? (*/}
       {/*  <h1 className="pre-tourney-header">*/}
       {/*    {createPreTourneyDataNotAvailableYetMessage("Leaderboard")}*/}

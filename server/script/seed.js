@@ -74,7 +74,12 @@ const groupInfo = {
   L: [northMacedonia, jamaica, sweden, chile],
 };
 
-const teamFlagMapperData = [{ name: "Czechia", mapTo: "Czech_Republic" }];
+const teamFlagMapperData = [
+  { name: usa, mapTo: "United_States" },
+  { name: saudiArabia, mapTo: "Saudi_Arabia" },
+  { name: costaRica, mapTo: "Costa_Rica" },
+  { name: northMacedonia, mapTo: "Macedonia" },
+];
 
 const getFlagUrl = (teamName) => {
   const oneOffTeams = teamFlagMapperData.map((t) => t.name);

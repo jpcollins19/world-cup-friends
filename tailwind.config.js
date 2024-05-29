@@ -62,7 +62,8 @@ module.exports = {
         //serif: ["Craftworkgrotesk", ...defaultTheme.fontFamily.serif],
       },
       fontSize: {
-        vwLarge: "2vw",
+        vwXLg: "2vw",
+        vwLg: "1.5vw",
         vwBase: "1vw",
         vwSm: ".8vw",
       },

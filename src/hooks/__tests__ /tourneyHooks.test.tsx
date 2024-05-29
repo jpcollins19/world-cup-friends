@@ -52,3 +52,27 @@ describe("useGetLastUpdated ", () => {
     expect(result.current).not.toBe(null);
   });
 });
+
+describe("useHasTourneyStarted ", () => {
+  const testsToRun = [
+    { stage: 1, result: false },
+    { stage: 2, result: true },
+    { stage: 3, result: true },
+    { stage: 4, result: true },
+    { stage: 5, result: true },
+  ];
+
+  testsToRun.forEach((test) => {
+    it("returns false when tourney hasn't started", () => {
+      updateStore(_loadTourneyStage, test.stage);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.useHasTourneyStarted(), {
+        wrapper,
+      });
+
+      expect(result.current).toBe(test.result);
+    });
+  });
+});

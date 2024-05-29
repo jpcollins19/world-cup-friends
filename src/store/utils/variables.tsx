@@ -31,8 +31,11 @@ export const colors = {
 export const tw = {
   argentinaFlagBackground:
     "bg-gradient-to-b from-blue-300 via-white to-blue-300",
+  cursorArrow: "cursor-default",
+  cursorFingerPointer: "cursor-pointer",
   backgroundImage: "min-h-screen bg-cover bg-center",
   bDodger: "border-solid border-4 border-blue-500",
+  bLime: "border-solid border-4 border-lime-500",
   bPurple: "border-solid border-4 border-purple-700",
   bRed: "border-solid border-4 border-red-700",
   elevate: "shadow-xl hover:shadow-xl transition duration-300 ease-in-out",
@@ -40,10 +43,10 @@ export const tw = {
   flexA: "flex items-center",
   flexBoth: "flex justify-center items-center",
   flexJ: "flex justify-center",
-  cursorArrow: "cursor-default",
-  cursorFingerPointer: "cursor-pointer",
+  overFlowAuto: "overflow-auto",
   shrinkTextBase: "text-vwBase",
-  shrinkTextLarge: "text-vwLarge",
+  shrinkTextLg: "text-vwLg",
+  shrinkTextXLg: "text-vwXLg",
   shrinkTextSm: "text-vwSm",
   textShadowSmWhite: "text-shadow-smWhite",
   whiteTextMed: "text-shadow-med text-white", //3px shadow

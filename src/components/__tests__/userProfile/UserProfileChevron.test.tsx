@@ -22,7 +22,9 @@ describe("<UserProfileChevron/>", () => {
     it("it does not render", async () => {
       renderWithProvider(<UserProfileChevron />);
 
-      await queryTestIdTag(chevronTestId);
+      const chevron = await queryTestIdTag(chevronTestId);
+
+      expect(chevron).toBeFalsy();
     });
   });
 

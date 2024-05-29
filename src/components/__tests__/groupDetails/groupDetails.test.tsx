@@ -17,6 +17,9 @@ describe("<Leaderboard/>", () => {
   it("stage 1", async () => {
     renderWithProvider(<Leaderboard />);
 
+    //Asterisk_Cont doesnt show
+    //groupDetailsCont doesnt show
+
     const headerTestId = await getTestIdTag("pre-tourney-header-leaderboard");
 
     expect(headerTestId).toHaveTextContent(
