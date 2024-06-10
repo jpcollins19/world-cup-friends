@@ -43,9 +43,7 @@ describe("<NavbarComp/>", () => {
   it("should render the component", async () => {
     renderWithProvider(<NavbarComp />);
 
-    const testId = await getTestIdTag("navbar-comp");
-
-    expect(testId).toBeTruthy();
+    await getTestIdTag("navbar-comp");
   });
 
   describe("accurate routes are displayed", () => {
@@ -55,9 +53,7 @@ describe("<NavbarComp/>", () => {
 
         renderWithProvider(<NavbarComp />);
 
-        const rules = await getRouteTestId("rules");
-
-        expect(rules).toBeTruthy();
+        await getRouteTestId("rules");
 
         const { admin, leaderboard, myPicks, poolPicks, groupDetails } =
           await queryRouteTestIds();
@@ -80,17 +76,11 @@ describe("<NavbarComp/>", () => {
 
         renderWithProvider(<NavbarComp />);
 
-        const rules = await getRouteTestId("rules");
-        const leaderboard = await getRouteTestId("leaderboard");
-        const myPicks = await getRouteTestId("my-picks");
-        const poolPicks = await getRouteTestId("pool-picks");
-        const groupDetails = await getRouteTestId("group-details");
-
-        expect(rules).toBeTruthy();
-        expect(leaderboard).toBeTruthy();
-        expect(myPicks).toBeTruthy();
-        expect(poolPicks).toBeTruthy();
-        expect(groupDetails).toBeTruthy();
+        await getRouteTestId("rules");
+        await getRouteTestId("leaderboard");
+        await getRouteTestId("my-picks");
+        await getRouteTestId("pool-picks");
+        await getRouteTestId("group-details");
 
         const { admin } = await queryRouteTestIds();
 
@@ -104,19 +94,12 @@ describe("<NavbarComp/>", () => {
 
         renderWithProvider(<NavbarComp />);
 
-        const rules = await getRouteTestId("rules");
-        const admin = await getRouteTestId("admin");
-        const leaderboard = await getRouteTestId("leaderboard");
-        const myPicks = await getRouteTestId("my-picks");
-        const poolPicks = await getRouteTestId("pool-picks");
-        const groupDetails = await getRouteTestId("group-details");
-
-        expect(rules).toBeTruthy();
-        expect(admin).toBeTruthy();
-        expect(leaderboard).toBeTruthy();
-        expect(myPicks).toBeTruthy();
-        expect(poolPicks).toBeTruthy();
-        expect(groupDetails).toBeTruthy();
+        await getRouteTestId("rules");
+        await getRouteTestId("admin");
+        await getRouteTestId("leaderboard");
+        await getRouteTestId("my-picks");
+        await getRouteTestId("pool-picks");
+        await getRouteTestId("group-details");
       });
     });
   });
@@ -127,9 +110,7 @@ describe("<NavbarComp/>", () => {
 
       renderWithProvider(<NavbarComp />);
 
-      const testId = await getTestIdTag("navbar-comp-mobile");
-
-      expect(testId).toBeTruthy();
+      await getTestIdTag("navbar-comp-mobile");
     });
   });
 });

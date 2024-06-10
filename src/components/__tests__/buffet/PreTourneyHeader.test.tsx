@@ -6,9 +6,9 @@ import {
   renderWithProvider,
 } from "../../testingUtils";
 import axios from "axios";
-import { _loadTourneyStage, tourneyStartDate } from "../../../store";
+import { tourneyStartDate } from "../../../store";
 import PreTourneyHeader from "../../buffet/PreTourneyHeader";
-import { updateStore } from "../../../hooks/__tests__ /hookUtils";
+import { updateTourneyStage } from "../../../hooks/__tests__ /hookUtils";
 
 jest.mock("axios");
 
@@ -16,7 +16,7 @@ describe("<PreTourneyHeader/>", () => {
   const preTourneyHeaderLeaderboardTestId = "pre-tourney-header-leaderboard";
 
   it("should render the component during stage 1", async () => {
-    updateStore(_loadTourneyStage, 1);
+    updateTourneyStage(1);
 
     renderWithProvider(<PreTourneyHeader page="Leaderboard" />);
 
@@ -28,7 +28,7 @@ describe("<PreTourneyHeader/>", () => {
   });
 
   it("should render the component with poolPicks during stage 1", async () => {
-    updateStore(_loadTourneyStage, 1);
+    updateTourneyStage(1);
 
     renderWithProvider(<PreTourneyHeader page="Pool Picks" />);
 
@@ -43,7 +43,7 @@ describe("<PreTourneyHeader/>", () => {
 
   tourneyStages.forEach((stage) => {
     it(`does not render during stage ${stage}`, async () => {
-      updateStore(_loadTourneyStage, stage);
+      updateTourneyStage(stage);
 
       renderWithProvider(<PreTourneyHeader page="Leaderboard" />);
 

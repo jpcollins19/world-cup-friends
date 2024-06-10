@@ -14,6 +14,7 @@ describe("<NoMatch/>", () => {
     const pageTestId = await getTestIdTag("no-match-page");
 
     expect(pageTestId).toBeTruthy();
+
     expect(pageTestId).toHaveTextContent("404 Error");
     expect(pageTestId).toHaveTextContent("Click here for the Home Page");
     expect(pageTestId).toHaveStyle({

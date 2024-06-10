@@ -71,3 +71,13 @@ export const groupLetters = [
   "K",
   "L",
 ];
+
+export const groupDetailColumns = [
+  "MP",
+  "W",
+  "D",
+  "L",
+  "plusMinus",
+  "GD",
+  "Pts",
+];

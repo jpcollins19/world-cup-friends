@@ -1,13 +1,14 @@
 import * as React from "react";
 import "@testing-library/react-hooks";
 import { renderHook } from "@testing-library/react-hooks";
-import { _loadLastUpdated, _loadTourneyStage } from "../../store";
+import { _loadLastUpdated } from "../../store";
 import * as hooks from "../";
 
 import {
   getWrapper,
   ignoreReactDOMRenderError,
   updateStore,
+  updateTourneyStage,
 } from "./hookUtils";
 import { getFakerInfo } from "../fixtures";
 
@@ -20,7 +21,7 @@ describe("useFindTourneyStage ", () => {
 
   testsToRun.forEach((stage) => {
     it(`tourneyStage is ${stage}`, () => {
-      updateStore(_loadTourneyStage, stage);
+      updateTourneyStage(stage);
 
       const wrapper = getWrapper();
 
@@ -64,7 +65,7 @@ describe("useHasTourneyStarted ", () => {
 
   testsToRun.forEach((test) => {
     it("returns false when tourney hasn't started", () => {
-      updateStore(_loadTourneyStage, test.stage);
+      updateTourneyStage(test.stage);
 
       const wrapper = getWrapper();
 

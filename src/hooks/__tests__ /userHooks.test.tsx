@@ -1,18 +1,14 @@
 import * as React from "react";
 import "@testing-library/react-hooks";
 import { renderHook } from "@testing-library/react-hooks";
-import {
-  setAuth,
-  UserSchema,
-  _loadUsers,
-  _loadTourneyStage,
-} from "../../store";
+import { setAuth, UserSchema, _loadUsers } from "../../store";
 import * as hooks from "../";
 import { createUser, getFakerInfo } from "../fixtures";
 import {
   getWrapper,
   ignoreReactDOMRenderError,
   updateStore,
+  updateTourneyStage,
 } from "./hookUtils";
 
 beforeAll(() => {
@@ -245,7 +241,7 @@ describe("useShouldPayoutShow ", () => {
   testsToRun.forEach((test) => {
     it(test.scenario, () => {
       updateStore(setAuth, test.userData);
-      updateStore(_loadTourneyStage, test.tourneyStage);
+      updateTourneyStage(test.tourneyStage);
 
       const wrapper = getWrapper();
 

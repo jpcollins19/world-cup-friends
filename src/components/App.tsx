@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
+  loadTeams,
   loadTourneyStage,
   loadUsers,
   me,
@@ -21,6 +22,7 @@ const App = () => {
       await dispatch(me());
       await dispatch(loadUsers());
       await dispatch(loadTourneyStage());
+      await dispatch(loadTeams());
     })();
   }, []);
 

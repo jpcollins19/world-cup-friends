@@ -1,9 +1,13 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { RootState, store } from "../../store";
+import { _loadTourneyStage, RootState, store } from "../../store";
 
 export const updateStore = (thunk: any, data: any) => {
   return store.dispatch(thunk(data));
+};
+
+export const updateTourneyStage = (stage: number) => {
+  updateStore(_loadTourneyStage, stage);
 };
 
 export const getDataFromStore = (subStore: keyof RootState) => {

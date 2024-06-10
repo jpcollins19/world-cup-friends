@@ -2,17 +2,15 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import {
   getTestIdTag,
+  mockUseIsMobile,
   queryTestIdTag,
   renderWithProvider,
 } from "../../testingUtils";
 import axios from "axios";
-import {
-  _loadTourneyStage,
-  getPageTestId,
-  tourneyStartDate,
-} from "../../../store";
+import { getPageTestId, tourneyStartDate } from "../../../store";
 import PoolPicks from "../../poolPicks/PoolPicks";
-import { updateStore } from "../../../hooks/__tests__ /hookUtils";
+import { updateTourneyStage } from "../../../hooks/__tests__ /hookUtils";
+import { useMediaQuery } from "../../../../__mocks__/react-responsive";
 
 jest.mock("axios");
 
@@ -21,7 +19,7 @@ describe("<PoolPicks/>", () => {
   const userPicksTestId = getPageTestId("pool-picks-user-picks");
 
   it("should render the component", async () => {
-    updateStore(_loadTourneyStage, 1);
+    updateTourneyStage(1);
 
     renderWithProvider(<PoolPicks />);
 
@@ -29,7 +27,7 @@ describe("<PoolPicks/>", () => {
   });
 
   it("stage 1", async () => {
-    updateStore(_loadTourneyStage, 1);
+    updateTourneyStage(1);
 
     renderWithProvider(<PoolPicks />);
 
@@ -47,4 +45,16 @@ describe("<PoolPicks/>", () => {
   });
 
   //stage 2 should be the opposite of stage 1 verifications
+
+  describe("mobile view", () => {
+    it("renders the mobile view", async () => {
+      useMediaQuery.mockReturnValue(true);
+
+      updateTourneyStage(1);
+
+      renderWithProvider(<PoolPicks />);
+
+      await getTestIdTag("pool-picks-page-mobile");
+    });
+  });
 });

@@ -69,6 +69,7 @@ module.exports = {
       },
       margin: {
         "17vw": "17vw",
+        // "groupDetailsColumn": "17vw",
       },
       textShadow: {
         sm: "0 1.5px 1.5px #020617",
