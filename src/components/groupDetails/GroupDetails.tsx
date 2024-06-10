@@ -28,7 +28,7 @@ export const GroupDetails: React.FunctionComponent = () => {
     : "h-full pt-20 px-3";
 
   const pageTestId = getPageTestId("group-details-page");
-  const asteriskContTestId = getPageTestId("asterisk-cont");
+  const asteriskContTestId = getPageTestId("asterisk-cont-group-details");
   const groupDetailsTestId = getPageTestId("group-details-cont");
 
   return loadingDefault() ? (

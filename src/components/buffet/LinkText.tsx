@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { createUrlFromText, getPageTestId, tw } from "../../store";
 import { useIsMobile } from "../../hooks";
 

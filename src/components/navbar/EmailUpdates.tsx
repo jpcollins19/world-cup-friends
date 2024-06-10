@@ -9,7 +9,7 @@ import {
   navbarBackground,
   routes,
 } from "../../store";
-import { useGetUser, useIsUserAdmin, useIsUserLoggedIn } from "../../hooks";
+import { useGetAuth, useIsUserAdmin, useIsUserLoggedIn } from "../../hooks";
 
 export const EmailUpdates: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -22,7 +22,7 @@ export const EmailUpdates: React.FunctionComponent = () => {
     })();
   }, []);
 
-  const user = useGetUser();
+  const user = useGetAuth();
 
   const compVerbiage = user?.emailNotifications
     ? geti18n("emailNotificationsOptOut")

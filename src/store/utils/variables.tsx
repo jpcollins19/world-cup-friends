@@ -13,6 +13,7 @@ export const routes = {
   editProfileEmailNotifications: "/edit-profile-email-notifications",
   leaderboard: "/leaderboard",
   myPicks: "/my-picks",
+  myPicksEdit: "/my-picks-edit",
   myProfile: "/my-profile",
   noMatch: "*",
   poolPicks: "/pool-picks",
@@ -47,6 +48,7 @@ export const tw = {
   shrinkTextBase: "text-vwBase",
   shrinkTextLg: "text-vwLg",
   shrinkTextXLg: "text-vwXLg",
+  shrinkText2XLg: "text-vw2XLg",
   shrinkTextSm: "text-vwSm",
   textShadowSmWhite: "text-shadow-smWhite",
   whiteTextMed: "text-shadow-med text-white", //3px shadow

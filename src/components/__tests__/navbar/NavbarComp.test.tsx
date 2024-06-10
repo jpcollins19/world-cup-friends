@@ -17,7 +17,7 @@ jest.mock("../../../hooks", () => ({
   useIsUserAdmin: jest.fn(),
   useIsUserLoggedIn: jest.fn(),
   useGetActiveUsers: jest.fn(),
-  useGetUser: jest.fn(),
+  useGetAuth: jest.fn(),
   useShouldPayoutShow: jest.fn(),
   useGetLastUpdated: jest.fn(),
 }));

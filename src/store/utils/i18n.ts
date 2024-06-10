@@ -23,6 +23,7 @@ export const en = {
   passwordNoMatch: "Passwords do not match",
   rules: "Rules/General Info",
   save: "Save",
+  selectGroupPicks: "Select Group Picks",
   signIn: "Sign In",
   signOut: "Sign Out",
   submit: "Submit",
@@ -51,6 +52,7 @@ export type i18nOptionsTypes =
   | "passwordNoMatch"
   | "rules"
   | "save"
+  | "selectGroupPicks"
   | "signIn"
   | "signOut"
   | "submit"

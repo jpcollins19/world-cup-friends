@@ -17,6 +17,7 @@ import NoMatch from "./noMatch/NoMatch";
 import Rules from "./rules/Rules";
 import PoolPicks from "./poolPicks/PoolPicks";
 import GroupDetails from "./groupDetails/GroupDetails";
+import MyPicks from "./myPicks/locked/MyPicks";
 
 const Routes = () => {
   const dispatch = tDispatch();
@@ -57,6 +58,10 @@ const Routes = () => {
     path: routes.groupDetails,
     component: GroupDetails,
   };
+  const myPicksRoute = {
+    path: routes.myPicks,
+    component: MyPicks,
+  };
 
   const noAuthRoutes = [
     preSignInRoute,
@@ -65,7 +70,12 @@ const Routes = () => {
     rulesRoute,
   ];
 
-  const authRoutes = [leaderboardRoute, poolPicksRoute, groupDetailsRoute];
+  const authRoutes = [
+    leaderboardRoute,
+    poolPicksRoute,
+    groupDetailsRoute,
+    myPicksRoute,
+  ];
 
   const redirectHome = <Redirect to={routes.home} />;
 

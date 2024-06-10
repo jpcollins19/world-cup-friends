@@ -8,7 +8,7 @@ import {
 } from "../store";
 import { useFindTourneyStage } from "./tourneyHooks";
 
-export const useGetUser = (): AuthState => {
+export const useGetAuth = (): AuthState => {
   return useSelector((state: RootState) => state.auth);
 };
 
@@ -17,13 +17,13 @@ export const useGetUsers = (): UserSchema[] => {
 };
 
 export const useIsUserLoggedIn = (): boolean => {
-  const auth = useGetUser();
+  const auth = useGetAuth();
 
   return !!auth.id;
 };
 
 export const useIsUserAdmin = (): boolean => {
-  const auth = useGetUser();
+  const auth = useGetAuth();
 
   return !!auth.isAdmin;
 };
@@ -39,7 +39,7 @@ export const useShouldPayoutShow = (): boolean => {
 
   const tourneyStarted = tourneyStage !== 1;
 
-  const user = useGetUser();
+  const user = useGetAuth();
 
   const userSubmittedPicks = user?.tiebreaker ?? false;
 
@@ -68,4 +68,16 @@ export const useIsNameInUse = (name: string): boolean => {
   );
 
   return userNames.includes(formatStrToLowerCase(name));
+};
+
+export const useGetUser = (userId: string): UserSchema => {
+  return useGetUserGroupPicks(userId);
+};
+
+export const useGetUserGroupPicks = (userId: string): UserSchema => {
+  const users = useGetUsers();
+
+  const user = users.find((user) => user.id === userId);
+
+  return user!!;
 };

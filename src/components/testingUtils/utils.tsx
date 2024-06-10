@@ -6,7 +6,7 @@ import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
 import {
   useGetActiveUsers,
   useGetLastUpdated,
-  useGetUser,
+  useGetAuth,
   useIsMobile,
   useIsUserAdmin,
   useIsUserLoggedIn,
@@ -157,6 +157,6 @@ export const mockUseGetLastUpdated = (lastUpdated: LastUpdatedSchema) => {
   mockReturnedValue(useGetLastUpdated, lastUpdated);
 };
 
-export const mockUseGetUser = (user: any) => {
-  mockReturnedValue(useGetUser, user);
+export const mockUseGetAuth = (user: any) => {
+  mockReturnedValue(useGetAuth, user);
 };

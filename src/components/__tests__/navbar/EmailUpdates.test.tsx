@@ -2,7 +2,7 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import {
   getTestIdTag,
-  mockUseGetUser,
+  mockUseGetAuth,
   mockUseIsMobile,
   mockUseIsUserAdmin,
   mockUseIsUserLoggedIn,
@@ -17,7 +17,7 @@ jest.mock("../../../hooks", () => ({
   useIsMobile: jest.fn(),
   useIsUserAdmin: jest.fn(),
   useIsUserLoggedIn: jest.fn(),
-  useGetUser: jest.fn(),
+  useGetAuth: jest.fn(),
 }));
 
 describe("<EmailUpdates/>", () => {
@@ -71,7 +71,7 @@ describe("<EmailUpdates/>", () => {
       it("user emailNotifications is false", async () => {
         const user: UserSchema = createUser();
 
-        mockUseGetUser(user);
+        mockUseGetAuth(user);
 
         renderWithProvider(<EmailUpdates />);
 
@@ -85,7 +85,7 @@ describe("<EmailUpdates/>", () => {
       it("user emailNotifications is true", async () => {
         const user: UserSchema = createUser({ emailNotifications: true });
 
-        mockUseGetUser(user);
+        mockUseGetAuth(user);
 
         renderWithProvider(<EmailUpdates />);
 

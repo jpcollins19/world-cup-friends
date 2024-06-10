@@ -35,7 +35,7 @@ describe("useGetUser", () => {
 
       const wrapper = getWrapper();
 
-      const { result } = renderHook(() => hooks.useGetUser(), {
+      const { result } = renderHook(() => hooks.useGetAuth(), {
         wrapper,
       });
 
