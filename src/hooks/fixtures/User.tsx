@@ -1,5 +1,9 @@
-import { UserSchema } from "../../store";
-import { getFakerInfo } from "./";
+import { TeamSchema, UserSchema, UserSingleGroupPickSchema } from "../../store";
+import {
+  generateRandomGroupOrder,
+  getFakerInfo,
+  UserSingleGroupPickSetupSchema,
+} from "./";
 
 export const createUser = ({
   tiebreaker = undefined,
@@ -22,4 +26,31 @@ export const createUser = ({
     createdAt: "2024-03-07T22:44:20.451Z",
     updatedAt: "2024-03-07T22:44:20.451Z",
   };
+};
+
+export const createUserGroupPicks = ({
+  groups = [],
+  userGroupPicks = [],
+}: {
+  groups?: TeamSchema[];
+  userGroupPicks?: UserSingleGroupPickSetupSchema[];
+} = {}): UserSingleGroupPickSchema[] => {
+  return userGroupPicks.map((userGroupPick: UserSingleGroupPickSetupSchema) => {
+    const teamsInGroup = groups.filter(
+      (group) => group.group === userGroupPick.group,
+    );
+
+    const groupPicks = generateRandomGroupOrder().reduce(
+      (a: any, num: number, idx: number) => {
+        a[num] = teamsInGroup[idx].name;
+        return a;
+      },
+      {},
+    );
+
+    groupPicks.group = userGroupPick.group;
+    groupPicks.thirdPlaceToAdvanceToKo = userGroupPick.thirdPlaceToAdvanceToKo;
+
+    return groupPicks;
+  });
 };

@@ -15,7 +15,7 @@ import {
 } from "../../../store";
 import { LinkButton, Loading } from "../../buffet";
 import { useSelector } from "react-redux";
-import { useGetUser } from "../../../hooks";
+import { useGetAuth, useGetUser } from "../../../hooks";
 
 export const MyPicks: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -29,8 +29,6 @@ export const MyPicks: React.FunctionComponent = () => {
   const jCole =
     "https://cdn.shoot.co.uk/wp-content/uploads/2018/07/Joe-Cole-9.jpg";
 
-  const auth = useSelector((state: RootState) => state.auth);
-
   const pageTestId = getPageTestId("my-picks-page");
   const myPicksContTestId = getPageTestId("my-picks-cont");
   const asteriskContTestId = getPageTestId("asterisk-cont-my-picks");
@@ -38,10 +36,11 @@ export const MyPicks: React.FunctionComponent = () => {
 
   const didUserSubmitPicks = false;
 
+  const auth = useGetAuth();
   const user = useGetUser(auth.id!!);
 
-  console.log("auth", auth);
-  console.log("user", user);
+  // console.log("auth", auth);
+  // console.log("user", user);
 
   return loadingDefault() ? (
     <Loading />
@@ -54,7 +53,7 @@ export const MyPicks: React.FunctionComponent = () => {
       <div
         className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkText2XLg} pt-5`}
       >
-        {/*{user.name}*/}
+        {user.name}
       </div>
 
       <div className={tw.flexBoth}>

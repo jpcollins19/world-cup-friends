@@ -1,4 +1,5 @@
 import axios from "axios";
+import { loadGroupPicks } from "./group_picks_store";
 
 const LOAD_USERS = "LOAD_USERS";
 
@@ -9,6 +10,9 @@ export const _loadUsers = (users: UsersState) => {
 export const loadUsers = () => {
   return async (dispatch: any) => {
     const users = (await axios.get("/api/users")).data;
+
+    const groupPicks = await loadGroupPicks();
+
     dispatch(_loadUsers(users));
   };
 };
@@ -23,6 +27,32 @@ export type UserSchema = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UserSingleGroupPickSchema = {
+  group: string;
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  thirdPlaceToAdvanceToKo: boolean;
+};
+
+export type UserGroupPicksSchema = Array<UserSingleGroupPickSchema>;
+
+//     {
+//   a: UserSingleGroupPickSchema;
+//   b: UserSingleGroupPickSchema;
+//   c: UserSingleGroupPickSchema;
+//   d: UserSingleGroupPickSchema;
+//   e: UserSingleGroupPickSchema;
+//   f: UserSingleGroupPickSchema;
+//   g: UserSingleGroupPickSchema;
+//   h: UserSingleGroupPickSchema;
+//   i: UserSingleGroupPickSchema;
+//   j: UserSingleGroupPickSchema;
+//   k: UserSingleGroupPickSchema;
+//   l: UserSingleGroupPickSchema;
+// };
 
 export interface UsersState extends Array<UserSchema> {}
 

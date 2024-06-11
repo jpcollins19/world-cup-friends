@@ -6,10 +6,23 @@ import {
   renderWithProvider,
 } from "../../testingUtils";
 import axios from "axios";
-import { groupLetters, TeamSchema } from "../../../store";
-import { updateTourneyStage } from "../../../hooks/__tests__ /hookUtils";
+import {
+  _loadUsers,
+  groupLetters,
+  setAuth,
+  TeamSchema,
+  UserSchema,
+} from "../../../store";
+import {
+  updateStore,
+  updateTourneyStage,
+} from "../../../hooks/__tests__ /hookUtils";
 import GroupDetails from "../../groupDetails/GroupDetails";
-import { createAllGroups } from "../../../hooks/fixtures";
+import {
+  createAllGroups,
+  createUser,
+  getFakerInfo,
+} from "../../../hooks/fixtures";
 import { useAxiosGet } from "../../../hooks/__tests__ /axiosUtils";
 import { useMediaQuery } from "../../../../__mocks__/react-responsive";
 import MyPicks from "../../myPicks/locked/MyPicks";
@@ -20,9 +33,13 @@ describe("<MyPicks/>", () => {
   it("should render the component", async () => {
     updateTourneyStage(1);
 
-    // const teams: TeamSchema[] = createAllGroups();
-    //
-    // useAxiosGet(teams);
+    const user: UserSchema = createUser({ name: "Joe" });
+
+    const auth = { id: user.id };
+
+    updateStore(setAuth, auth);
+    updateStore(_loadUsers, [user]);
+    useAxiosGet([user]);
 
     renderWithProvider(<MyPicks />);
 
@@ -41,6 +58,7 @@ describe("<MyPicks/>", () => {
     //
     //   // linkButton has accurate text when no picks have been submitted
     //   // asteriskCont does not show
+    //    //  userPicks cont does not show
     //
     //   //await getTestIdTag("my-picks-page");
     //

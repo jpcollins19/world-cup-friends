@@ -71,13 +71,19 @@ export const useIsNameInUse = (name: string): boolean => {
 };
 
 export const useGetUser = (userId: string): UserSchema => {
-  return useGetUserGroupPicks(userId);
-};
-
-export const useGetUserGroupPicks = (userId: string): UserSchema => {
   const users = useGetUsers();
 
-  const user = users.find((user) => user.id === userId);
+  const user = users.find((user) => user.id === userId)!;
+
+  const groupPicks = useGetUserGroupPicks(user.id);
+
+  //ifTourneyStage >=4, useGetUserKOPicks
 
   return user!!;
+};
+
+export const useGetUserGroupPicks = (userId: string): string => {
+  //create a schema for userPicks in the user_store and adjust the return here
+
+  return userId;
 };

@@ -12,14 +12,14 @@ app.get("/api/group-picks", async (req, res, next) => {
   }
 });
 
-app.put("/api/group-picks/:id", async (req, res, next) => {
-  try {
-    const pick = await Team.GroupPick(req.params.id);
-
-    res.status(204).send(await pick.update(req.body));
-  } catch (err) {
-    next(err);
-  }
-});
+// app.put("/api/group-picks/:id", async (req, res, next) => {
+//   try {
+//     const pick = await Team.GroupPick(req.params.id);
+//
+//     res.status(204).send(await pick.update(req.body));
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 module.exports = app;
