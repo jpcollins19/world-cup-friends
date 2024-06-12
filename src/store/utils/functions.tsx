@@ -1,13 +1,13 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile, useIsUserLoggedIn } from "../../hooks";
-import { calcPayoutSchema } from "./functionSchemas";
+import { calcPayoutSchema, GroupPicksResult } from "./functionSchemas";
 import { GroupPicksState } from "../group_picks_store";
 import {
   UserGroupPicksSchema,
   UserSingleGroupPickSchema,
 } from "../users_store";
-import { groupLetters } from "./variables";
+import { groupLetters, mapOverTeamsInAGroup } from "./variables";
 import { TeamSchema } from "../teams_store";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
@@ -188,89 +188,51 @@ export const createPreTourneyDataNotAvailableYetMessage = (page: string) => {
 
 export const getUserGroupPicks = (
   userId: string,
-  groupPicks: GroupPicksState,
+  poolGroupPicks: GroupPicksState,
   teams: TeamSchema[],
 ): UserGroupPicksSchema => {
-  const userGroupPicks: UserGroupPicksSchema = [];
+  const result: UserGroupPicksSchema = [];
 
-  const userPicksFromApi = groupPicks.filter(
+  const userPicks = poolGroupPicks.filter(
     (groupPick) => groupPick.userUuid === userId,
   );
 
-  //console.log("userPicksFromApi", userPicksFromApi);
+  if (userPicks.length === 0) {
+    return [];
+  }
 
   groupLetters.forEach((letter) => {
-    const isGroupA = letter === "A";
-
-    const userPicksForGroupAtHand = userPicksFromApi.filter(
+    const userGroupPicks = userPicks.filter(
       (pick) => pick.groupLetter === letter,
     );
 
-    // isGroupA && console.log("userPicksForGroupAtHand", userPicksForGroupAtHand);
+    const groupPicksResult = mapOverTeamsInAGroup.reduce(
+      (a: GroupPicksResult, finishingPosition: number, idx: number) => {
+        const userGroupPositionResult = userGroupPicks[idx];
 
-    const userPicksForGroupAtHand1 = userPicksForGroupAtHand[0];
-    const userPicksForGroupAtHand2 = userPicksForGroupAtHand[1];
-    const userPicksForGroupAtHand3 = userPicksForGroupAtHand[2];
-    const userPicksForGroupAtHand4 = userPicksForGroupAtHand[3];
+        const isGroupPlacementThird =
+          userGroupPositionResult.groupPlacement === 3;
 
-    // isGroupA &&
-    //   console.log("userPicksForGroupAtHand1", userPicksForGroupAtHand1);
-    //
-    // isGroupA &&
-    //   console.log("userPicksForGroupAtHand2", userPicksForGroupAtHand2);
-    //
-    // isGroupA &&
-    //   console.log("userPicksForGroupAtHand3", userPicksForGroupAtHand3);
-    //
-    // isGroupA &&
-    //   console.log("userPicksForGroupAtHand4", userPicksForGroupAtHand4);
+        const teamName: string = teams.find(
+          (team) => team.id === userGroupPositionResult.teamUuid,
+        )?.name as string;
 
-    const userPickTeamName1: string = teams.find(
-      (team) => team.id === userPicksForGroupAtHand1.teamUuid,
-    )?.name!;
+        a[finishingPosition] = teamName;
 
-    const userPickTeamName2: string = teams.find(
-      (team) => team.id === userPicksForGroupAtHand2.teamUuid,
-    )?.name!;
+        if (isGroupPlacementThird) {
+          a.thirdPlaceToAdvanceToKo =
+            userGroupPositionResult.thirdPlaceToAdvanceToKo;
+        }
 
-    const userPickTeamName3: string = teams.find(
-      (team) => team.id === userPicksForGroupAtHand3.teamUuid,
-    )?.name!;
+        return a;
+      },
+      {
+        group: letter,
+      } as GroupPicksResult,
+    );
 
-    const userPickTeamName4: string = teams.find(
-      (team) => team.id === userPicksForGroupAtHand4.teamUuid,
-    )?.name!;
-
-    // isGroupA && console.log("userPickTeamName1", userPickTeamName1);
-    // isGroupA && console.log("userPickTeamName2", userPickTeamName2);
-    // isGroupA && console.log("userPickTeamName3", userPickTeamName3);
-    // isGroupA && console.log("userPickTeamName4", userPickTeamName4);
-
-    const thirdPlaceToAdvanceToKo: boolean =
-      userPicksForGroupAtHand3?.thirdPlaceToAdvanceToKo!;
-
-    const groupPicksResult = {
-      group: letter,
-      1: userPickTeamName1,
-      2: userPickTeamName2,
-      3: userPickTeamName3,
-      4: userPickTeamName4,
-      thirdPlaceToAdvanceToKo,
-    };
-
-    userGroupPicks.push(groupPicksResult);
+    result.push(groupPicksResult as UserSingleGroupPickSchema);
   });
 
-  // console.log("userGroupPicks", userGroupPicks);
-
-  const groupA: UserSingleGroupPickSchema = {
-    group: "A",
-    1: "Dutch",
-    2: "USA",
-    3: "Germany",
-    4: "Canada",
-    thirdPlaceToAdvanceToKo: true,
-  };
-
-  return userGroupPicks;
+  return result;
 };

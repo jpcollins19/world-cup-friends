@@ -21,7 +21,6 @@ import {
   createUserGroupPicks,
   UserSingleGroupPickSetupSchema,
 } from "../../hooks/fixtures";
-import { PickSchema } from "../group_picks_store";
 
 describe("geti18n", () => {
   const testsToRun = [
@@ -338,199 +337,173 @@ describe("removeForwardSlashFromRoute", () => {
 });
 
 describe("getUserGroupPicks", () => {
-  const user1 = createUser({ name: "Joe" });
-  const user2 = createUser({ name: "Kelly" });
   const teams = createAllGroups();
 
-  // console.log("groups", teams);
+  describe("when user has picks", () => {
+    const user1 = createUser({ name: "Joe" });
+    const user2 = createUser({ name: "Kelly" });
 
-  const user1GroupPicks: UserSingleGroupPickSetupSchema[] = [
-    { group: "A", thirdPlaceToAdvanceToKo: true },
-    { group: "B", thirdPlaceToAdvanceToKo: true },
-    { group: "C", thirdPlaceToAdvanceToKo: true },
-    { group: "D", thirdPlaceToAdvanceToKo: true },
-    { group: "E", thirdPlaceToAdvanceToKo: true },
-    { group: "F", thirdPlaceToAdvanceToKo: true },
-    { group: "G", thirdPlaceToAdvanceToKo: true },
-    { group: "H", thirdPlaceToAdvanceToKo: true },
-    { group: "I", thirdPlaceToAdvanceToKo: false },
-    { group: "J", thirdPlaceToAdvanceToKo: false },
-    { group: "K", thirdPlaceToAdvanceToKo: false },
-    { group: "L", thirdPlaceToAdvanceToKo: false },
-  ];
+    const user1GroupPicks: UserSingleGroupPickSetupSchema[] = [
+      { group: "A", thirdPlaceToAdvanceToKo: true },
+      { group: "B", thirdPlaceToAdvanceToKo: true },
+      { group: "C", thirdPlaceToAdvanceToKo: true },
+      { group: "D", thirdPlaceToAdvanceToKo: true },
+      { group: "E", thirdPlaceToAdvanceToKo: true },
+      { group: "F", thirdPlaceToAdvanceToKo: true },
+      { group: "G", thirdPlaceToAdvanceToKo: true },
+      { group: "H", thirdPlaceToAdvanceToKo: true },
+      { group: "I", thirdPlaceToAdvanceToKo: false },
+      { group: "J", thirdPlaceToAdvanceToKo: false },
+      { group: "K", thirdPlaceToAdvanceToKo: false },
+      { group: "L", thirdPlaceToAdvanceToKo: false },
+    ];
 
-  const user2GroupPicks: UserSingleGroupPickSetupSchema[] = [
-    { group: "A", thirdPlaceToAdvanceToKo: true },
-    { group: "B", thirdPlaceToAdvanceToKo: true },
-    { group: "C", thirdPlaceToAdvanceToKo: true },
-    { group: "D", thirdPlaceToAdvanceToKo: true },
-    { group: "E", thirdPlaceToAdvanceToKo: false },
-    { group: "F", thirdPlaceToAdvanceToKo: true },
-    { group: "G", thirdPlaceToAdvanceToKo: false },
-    { group: "H", thirdPlaceToAdvanceToKo: true },
-    { group: "I", thirdPlaceToAdvanceToKo: false },
-    { group: "J", thirdPlaceToAdvanceToKo: true },
-    { group: "K", thirdPlaceToAdvanceToKo: false },
-    { group: "L", thirdPlaceToAdvanceToKo: true },
-  ];
+    const user2GroupPicks: UserSingleGroupPickSetupSchema[] = [
+      { group: "A", thirdPlaceToAdvanceToKo: true },
+      { group: "B", thirdPlaceToAdvanceToKo: true },
+      { group: "C", thirdPlaceToAdvanceToKo: true },
+      { group: "D", thirdPlaceToAdvanceToKo: true },
+      { group: "E", thirdPlaceToAdvanceToKo: false },
+      { group: "F", thirdPlaceToAdvanceToKo: true },
+      { group: "G", thirdPlaceToAdvanceToKo: false },
+      { group: "H", thirdPlaceToAdvanceToKo: true },
+      { group: "I", thirdPlaceToAdvanceToKo: false },
+      { group: "J", thirdPlaceToAdvanceToKo: true },
+      { group: "K", thirdPlaceToAdvanceToKo: false },
+      { group: "L", thirdPlaceToAdvanceToKo: true },
+    ];
 
-  const user1GroupPicksResult = createUserGroupPicks({
-    groups: teams,
-    userGroupPicks: user1GroupPicks,
-  });
+    const user1GroupPicksResult = createUserGroupPicks({
+      groups: teams,
+      userGroupPicks: user1GroupPicks,
+    });
 
-  const user2GroupPicksResult = createUserGroupPicks({
-    groups: teams,
-    userGroupPicks: user2GroupPicks,
-  });
+    const user2GroupPicksResult = createUserGroupPicks({
+      groups: teams,
+      userGroupPicks: user2GroupPicks,
+    });
 
-  const user1TestInfo: CreateGroupPicksSchema = {
-    userId: user1.id,
-    groupPicks: user1GroupPicksResult,
-  };
+    const user1TestInfo: CreateGroupPicksSchema = {
+      userId: user1.id,
+      groupPicks: user1GroupPicksResult,
+    };
 
-  const user2TestInfo: CreateGroupPicksSchema = {
-    userId: user2.id,
-    groupPicks: user2GroupPicksResult,
-  };
+    const user2TestInfo: CreateGroupPicksSchema = {
+      userId: user2.id,
+      groupPicks: user2GroupPicksResult,
+    };
 
-  const groupPicksResult = createGroupPicks_Pool({
-    groups: teams,
-    userGroupPicks: [user1TestInfo, user2TestInfo],
-  });
+    const groupPicksResult = createGroupPicks_Pool({
+      groups: teams,
+      userGroupPicks: [user1TestInfo, user2TestInfo],
+    });
 
-  // console.log("groupPicksResult", groupPicksResult);
-  // console.log("user1GroupPicksResult", user1GroupPicksResult);
+    const testsToRun = [
+      { userName: user1.name, user: user1TestInfo },
+      { userName: user2.name, user: user2TestInfo },
+    ];
 
-  const testsToRun = [
-    { userName: user1.name, user: user1TestInfo },
-    { userName: user2.name, user: user2TestInfo },
-  ];
+    testsToRun.forEach((test) => {
+      describe(test.userName, () => {
+        groupLetters.forEach((letter) => {
+          it(`group: ${letter}`, () => {
+            const userUuid = test.user.userId;
 
-  testsToRun.forEach((test) => {
-    describe(test.userName, () => {
-      groupLetters.forEach((letter) => {
-        it(`group: ${letter}`, () => {
-          const userUuid = test.user.userId;
-
-          const result: UserGroupPicksSchema = funcs.getUserGroupPicks(
-            userUuid,
-            groupPicksResult,
-            teams,
-          );
-
-          const isGroupA = letter === "A";
-
-          const teamDataFromGroup = teams.filter(
-            (team) => team.group === letter,
-          );
-
-          // isGroupA && console.log("teamDataFromGroup", teamDataFromGroup);
-
-          const groupPicksResultsForGroup = groupPicksResult.filter(
-            (result) =>
-              result.groupLetter === letter && result.userUuid === userUuid,
-          );
-
-          // isGroupA &&
-          //   console.log("groupPicksResultsForGroup", groupPicksResultsForGroup);
-
-          const groupPicksResultsForGroup1 = groupPicksResultsForGroup[0];
-          const groupPicksResultsForGroup2 = groupPicksResultsForGroup[1];
-          const groupPicksResultsForGroup3 = groupPicksResultsForGroup[2];
-          const groupPicksResultsForGroup4 = groupPicksResultsForGroup[3];
-
-          // isGroupA &&
-          //   console.log("groupPicksResultsForGroup1", groupPicksResultsForGroup1);
-
-          const groupPicksResultsForGroupTeamName1 = teamDataFromGroup.find(
-            (team) => team.id === groupPicksResultsForGroup1.teamUuid,
-          )?.name;
-
-          const groupPicksResultsForGroupTeamName2 = teamDataFromGroup.find(
-            (team) => team.id === groupPicksResultsForGroup2.teamUuid,
-          )?.name;
-
-          const groupPicksResultsForGroupTeamName3 = teamDataFromGroup.find(
-            (team) => team.id === groupPicksResultsForGroup3.teamUuid,
-          )?.name;
-
-          const groupPicksResultsForGroupTeamName4 = teamDataFromGroup.find(
-            (team) => team.id === groupPicksResultsForGroup4.teamUuid,
-          )?.name;
-
-          // isGroupA &&
-          //   console.log(
-          //     "groupPicksResultsForGroupTeamName1",
-          //     groupPicksResultsForGroupTeamName1,
-          //   );
-
-          // isGroupA && console.log("expectedResult", expectedResult);
-
-          const userGroupPicksTestSetup: UserSingleGroupPickSchema | undefined =
-            test.user.groupPicks.find(
-              (groupPick) => groupPick.group === letter,
+            const result: UserGroupPicksSchema = funcs.getUserGroupPicks(
+              userUuid,
+              groupPicksResult,
+              teams,
             );
 
-          // isGroupA &&
-          //   console.log("userGroupPicksTestSetup", userGroupPicksTestSetup);
+            const userPicksTestSetup: UserSingleGroupPickSchema | undefined =
+              test.user.groupPicks.find(
+                (groupPick) => groupPick.group === letter,
+              );
 
-          if (userGroupPicksTestSetup) {
-            const userGroupPickTestSetupTeamName1 =
-              userGroupPicksTestSetup["1"];
-            const userGroupPickTestSetupTeamName2 =
-              userGroupPicksTestSetup["2"];
-            const userGroupPickTestSetupTeamName3 =
-              userGroupPicksTestSetup["3"];
-            const userGroupPickTestSetupTeamName4 =
-              userGroupPicksTestSetup["4"];
+            if (userPicksTestSetup) {
+              const userPickTestSetupTeamName1 = userPicksTestSetup["1"];
+              const userPickTestSetupTeamName2 = userPicksTestSetup["2"];
+              const userPickTestSetupTeamName3 = userPicksTestSetup["3"];
+              const userPickTestSetupTeamName4 = userPicksTestSetup["4"];
 
-            const thirdPlaceToAdvanceToKo =
-              userGroupPicksTestSetup["thirdPlaceToAdvanceToKo"];
+              const thirdPlaceToAdvanceToKo =
+                userPicksTestSetup["thirdPlaceToAdvanceToKo"];
 
-            // isGroupA &&
-            //   console.log("userGroupPickTeamName1", userGroupPickTeamName1);
+              const expectedResultFromUserPickTestSetup = {
+                group: letter,
+                1: userPickTestSetupTeamName1,
+                2: userPickTestSetupTeamName2,
+                3: userPickTestSetupTeamName3,
+                4: userPickTestSetupTeamName4,
+                thirdPlaceToAdvanceToKo,
+              };
 
-            const teamInfo1 = teams.find(
-              (team) => team.name === userGroupPickTestSetupTeamName1,
-            );
+              const groupAnswersFromResult = result.find(
+                (answer) => answer.group === letter,
+              );
 
-            const teamInfo2 = teams.find(
-              (team) => team.name === userGroupPickTestSetupTeamName2,
-            );
-
-            const teamInfo3 = teams.find(
-              (team) => team.name === userGroupPickTestSetupTeamName3,
-            );
-
-            const teamInfo4 = teams.find(
-              (team) => team.name === userGroupPickTestSetupTeamName4,
-            );
-
-            // isGroupA && console.log("teamInfo1", teamInfo1);
-
-            // isGroupA &&
-            //   console.log("groupAnswersFromResult", groupAnswersFromResult);
-
-            const expectedResultFromUserGroupPickTestSetup = {
-              group: letter,
-              1: userGroupPickTestSetupTeamName1,
-              2: userGroupPickTestSetupTeamName2,
-              3: userGroupPickTestSetupTeamName3,
-              4: userGroupPickTestSetupTeamName4,
-              thirdPlaceToAdvanceToKo,
-            };
-
-            const groupAnswersFromResult = result.find(
-              (answer) => answer.group === letter,
-            );
-
-            expect(groupAnswersFromResult).toEqual(
-              expectedResultFromUserGroupPickTestSetup,
-            );
-          }
+              expect(groupAnswersFromResult).toEqual(
+                expectedResultFromUserPickTestSetup,
+              );
+            }
+          });
         });
       });
+    });
+  });
+
+  describe("when user does not have picks", () => {
+    const user1 = createUser({ name: "James" });
+    const user2 = createUser({ name: "Craig" });
+
+    const user1GroupPicks: UserSingleGroupPickSetupSchema[] = [
+      { group: "A", thirdPlaceToAdvanceToKo: true },
+      { group: "B", thirdPlaceToAdvanceToKo: true },
+      { group: "C", thirdPlaceToAdvanceToKo: true },
+      { group: "D", thirdPlaceToAdvanceToKo: true },
+      { group: "E", thirdPlaceToAdvanceToKo: true },
+      { group: "F", thirdPlaceToAdvanceToKo: true },
+      { group: "G", thirdPlaceToAdvanceToKo: true },
+      { group: "H", thirdPlaceToAdvanceToKo: true },
+      { group: "I", thirdPlaceToAdvanceToKo: false },
+      { group: "J", thirdPlaceToAdvanceToKo: false },
+      { group: "K", thirdPlaceToAdvanceToKo: false },
+      { group: "L", thirdPlaceToAdvanceToKo: false },
+    ];
+
+    const user1GroupPicksResult = createUserGroupPicks({
+      groups: teams,
+      userGroupPicks: user1GroupPicks,
+    });
+
+    const user2GroupPicksResult: UserSingleGroupPickSchema[] =
+      [] as UserSingleGroupPickSchema[];
+
+    const user1TestInfo: CreateGroupPicksSchema = {
+      userId: user1.id,
+      groupPicks: user1GroupPicksResult,
+    };
+
+    const user2TestInfo: CreateGroupPicksSchema = {
+      userId: user2.id,
+      groupPicks: user2GroupPicksResult,
+    };
+
+    const groupPicksResult = createGroupPicks_Pool({
+      groups: teams,
+      userGroupPicks: [user1TestInfo, user2TestInfo],
+    });
+
+    it(`returns an empty array`, () => {
+      const userUuid = user2.id;
+
+      const result: UserGroupPicksSchema = funcs.getUserGroupPicks(
+        userUuid,
+        groupPicksResult,
+        teams,
+      );
+
+      expect(result).toEqual([]);
     });
   });
 });

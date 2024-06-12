@@ -5,6 +5,7 @@ import {
   loadTourneyStage,
   loadUsers,
   me,
+  RootState,
   routes,
   tDispatch,
   tw,
@@ -30,6 +31,11 @@ const App = () => {
 
   // const navbarClass =
   //   "max-w-sm mx-auto bg-white shadow-md hover:shadow-lg transition duration-300 ease-in-out";
+
+  // console.log(
+  //   "byah",
+  //   useSelector((state: RootState) => state.groupPicks),
+  // );
 
   const navbarClass = "bg-white";
 

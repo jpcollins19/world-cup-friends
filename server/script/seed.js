@@ -10,6 +10,34 @@ const {
 const tourneyStage = 1;
 const lastUpdated = "4/9/24 at 1:30 PM CT";
 
+const A = "A";
+const B = "B";
+const C = "C";
+const D = "D";
+const E = "E";
+const F = "F";
+const G = "G";
+const H = "H";
+const I = "I";
+const J = "J";
+const K = "K";
+const L = "L";
+
+const groupToIdxMapper = {
+  0: A,
+  1: B,
+  2: C,
+  3: D,
+  4: E,
+  5: F,
+  6: G,
+  7: H,
+  8: I,
+  9: J,
+  10: K,
+  11: L,
+};
+
 const netherlands = "Netherlands";
 const ecuador = "Ecuador";
 const senegal = "Senegal";
@@ -159,21 +187,35 @@ const users = [
   },
 ];
 
-const createGroupPicks = (userPicks, userUuid, thirdPlacePicks) => {
-  userPicks.forEach((groupPicks) => {
-    groupPicks.forEach(async (team, idx) => {
-      const placement = idx + 1;
+const createGroupPicks = (
+  userPicks,
+  userUuid,
+  userPicksFor3rdPlaceToAdvanceToKo,
+) => {
+  console.log("userPicksLength", userPicks.length);
 
+  userPicks.forEach((groupPickData, idx) => {
+    const group = groupToIdxMapper[idx];
+
+    console.log("group", group);
+
+    groupPickData.forEach(async (team, idx) => {
+      const placement = idx + 1;
       const isThirdPlace = placement === 3;
 
       let thirdPlaceToAdvanceToKo = false;
 
-      if (isThirdPlace && team.name === thirdPlacePicks[team.group]) {
+      if (isThirdPlace && userPicksFor3rdPlaceToAdvanceToKo.includes(group)) {
         thirdPlaceToAdvanceToKo = true;
       }
 
+      if (isThirdPlace) {
+        console.log("group", group);
+        console.log("thirdPlaceToAdvanceToKo", thirdPlaceToAdvanceToKo);
+      }
+
       await GroupPick.create({
-        userUuid: userUuid,
+        userUuid,
         teamUuid: team.id,
         groupLetter: team.group,
         groupPlacement: placement,
@@ -277,16 +319,7 @@ const syncAndSeed = async () => {
   const jPicks_K = [Mali, Nigeria, Iraq, Colombia];
   const jPicks_L = [North_Macedonia, Jamaica, Sweden, Chile];
 
-  const joeThirdPlace = {
-    A: senegal,
-    C: poland,
-    D: australia,
-    F: morocco,
-    I: turkey,
-    J: slovakia,
-    K: iraq,
-    L: sweden,
-  };
+  const joeThirdPlaceToAdvanceToKo = [A, C, D, F, I, J, K, L];
 
   const joePicks = [
     jPicks_A,
@@ -316,16 +349,7 @@ const syncAndSeed = async () => {
   const kPicks_K = [Nigeria, Colombia, Iraq, Mali];
   const kPicks_L = [Jamaica, Sweden, Chile, North_Macedonia];
 
-  const kellyThirdPlace = {
-    C: argentina,
-    E: germany,
-    F: canada,
-    G: scotland,
-    H: slovenia,
-    I: georgia,
-    J: cameroon,
-    K: iraq,
-  };
+  const kellyThirdPlaceToAdvanceToKo = [C, E, F, G, H, I, J, K];
 
   const kellyPicks = [
     kPicks_A,
@@ -355,16 +379,7 @@ const syncAndSeed = async () => {
   const cPicks_K = [Colombia, Nigeria, Iraq, Mali];
   const cPicks_L = [Jamaica, North_Macedonia, Chile, Sweden];
 
-  const coachThirdPlace = {
-    C: mexico,
-    D: france,
-    E: spain,
-    G: switzerland,
-    H: romania,
-    I: georgia,
-    K: iraq,
-    L: chile,
-  };
+  const coachThirdPlaceToAdvanceToKo = [C, D, E, G, H, I, K, L];
 
   const coachPicks = [
     cPicks_A,
@@ -394,16 +409,7 @@ const syncAndSeed = async () => {
   const aPicks_K = [Colombia, Nigeria, Iraq, Mali];
   const aPicks_L = [Jamaica, Chile, Sweden, North_Macedonia];
 
-  const aboonaThirdPlace = {
-    A: netherlands,
-    D: australia,
-    E: germany,
-    F: croatia,
-    G: switzerland,
-    I: turkey,
-    J: egypt,
-    L: sweden,
-  };
+  const aboonaThirdPlaceToAdvanceToKo = [A, D, E, F, G, I, J, L];
 
   const aboonaPicks = [
     aPicks_A,
@@ -420,11 +426,11 @@ const syncAndSeed = async () => {
     aPicks_L,
   ];
 
-  createGroupPicks(joePicks, Joe.id, joeThirdPlace);
-  createGroupPicks(joePicks, Stan.id, joeThirdPlace);
-  createGroupPicks(kellyPicks, Kelly.id, kellyThirdPlace);
-  createGroupPicks(coachPicks, Coach.id, coachThirdPlace);
-  createGroupPicks(aboonaPicks, Aboona.id, aboonaThirdPlace);
+  createGroupPicks(joePicks, Joe.id, joeThirdPlaceToAdvanceToKo);
+  createGroupPicks(joePicks, Stan.id, joeThirdPlaceToAdvanceToKo);
+  createGroupPicks(kellyPicks, Kelly.id, kellyThirdPlaceToAdvanceToKo);
+  createGroupPicks(coachPicks, Coach.id, coachThirdPlaceToAdvanceToKo);
+  createGroupPicks(aboonaPicks, Aboona.id, aboonaThirdPlaceToAdvanceToKo);
 
   await TourneyStage.create({
     stage: tourneyStage,

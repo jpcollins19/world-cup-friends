@@ -23,6 +23,7 @@ export const createUser = ({
     name: name ?? getFakerInfo("name"),
     tiebreaker: tiebreaker ?? null,
     emailNotifications: emailNotifications ?? false,
+    groupPicks: [],
     createdAt: "2024-03-07T22:44:20.451Z",
     updatedAt: "2024-03-07T22:44:20.451Z",
   };

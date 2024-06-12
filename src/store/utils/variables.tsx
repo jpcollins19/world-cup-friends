@@ -74,6 +74,9 @@ export const groupLetters = [
   "L",
 ];
 
+// export const mapOverTeamsInAGroup = ["1", "2", "3", "4"];
+export const mapOverTeamsInAGroup = [1, 2, 3, 4];
+
 export const groupDetailColumns = [
   "MP",
   "W",

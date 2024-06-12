@@ -1,4 +1,4 @@
-import { TeamSchema } from "../../store";
+import { mapOverTeamsInAGroup, TeamSchema } from "../../store";
 import {
   CreateGroupPicksSchema,
   createTeam,
@@ -27,127 +27,87 @@ export const createGroupPicks_Pool = ({
   const groupPicksPool: GroupPicksState = [];
 
   userGroupPicks.forEach((userGroupPick: CreateGroupPicksSchema) => {
-    const userId = userGroupPick.userId;
+    const userUuid = userGroupPick.userId;
 
     const userGroupPicks = userGroupPick.groupPicks;
 
     userGroupPicks.forEach((groupPick) => {
-      // console.log("groupPick", groupPick);
+      const groupLetter = groupPick.group;
 
-      const group = groupPick.group;
-      const thirdPlaceToAdvanceToKo = groupPick.thirdPlaceToAdvanceToKo;
+      mapOverTeamsInAGroup.forEach((finishingPos: number) => {
+        const is1stPos = finishingPos === 1;
+        const is2ndPos = finishingPos === 2;
+        const is3rdPos = finishingPos === 3;
+        const is4thPos = finishingPos === 4;
 
-      const first = groupPick["1"];
-      const second = groupPick["2"];
-      const third = groupPick["3"];
-      const fourth = groupPick["4"];
+        let thirdPlaceToAdvanceToKo = false;
 
-      const firstFromGroupInfo: TeamSchema | undefined = groups.find(
-        (team) => team.name! === first,
-      );
-      const secondFromGroupInfo: TeamSchema | undefined = groups.find(
-        (team) => team.name === second,
-      );
-      const thirdFromGroupInfo: TeamSchema | undefined = groups.find(
-        (team) => team.name === third,
-      );
-      const fourthFromGroupInfo: TeamSchema | undefined = groups.find(
-        (team) => team.name === fourth,
-      );
+        let teamUuid;
 
-      // console.log("first", first);
-      // console.log("firstFromGroupInfo", firstFromGroupInfo);
-      // console.log("second", second);
-      // console.log("secondFromGroupInfo", secondFromGroupInfo);
-      // console.log("third", third);
-      // console.log("thirdFromGroupInfo", thirdFromGroupInfo);
-      // console.log("fourth", fourth);
-      // console.log("fourthFromGroupInfo", fourthFromGroupInfo);
-      //
-      // console.log("groups", groups[0]);
+        if (is1stPos) {
+          teamUuid = getTeamUuid(groupPick[finishingPos], groups);
+        }
 
-      const firstGroupPickResult = {
-        id: getFakerInfo("uuid"),
-        userUuid: userId,
-        teamUuid: firstFromGroupInfo?.id as string,
-        groupLetter: group,
-        groupPlacement: 1,
-        thirdPlaceToAdvanceToKo: false,
-        createdAt: "2024-03-07T22:44:20.451Z",
-        updatedAt: "2024-03-07T22:44:20.451Z",
-      };
+        if (is2ndPos) {
+          teamUuid = getTeamUuid(groupPick[finishingPos], groups);
+        }
 
-      const secondGroupPickResult = {
-        id: getFakerInfo("uuid"),
-        userUuid: userId,
-        teamUuid: secondFromGroupInfo?.id as string,
-        groupLetter: group,
-        groupPlacement: 2,
-        thirdPlaceToAdvanceToKo: false,
-        createdAt: "2024-03-07T22:44:20.451Z",
-        updatedAt: "2024-03-07T22:44:20.451Z",
-      };
+        if (is3rdPos) {
+          teamUuid = getTeamUuid(groupPick[finishingPos], groups);
+          thirdPlaceToAdvanceToKo = groupPick.thirdPlaceToAdvanceToKo;
+        }
 
-      const thirdGroupPickResult = {
-        id: getFakerInfo("uuid"),
-        userUuid: userId,
-        teamUuid: thirdFromGroupInfo?.id as string,
-        groupLetter: group,
-        groupPlacement: 3,
-        thirdPlaceToAdvanceToKo,
-        createdAt: "2024-03-07T22:44:20.451Z",
-        updatedAt: "2024-03-07T22:44:20.451Z",
-      };
+        if (is4thPos) {
+          teamUuid = getTeamUuid(groupPick[finishingPos], groups);
+        }
 
-      const fourthGroupPickResult = {
-        id: getFakerInfo("uuid"),
-        userUuid: userId,
-        teamUuid: fourthFromGroupInfo?.id as string,
-        groupLetter: group,
-        groupPlacement: 4,
-        thirdPlaceToAdvanceToKo: false,
-        createdAt: "2024-03-07T22:44:20.451Z",
-        updatedAt: "2024-03-07T22:44:20.451Z",
-      };
+        const groupPickResult = createSingleGroupResult({
+          userUuid,
+          teamUuid,
+          groupLetter,
+          groupPlacement: finishingPos,
+          thirdPlaceToAdvanceToKo,
+        });
 
-      groupPicksPool.push(firstGroupPickResult);
-      groupPicksPool.push(secondGroupPickResult);
-      groupPicksPool.push(thirdGroupPickResult);
-      groupPicksPool.push(fourthGroupPickResult);
+        groupPicksPool.push(groupPickResult);
+      });
     });
   });
-
-  // const byah = {
-  //   id: getFakerInfo("uuid"),
-  //   userUuid: "123",
-  //   teamUuid: "123",
-  //   groupLetter: "123",
-  //   groupPlacement: 1,
-  //   thirdPlaceToAdvanceToKo: true,
-  //   createdAt: "123",
-  //   updatedAt: "123",
-  // };
 
   return groupPicksPool;
 };
 
-export const createSingleGroupPick = ({
-  groups = [],
-  userGroupPicks = [],
+export const createSingleGroupResult = ({
+  userUuid = "",
+  teamUuid = "",
+  groupLetter = "",
+  groupPlacement = 1,
+  thirdPlaceToAdvanceToKo = false,
 }: {
-  groups?: TeamSchema[];
-  userGroupPicks?: CreateGroupPicksSchema[];
-} = {}): PickSchema[] => {
-  const byah = {
-    id: "123",
-    userUuid: "123",
-    teamUuid: "123",
-    groupLetter: "123",
-    groupPlacement: 1,
-    thirdPlaceToAdvanceToKo: true,
-    createdAt: "123",
-    updatedAt: "123",
+  userUuid?: string;
+  teamUuid?: string;
+  groupLetter?: string;
+  groupPlacement?: number;
+  thirdPlaceToAdvanceToKo?: boolean;
+} = {}): PickSchema => {
+  return {
+    id: getFakerInfo("uuid"),
+    userUuid,
+    teamUuid,
+    groupLetter,
+    groupPlacement,
+    thirdPlaceToAdvanceToKo,
+    createdAt: "2024-03-07T22:44:20.451Z",
+    updatedAt: "2024-03-07T22:44:20.451Z",
   };
+};
 
-  return [byah];
+const getTeam = (teamName: string, groups: TeamSchema[]): TeamSchema => {
+  return groups.find((team) => team.name === teamName) as TeamSchema;
+};
+
+const getTeamUuid = (teamName: string, groups: TeamSchema[]): string => {
+  const team = getTeam(teamName, groups);
+
+  return team?.id as string;
 };

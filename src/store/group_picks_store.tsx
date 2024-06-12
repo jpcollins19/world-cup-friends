@@ -9,6 +9,7 @@ export const _loadGroupPicks = (groupPicks: GroupPicksState) => {
 export const loadGroupPicks = () => {
   return async (dispatch: any) => {
     const groupPicks = (await axios.get("/api/group-picks")).data;
+
     dispatch(_loadGroupPicks(groupPicks));
   };
 };

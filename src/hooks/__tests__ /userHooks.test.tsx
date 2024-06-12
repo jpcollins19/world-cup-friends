@@ -15,23 +15,38 @@ beforeAll(() => {
   ignoreReactDOMRenderError();
 });
 
-const authLoggedInWithPicks = { id: getFakerInfo("uuid"), tiebreaker: 101 };
-const authLoggedInWithNoPicks = { id: getFakerInfo("uuid"), tiebreaker: null };
+const authUserWithPicks: UserSchema = createUser({ tiebreaker: 101 });
+const authUserWithNoPicks: UserSchema = createUser();
+
+const authLoggedInWithPicks = { id: authUserWithPicks.id, tiebreaker: 101 };
+const authLoggedInWithNoPicks = {
+  id: authUserWithNoPicks.id,
+  tiebreaker: null,
+};
 const authNotLoggedIn = { id: null };
 
 const authLoggedInAndIsAdmin = { id: getFakerInfo("uuid"), isAdmin: true };
 
-describe("useGetUser", () => {
+describe("useGetAuth", () => {
   const testsToRun = [
-    { scenario: "user is logged in", userData: authLoggedInWithPicks },
-    { scenario: "user is not logged in", userData: authNotLoggedIn },
+    {
+      scenario: "user is logged in",
+      auth: authLoggedInWithPicks,
+      expectedResult: authUserWithPicks,
+    },
+    {
+      scenario: "user is not logged in",
+      auth: authNotLoggedIn,
+      expectedResult: authNotLoggedIn,
+    },
   ];
 
   testsToRun.forEach((test) => {
     it(test.scenario, () => {
-      const userData = test.userData;
+      const auth = test.auth;
 
-      updateStore(setAuth, userData);
+      updateStore(_loadUsers, [authUserWithPicks]);
+      updateStore(setAuth, auth);
 
       const wrapper = getWrapper();
 
@@ -39,12 +54,52 @@ describe("useGetUser", () => {
         wrapper,
       });
 
-      expect(result.current).toBe(userData);
+      expect(result.current).toMatchObject(test.expectedResult);
     });
   });
 });
 
-describe("useIsUserLoggedIn ", () => {
+describe("useGetUser", () => {
+  const user1: UserSchema = createUser();
+  const user2: UserSchema = createUser();
+  const user3: UserSchema = createUser();
+  const user4: UserSchema = createUser();
+
+  const testsToRun = [
+    {
+      scenario: "user1",
+      userToFind: user1,
+      expectedResult: user1,
+      users: [user1, user2, user3, user4],
+    },
+
+    {
+      scenario: "user2",
+      userToFind: user2,
+      expectedResult: user2,
+      users: [user1, user2, user3, user4],
+    },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      updateStore(_loadUsers, test.users);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(
+        () => hooks.useGetUser(test.userToFind.id),
+        {
+          wrapper,
+        },
+      );
+
+      expect(result.current).toEqual(test.expectedResult);
+    });
+  });
+});
+
+describe("useIsUserLoggedIn", () => {
   const testsToRun = [
     {
       scenario: "user is logged in",
@@ -75,7 +130,7 @@ describe("useIsUserLoggedIn ", () => {
   });
 });
 
-describe("useIsUserAdmin ", () => {
+describe("useIsUserAdmin", () => {
   const testsToRun = [
     {
       scenario: "user is logged in and isAdmin",
@@ -111,7 +166,7 @@ describe("useIsUserAdmin ", () => {
   });
 });
 
-describe("useGetUsers ", () => {
+describe("useGetUsers", () => {
   const user1: UserSchema = createUser();
   const user2: UserSchema = createUser();
   const user3: UserSchema = createUser();
@@ -147,7 +202,7 @@ describe("useGetUsers ", () => {
   });
 });
 
-describe("useGetActiveUsers ", () => {
+describe("useGetActiveUsers", () => {
   const notSubmitted: UserSchema = createUser();
   const submitted: UserSchema = createUser({ tiebreaker: 100 });
 
@@ -204,34 +259,39 @@ describe("useGetActiveUsers ", () => {
   });
 });
 
-describe("useShouldPayoutShow ", () => {
+describe("useShouldPayoutShow", () => {
   const testsToRun = [
     {
       scenario: "tourney has not started, user is logged in",
+      userIsLoggedIn: true,
       userData: authLoggedInWithPicks,
       tourneyStage: 1,
       result: true,
     },
     {
       scenario: "tourney has not started, user is not logged in",
+      userIsLoggedIn: false,
       userData: authNotLoggedIn,
       tourneyStage: 1,
       result: false,
     },
     {
       scenario: "tourney has started, user is logged in, and has picks",
+      userIsLoggedIn: true,
       userData: authLoggedInWithPicks,
       tourneyStage: 2,
       result: true,
     },
     {
       scenario: "tourney has started, user is logged in, but has no picks",
+      userIsLoggedIn: true,
       userData: authLoggedInWithNoPicks,
       tourneyStage: 2,
       result: false,
     },
     {
       scenario: "tourney has started, user is not logged in",
+      userIsLoggedIn: false,
       userData: authNotLoggedIn,
       tourneyStage: 2,
       result: false,
@@ -240,6 +300,10 @@ describe("useShouldPayoutShow ", () => {
 
   testsToRun.forEach((test) => {
     it(test.scenario, () => {
+      if (test.userIsLoggedIn) {
+        updateStore(_loadUsers, [authUserWithPicks]);
+      }
+
       updateStore(setAuth, test.userData);
       updateTourneyStage(test.tourneyStage);
 
@@ -254,7 +318,7 @@ describe("useShouldPayoutShow ", () => {
   });
 });
 
-describe("useIsEmailInUse ", () => {
+describe("useIsEmailInUse", () => {
   const joe: UserSchema = createUser({ email: "joe@gmail.com" });
   const kelly: UserSchema = createUser({ email: "kelly@gmail.com" });
   const anna: UserSchema = createUser({ email: "anna@gmail.com" });
@@ -295,7 +359,7 @@ describe("useIsEmailInUse ", () => {
   });
 });
 
-describe("useIsNameInUse ", () => {
+describe("useIsNameInUse", () => {
   const joe: UserSchema = createUser({ name: "Joe" });
   const kelly: UserSchema = createUser({ name: "Kelly" });
   const anna: UserSchema = createUser({ name: "Anna" });

@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import {
-  AuthState,
   formatStrToLowerCase,
   getSpecificKeyFromArray,
   RootState,
@@ -8,22 +7,34 @@ import {
 } from "../store";
 import { useFindTourneyStage } from "./tourneyHooks";
 
-export const useGetAuth = (): AuthState => {
-  return useSelector((state: RootState) => state.auth);
+export const useGetAuth = (): UserSchema => {
+  const auth = useSelector((state: RootState) => state.auth);
+
+  return useGetUser(auth.id!!);
 };
 
 export const useGetUsers = (): UserSchema[] => {
   return useSelector((state: RootState) => state.users);
 };
 
+export const useGetUser = (userId: string): UserSchema => {
+  const users = useGetUsers();
+
+  const user = users.find((user) => user.id === userId)!;
+
+  const noAuth = { id: null };
+
+  return user ?? noAuth;
+};
+
 export const useIsUserLoggedIn = (): boolean => {
-  const auth = useGetAuth();
+  const auth = useSelector((state: RootState) => state.auth);
 
   return !!auth.id;
 };
 
 export const useIsUserAdmin = (): boolean => {
-  const auth = useGetAuth();
+  const auth = useSelector((state: RootState) => state.auth);
 
   return !!auth.isAdmin;
 };
@@ -45,6 +56,7 @@ export const useShouldPayoutShow = (): boolean => {
 
   const isUserLoggedIn = useIsUserLoggedIn();
 
+  //leave this return statement as is -- do not simplify
   return !tourneyStarted && isUserLoggedIn
     ? true
     : tourneyStarted && userSubmittedPicks
@@ -68,22 +80,4 @@ export const useIsNameInUse = (name: string): boolean => {
   );
 
   return userNames.includes(formatStrToLowerCase(name));
-};
-
-export const useGetUser = (userId: string): UserSchema => {
-  const users = useGetUsers();
-
-  const user = users.find((user) => user.id === userId)!;
-
-  const groupPicks = useGetUserGroupPicks(user.id);
-
-  //ifTourneyStage >=4, useGetUserKOPicks
-
-  return user!!;
-};
-
-export const useGetUserGroupPicks = (userId: string): string => {
-  //create a schema for userPicks in the user_store and adjust the return here
-
-  return userId;
 };

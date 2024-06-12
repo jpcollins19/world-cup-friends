@@ -27,6 +27,7 @@ import users, { UsersState } from "./users_store";
 import teams, { TeamsState } from "./teams_store";
 import tourneyStage, { TourneyStageSchema } from "./tourneyStage_store";
 import lastUpdated, { LastUpdatedSchema } from "./lastUpdated_store";
+import groupPicks, { GroupPicksState } from "./group_picks_store";
 
 // Define the root state type
 export interface RootState {
@@ -35,6 +36,7 @@ export interface RootState {
   teams: TeamsState;
   tourneyStage: TourneyStageSchema;
   lastUpdated: LastUpdatedSchema;
+  groupPicks: GroupPicksState;
 }
 
 export const reducer: Reducer<RootState> = combineReducers({
@@ -43,6 +45,7 @@ export const reducer: Reducer<RootState> = combineReducers({
   teams,
   tourneyStage,
   lastUpdated,
+  groupPicks,
 });
 
 //const middleware = applyMiddleware(thunk);
@@ -84,4 +87,5 @@ export * from "./users_store";
 export * from "./teams_store";
 export * from "./tourneyStage_store";
 export * from "./lastUpdated_store";
+export * from "./group_picks_store";
 export * from "./utils/index";

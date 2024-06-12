@@ -45,8 +45,9 @@ describe("<MyPicks/>", () => {
 
     await getTestIdTag("my-picks-page");
 
-    // await getTestIdTag(groupDetailsContTestId);
-    // userName shows
+    const userName = await getTestIdTag("my-picks-user-name");
+
+    expect(userName.textContent).toEqual("Joe");
   });
 
   describe("stage 1", () => {
@@ -57,6 +58,7 @@ describe("<MyPicks/>", () => {
     //   renderWithProvider(<MyPicks />);
     //
     //   // linkButton has accurate text when no picks have been submitted
+    //    // editPicksButtonTestId = 'link-button-cont-Select-Group-Picks'
     //   // asteriskCont does not show
     //    //  userPicks cont does not show
     //
