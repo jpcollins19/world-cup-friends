@@ -192,12 +192,8 @@ const createGroupPicks = (
   userUuid,
   userPicksFor3rdPlaceToAdvanceToKo,
 ) => {
-  console.log("userPicksLength", userPicks.length);
-
   userPicks.forEach((groupPickData, idx) => {
     const group = groupToIdxMapper[idx];
-
-    console.log("group", group);
 
     groupPickData.forEach(async (team, idx) => {
       const placement = idx + 1;
@@ -207,11 +203,6 @@ const createGroupPicks = (
 
       if (isThirdPlace && userPicksFor3rdPlaceToAdvanceToKo.includes(group)) {
         thirdPlaceToAdvanceToKo = true;
-      }
-
-      if (isThirdPlace) {
-        console.log("group", group);
-        console.log("thirdPlaceToAdvanceToKo", thirdPlaceToAdvanceToKo);
       }
 
       await GroupPick.create({

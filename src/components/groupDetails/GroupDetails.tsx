@@ -23,9 +23,7 @@ export const GroupDetails: React.FunctionComponent = () => {
 
   const isAGroupFinished = false; //need to test for this during stage 3 testing
 
-  const groupDetailsContClass = isAGroupFinished
-    ? "h-5/6"
-    : "h-full pt-20 px-3";
+  const groupDetailsContClass = "pt-20 px-3";
 
   const pageTestId = getPageTestId("group-details-page");
   const asteriskContTestId = getPageTestId("asterisk-cont-group-details");
@@ -36,11 +34,11 @@ export const GroupDetails: React.FunctionComponent = () => {
   ) : (
     <div
       data-testid={pageTestId}
-      className={tw.backgroundImage}
+      className={`${tw.backgroundImage} ${tw.overFlowAuto} h-full`}
       style={{ backgroundImage: `url(${legendsOfTheWC})` }}
     >
       {isAGroupFinished && (
-        <div data-testid={asteriskContTestId} className="h-1/6">
+        <div data-testid={asteriskContTestId} className="">
           {/*{finishedGroups.length && <Asterisk_Cont />*/}
           3rd place Asterisk_Cont placeholder
         </div>
@@ -48,7 +46,7 @@ export const GroupDetails: React.FunctionComponent = () => {
 
       <div
         data-testid={groupDetailsTestId}
-        className={`${groupDetailsContClass} ${tw.overFlowAuto} flex flex-wrap justify-around`}
+        className={`${groupDetailsContClass} ${tw.overFlowAuto} ${tw.cursorArrow} flex flex-wrap justify-around`}
       >
         {groupLetters.map((letter) => (
           <SingleGroupCont key={letter} letter={letter} />

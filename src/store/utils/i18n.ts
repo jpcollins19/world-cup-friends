@@ -1,6 +1,7 @@
 import { tourneyStartDate } from "./variables";
 
 export const en = {
+  adjustGroupPicks: "Adjust Group Picks",
   cancel: "Cancel",
   confirmPassword: "confirm password",
   createAccount: "Create Account",
@@ -27,10 +28,12 @@ export const en = {
   signIn: "Sign In",
   signOut: "Sign Out",
   submit: "Submit",
+  thirdPlaceTeamAdvance: "3rd place team selected to advance from group",
   viewPw: "View password",
 };
 
 export type i18nOptionsTypes =
+  | "adjustGroupPicks"
   | "cancel"
   | "confirmPassword"
   | "createAccount"
@@ -56,4 +59,5 @@ export type i18nOptionsTypes =
   | "signIn"
   | "signOut"
   | "submit"
+  | "thirdPlaceTeamAdvance"
   | "viewPw";

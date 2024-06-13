@@ -10,6 +10,7 @@ import {
   updateStore,
   updateTourneyStage,
 } from "./hookUtils";
+import { useUserGroupPicksSubmitted } from "../";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();
@@ -407,6 +408,38 @@ describe("useIsNameInUse", () => {
           wrapper,
         },
       );
+
+      expect(result.current).toBe(test.result);
+    });
+  });
+});
+
+describe("useUserGroupPicksSubmitted", () => {
+  const testsToRun = [
+    {
+      scenario: "picks have been submitted",
+      auth: authUserWithPicks,
+      user: authLoggedInWithPicks,
+      result: true,
+    },
+    {
+      scenario: "picks have not been submitted",
+      auth: authUserWithNoPicks,
+      user: authLoggedInWithNoPicks,
+      result: false,
+    },
+  ];
+
+  testsToRun.forEach((test) => {
+    it(test.scenario, () => {
+      updateStore(_loadUsers, [test.user]);
+      updateStore(setAuth, test.auth);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(() => hooks.useUserGroupPicksSubmitted(), {
+        wrapper,
+      });
 
       expect(result.current).toBe(test.result);
     });

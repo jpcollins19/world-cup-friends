@@ -3,7 +3,6 @@ const { User } = require("../db/index.js");
 
 app.post("/api/authorize", async (req, res, next) => {
   try {
-    console.log("req.body-byah", req.body);
     res.send({ token: await User.authenticate(req.body) });
   } catch (err) {
     next(err);

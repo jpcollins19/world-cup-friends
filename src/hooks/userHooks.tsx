@@ -81,3 +81,40 @@ export const useIsNameInUse = (name: string): boolean => {
 
   return userNames.includes(formatStrToLowerCase(name));
 };
+
+export const useUserGroupPicksSubmitted = (): boolean => {
+  const user = useGetAuth();
+
+  //leave this return statement as is -- do not simplify
+  return user?.tiebreaker ? true : false;
+};
+
+export const useGetUserGroupPicks = (groupLetter: string): any => {
+  const user = useGetAuth();
+
+  const teams = useSelector((state: RootState) => state.teams);
+
+  const userGroupPicks = user.groupPicks.find(
+    (groupPick) => groupPick.group === groupLetter,
+  );
+
+  return !userGroupPicks
+    ? []
+    : Object.values(userGroupPicks)
+        .slice(0, 4)
+        .map((teamName) => {
+          return teams.find((team) => team.name === teamName);
+        });
+};
+
+export const useUserHas3rdPlaceTeamAdvancing = (
+  groupLetter: string,
+): boolean => {
+  const user = useGetAuth();
+
+  const userGroupPicks = user.groupPicks.find(
+    (groupPick) => groupPick.group === groupLetter,
+  );
+
+  return userGroupPicks?.thirdPlaceToAdvanceToKo as boolean;
+};

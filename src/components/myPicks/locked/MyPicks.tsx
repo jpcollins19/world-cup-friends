@@ -7,9 +7,12 @@ import {
   routes,
   loadUsers,
   geti18n,
+  groupLetters,
 } from "../../../store";
 import { LinkButton, Loading } from "../../buffet";
-import { useGetAuth, useGetUser } from "../../../hooks";
+import { useGetAuth, useUserGroupPicksSubmitted } from "../../../hooks";
+import MyGroupPicks from "./MyGroupPicks";
+import SingleGroup from "./SingleGroup";
 
 export const MyPicks: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -25,24 +28,22 @@ export const MyPicks: React.FunctionComponent = () => {
 
   const pageTestId = getPageTestId("my-picks-page");
   const userNameTestId = getPageTestId("my-picks-user-name");
-  const myPicksContTestId = getPageTestId("my-picks-cont");
-  const asteriskContTestId = getPageTestId("asterisk-cont-my-picks");
-  const myPicksDataContTestId = getPageTestId("my-picks-data-cont");
+  const myGroupPicksTestId = getPageTestId("my-group-picks");
 
   const user = useGetAuth();
 
-  console.log("user", user);
+  const userGroupPicksSubmitted = useUserGroupPicksSubmitted();
 
-  const didUserSubmitPicks = false;
-
-  const editPicksButtonText = geti18n("selectGroupPicks");
+  const editPicksButtonText = userGroupPicksSubmitted
+    ? geti18n("adjustGroupPicks")
+    : geti18n("selectGroupPicks");
 
   return loadingDefault() ? (
     <Loading />
   ) : (
     <div
       data-testid={pageTestId}
-      className={tw.backgroundImage}
+      className={`${tw.backgroundImage} ${tw.overFlowAuto} ${tw.cursorArrow}`}
       style={{ backgroundImage: `url(${jCole})` }}
     >
       <div
@@ -52,22 +53,11 @@ export const MyPicks: React.FunctionComponent = () => {
         {user.name}
       </div>
 
-      <div className={tw.flexBoth}>
+      <div className={`${tw.flexBoth}`}>
         <LinkButton route={routes.myPicksEdit} text={editPicksButtonText} />
       </div>
 
-      {didUserSubmitPicks && (
-        <div data-testid={myPicksContTestId} className="h-1/6">
-          <div data-testid={asteriskContTestId} className="h-1/6">
-            {/*{finishedGroups.length && <Asterisk_Cont />*/}
-            3rd place Asterisk_Cont placeholder
-          </div>
-
-          <div data-testid={myPicksDataContTestId} className="h-1/6">
-            userPicks cont
-          </div>
-        </div>
-      )}
+      <MyGroupPicks />
     </div>
   );
 };

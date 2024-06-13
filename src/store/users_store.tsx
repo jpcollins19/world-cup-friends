@@ -1,7 +1,5 @@
 import axios from "axios";
 import { getUserGroupPicks } from "./utils";
-import { loadTeams, TeamsState } from "./";
-import { GroupPicksState, loadGroupPicks } from "./group_picks_store";
 
 const LOAD_USERS = "LOAD_USERS";
 

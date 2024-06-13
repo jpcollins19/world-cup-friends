@@ -202,9 +202,9 @@ export const getUserGroupPicks = (
   }
 
   groupLetters.forEach((letter) => {
-    const userGroupPicks = userPicks.filter(
-      (pick) => pick.groupLetter === letter,
-    );
+    const userGroupPicks = userPicks
+      .filter((pick) => pick.groupLetter === letter)
+      .sort((a, b) => a.groupPlacement - b.groupPlacement);
 
     const groupPicksResult = mapOverTeamsInAGroup.reduce(
       (a: GroupPicksResult, finishingPosition: number, idx: number) => {
