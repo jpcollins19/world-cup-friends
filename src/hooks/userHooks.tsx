@@ -7,18 +7,25 @@ import {
 } from "../store";
 import { useFindTourneyStage } from "./tourneyHooks";
 
-export const useGetAuth = (): UserSchema => {
+export const useGetAuth = (test: boolean = false): UserSchema => {
   const auth = useSelector((state: RootState) => state.auth);
 
-  return useGetUser(auth.id!!);
+  // test && console.log("auth", auth);
+
+  return useGetUser(auth.id!!, test);
 };
 
 export const useGetUsers = (): UserSchema[] => {
   return useSelector((state: RootState) => state.users);
 };
 
-export const useGetUser = (userId: string): UserSchema => {
+export const useGetUser = (
+  userId: string,
+  test: boolean = false,
+): UserSchema => {
   const users = useGetUsers();
+
+  // test && console.log("userId", userId);
 
   const user = users.find((user) => user.id === userId)!;
 

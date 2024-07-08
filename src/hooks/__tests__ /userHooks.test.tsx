@@ -1,16 +1,33 @@
 import * as React from "react";
 import "@testing-library/react-hooks";
 import { renderHook } from "@testing-library/react-hooks";
-import { setAuth, UserSchema, _loadUsers } from "../../store";
-import * as hooks from "../";
-import { createUser, getFakerInfo } from "../fixtures";
 import {
+  setAuth,
+  UserSchema,
+  _loadUsers,
+  groupLetters,
+  UserGroupPicksSchema,
+  UserSingleGroupPickSchema,
+  _loadGroupPicks,
+  _loadTeams,
+} from "../../store";
+import * as hooks from "../";
+import {
+  createAllGroups,
+  createGroupPicks_Pool,
+  CreateGroupPicksSchema,
+  createUser,
+  createUserGroupPicks,
+  getFakerInfo,
+  UserSingleGroupPickSetupSchema,
+} from "../fixtures";
+import {
+  getDataFromStore,
   getWrapper,
   ignoreReactDOMRenderError,
   updateStore,
   updateTourneyStage,
 } from "./hookUtils";
-import { useUserGroupPicksSubmitted } from "../";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();
@@ -442,6 +459,83 @@ describe("useUserGroupPicksSubmitted", () => {
       });
 
       expect(result.current).toBe(test.result);
+    });
+  });
+});
+
+describe("useGetUserGroupPicks", () => {
+  const user: UserSchema = createUser({ name: "Joe" });
+  const auth = { id: user.id, tiebreaker: 101 };
+  const teams = createAllGroups();
+
+  const userGroupPicks: UserSingleGroupPickSetupSchema[] = [
+    { group: "A", thirdPlaceToAdvanceToKo: true },
+    { group: "B", thirdPlaceToAdvanceToKo: false },
+    { group: "C", thirdPlaceToAdvanceToKo: true },
+    { group: "D", thirdPlaceToAdvanceToKo: true },
+    { group: "E", thirdPlaceToAdvanceToKo: false },
+    { group: "F", thirdPlaceToAdvanceToKo: true },
+    { group: "G", thirdPlaceToAdvanceToKo: true },
+    { group: "H", thirdPlaceToAdvanceToKo: true },
+    { group: "I", thirdPlaceToAdvanceToKo: false },
+    { group: "J", thirdPlaceToAdvanceToKo: true },
+    { group: "K", thirdPlaceToAdvanceToKo: false },
+    { group: "L", thirdPlaceToAdvanceToKo: true },
+  ];
+
+  const userGroupPicksExpected = createUserGroupPicks({
+    groups: teams,
+    userGroupPicks: userGroupPicks,
+  });
+
+  user.groupPicks = userGroupPicksExpected;
+
+  const userTestInfo: CreateGroupPicksSchema = {
+    userId: user.id,
+    groupPicks: userGroupPicksExpected,
+  };
+
+  const groupPicksExpected = createGroupPicks_Pool({
+    groups: teams,
+    userGroupPicks: [userTestInfo],
+  });
+
+  groupLetters.forEach((groupLetter) => {
+    it(`group: ${groupLetter}`, () => {
+      updateStore(_loadUsers, [user]);
+      updateStore(setAuth, auth);
+      updateStore(_loadTeams, teams);
+      updateStore(_loadGroupPicks, groupPicksExpected);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(
+        () => hooks.useGetUserGroupPicks(groupLetter),
+        {
+          wrapper,
+        },
+      );
+
+      const singleGroupPicksExpected = userGroupPicksExpected.find(
+        (group) => group.group === groupLetter,
+      );
+
+      if (singleGroupPicksExpected) {
+        const firstExpected = singleGroupPicksExpected[1];
+        const secondExpected = singleGroupPicksExpected[2];
+        const thirdExpected = singleGroupPicksExpected[3];
+        const fourthExpected = singleGroupPicksExpected[4];
+
+        const firstResult = result.current[0].name;
+        const secondResult = result.current[1].name;
+        const thirdResult = result.current[2].name;
+        const fourthResult = result.current[3].name;
+
+        expect(firstResult).toEqual(firstExpected);
+        expect(secondResult).toEqual(secondExpected);
+        expect(thirdResult).toEqual(thirdExpected);
+        expect(fourthResult).toEqual(fourthExpected);
+      }
     });
   });
 });
