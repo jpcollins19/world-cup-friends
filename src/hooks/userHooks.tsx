@@ -10,7 +10,7 @@ import { useFindTourneyStage } from "./tourneyHooks";
 export const useGetAuth = (test: boolean = false): UserSchema => {
   const auth = useSelector((state: RootState) => state.auth);
 
-  // test && console.log("auth", auth);
+  //test && console.log("auth", auth);
 
   return useGetUser(auth.id!!, test);
 };
@@ -25,7 +25,7 @@ export const useGetUser = (
 ): UserSchema => {
   const users = useGetUsers();
 
-  // test && console.log("userId", userId);
+  //test && console.log("userId", userId);
 
   const user = users.find((user) => user.id === userId)!;
 
@@ -116,6 +116,7 @@ export const useGetUserGroupPicks = (groupLetter: string): any => {
 
 export const useUserHas3rdPlaceTeamAdvancing = (
   groupLetter: string,
+  // test: boolean = false,
 ): boolean => {
   const user = useGetAuth();
 

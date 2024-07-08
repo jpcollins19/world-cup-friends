@@ -28,6 +28,7 @@ import {
   updateStore,
   updateTourneyStage,
 } from "./hookUtils";
+import { useUserHas3rdPlaceTeamAdvancing } from "../";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();
@@ -468,20 +469,15 @@ describe("useGetUserGroupPicks", () => {
   const auth = { id: user.id, tiebreaker: 101 };
   const teams = createAllGroups();
 
-  const userGroupPicks: UserSingleGroupPickSetupSchema[] = [
-    { group: "A", thirdPlaceToAdvanceToKo: true },
-    { group: "B", thirdPlaceToAdvanceToKo: false },
-    { group: "C", thirdPlaceToAdvanceToKo: true },
-    { group: "D", thirdPlaceToAdvanceToKo: true },
-    { group: "E", thirdPlaceToAdvanceToKo: false },
-    { group: "F", thirdPlaceToAdvanceToKo: true },
-    { group: "G", thirdPlaceToAdvanceToKo: true },
-    { group: "H", thirdPlaceToAdvanceToKo: true },
-    { group: "I", thirdPlaceToAdvanceToKo: false },
-    { group: "J", thirdPlaceToAdvanceToKo: true },
-    { group: "K", thirdPlaceToAdvanceToKo: false },
-    { group: "L", thirdPlaceToAdvanceToKo: true },
-  ];
+  const groupsToAdvance = ["A", "C", "D", "F", "G", "H", "J", "L"];
+
+  const userGroupPicks: UserSingleGroupPickSetupSchema[] = groupLetters.map(
+    (groupLetter) => {
+      const thirdPlaceToAdvanceToKo = groupsToAdvance.includes(groupLetter);
+
+      return { group: groupLetter, thirdPlaceToAdvanceToKo };
+    },
+  );
 
   const userGroupPicksExpected = createUserGroupPicks({
     groups: teams,
@@ -490,14 +486,14 @@ describe("useGetUserGroupPicks", () => {
 
   user.groupPicks = userGroupPicksExpected;
 
-  const userTestInfo: CreateGroupPicksSchema = {
+  const userPicksForPool: CreateGroupPicksSchema = {
     userId: user.id,
     groupPicks: userGroupPicksExpected,
   };
 
   const groupPicksExpected = createGroupPicks_Pool({
     groups: teams,
-    userGroupPicks: [userTestInfo],
+    userGroupPicks: [userPicksForPool],
   });
 
   groupLetters.forEach((groupLetter) => {
@@ -535,6 +531,67 @@ describe("useGetUserGroupPicks", () => {
         expect(secondResult).toEqual(secondExpected);
         expect(thirdResult).toEqual(thirdExpected);
         expect(fourthResult).toEqual(fourthExpected);
+      }
+    });
+  });
+});
+
+describe("useUserHas3rdPlaceTeamAdvancing", () => {
+  const user: UserSchema = createUser({ name: "Joe" });
+  const auth = { id: user.id, tiebreaker: 101 };
+  const teams = createAllGroups();
+
+  const groupsToAdvance = ["A", "C", "D", "F", "G", "H", "J", "L"];
+
+  const userGroupPicks: UserSingleGroupPickSetupSchema[] = groupLetters.map(
+    (groupLetter) => {
+      const thirdPlaceToAdvanceToKo = groupsToAdvance.includes(groupLetter);
+
+      return { group: groupLetter, thirdPlaceToAdvanceToKo };
+    },
+  );
+
+  const userGroupPicksExpected = createUserGroupPicks({
+    groups: teams,
+    userGroupPicks: userGroupPicks,
+  });
+
+  user.groupPicks = userGroupPicksExpected;
+
+  const userPicksForPool: CreateGroupPicksSchema = {
+    userId: user.id,
+    groupPicks: userGroupPicksExpected,
+  };
+
+  const groupPicksExpected = createGroupPicks_Pool({
+    groups: teams,
+    userGroupPicks: [userPicksForPool],
+  });
+
+  groupLetters.forEach((groupLetter) => {
+    it(`group: ${groupLetter}`, () => {
+      updateStore(_loadUsers, [user]);
+      updateStore(setAuth, auth);
+      updateStore(_loadTeams, teams);
+      updateStore(_loadGroupPicks, groupPicksExpected);
+
+      const wrapper = getWrapper();
+
+      const { result } = renderHook(
+        () => hooks.useUserHas3rdPlaceTeamAdvancing(groupLetter),
+        {
+          wrapper,
+        },
+      );
+
+      const singleGroupPicksExpected = userGroupPicksExpected.find(
+        (group) => group.group === groupLetter,
+      );
+
+      if (singleGroupPicksExpected) {
+        expect(result.current).toEqual(
+          singleGroupPicksExpected.thirdPlaceToAdvanceToKo,
+        );
       }
     });
   });

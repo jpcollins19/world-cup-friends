@@ -51,6 +51,10 @@ export const getTestIdTag = (testId: string) => {
   return screen.findByTestId(testId as any);
 };
 
+export const getTestIdTagForAll = (testId: string) => {
+  return screen.findAllByTestId(testId as any);
+};
+
 export const queryTestIdTag = (testId: string) => {
   return screen.queryByTestId(testId as any);
 };

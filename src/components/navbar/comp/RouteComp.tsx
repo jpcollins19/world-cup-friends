@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
+  colors,
   getPageTestId,
   getTextFromUrl,
   navbarMenuListClass,
+  routes,
   tw,
 } from "../../../store";
 
@@ -31,11 +33,18 @@ export const RouteComp: React.FunctionComponent<RouteCompProps> = ({
 
   const routeText = getTextFromUrl(routePath);
 
+  const isMyPicksEditPage = pathname === routes.myPicksEdit;
+  const isMyPicksRouteOption = routePath === routes.myPicks;
+
+  const showRedBackground = isMyPicksEditPage && isMyPicksRouteOption;
+
   const isCurrentPage = pathname === routePath;
 
-  const currentPageClass = isCurrentPage
-    ? "shadow-routesSelected bg-sky-600"
-    : "shadow-routesNotSelected";
+  const currentPageClass = showRedBackground
+    ? "shadow-routesSelected bg-red-500"
+    : isCurrentPage
+      ? "shadow-routesSelected bg-sky-600"
+      : "shadow-routesNotSelected";
 
   return (
     <Link

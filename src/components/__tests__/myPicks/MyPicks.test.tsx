@@ -2,21 +2,40 @@ import * as React from "react";
 import "@testing-library/jest-dom";
 import {
   getTestIdTag,
+  getTestIdTagForAll,
   queryTestIdTag,
   renderWithProvider,
 } from "../../testingUtils";
 import axios from "axios";
-import { _loadUsers, routes, setAuth, UserSchema } from "../../../store";
 import {
+  _loadGroupPicks,
+  _loadTeams,
+  _loadUsers,
+  groupLetters,
+  mapOverTeamsInAGroup,
+  routes,
+  setAuth,
+  UserSchema,
+} from "../../../store";
+import {
+  getDataFromStore,
   updateStore,
   updateTourneyStage,
 } from "../../../hooks/__tests__ /hookUtils";
-import { createUser } from "../../../hooks/fixtures";
+import {
+  createAllGroups,
+  createGroupPicks_Pool,
+  CreateGroupPicksSchema,
+  createUser,
+  createUserGroupPicks,
+  UserSingleGroupPickSetupSchema,
+} from "../../../hooks/fixtures";
 import { useAxiosGet } from "../../../hooks/__tests__ /axiosUtils";
 import { useMediaQuery } from "../../../../__mocks__/react-responsive";
 import MyPicks from "../../myPicks/locked/MyPicks";
 import MyGroupPicks from "../../myPicks/locked/MyGroupPicks";
 import PointsSystemTable from "../../myPicks/locked/PointsSystemTable";
+import SingleGroup from "../../myPicks/locked/SingleGroup";
 
 jest.mock("axios");
 
@@ -24,9 +43,38 @@ describe("<MyPicks/>", () => {
   const userWithNoPicks: UserSchema = createUser({ name: "Joe" });
   const authWithNoPicks = { id: userWithNoPicks.id };
 
-  const userWithPicks: UserSchema = createUser({ tiebreaker: 101 });
+  const teams = createAllGroups();
+
+  const groupsToAdvance = ["A", "C", "D", "F", "G", "H", "J", "L"];
+
+  const userGroupPicks: UserSingleGroupPickSetupSchema[] = groupLetters.map(
+    (groupLetter) => {
+      const thirdPlaceToAdvanceToKo = groupsToAdvance.includes(groupLetter);
+
+      return { group: groupLetter, thirdPlaceToAdvanceToKo };
+    },
+  );
+
+  const userGroupPicksExpected = createUserGroupPicks({
+    groups: teams,
+    userGroupPicks: userGroupPicks,
+  });
+
+  const userWithPicks: UserSchema = createUser({
+    tiebreaker: 101,
+  });
 
   const authWithPicks = { id: userWithPicks.id, tiebreaker: 101 };
+
+  const userPicksForPool: CreateGroupPicksSchema = {
+    userId: userWithPicks.id,
+    groupPicks: userGroupPicksExpected,
+  };
+
+  const groupPicksExpected = createGroupPicks_Pool({
+    groups: teams,
+    userGroupPicks: [userPicksForPool],
+  });
 
   const myGroupPicksTestId = "my-group-picks";
 
@@ -49,6 +97,8 @@ describe("<MyPicks/>", () => {
     updateStore(_loadUsers, [userWithPicks]);
     updateStore(setAuth, authWithPicks);
     useAxiosGet([userWithPicks]);
+    updateStore(_loadTeams, teams);
+    updateStore(_loadGroupPicks, groupPicksExpected);
   };
 
   it("renders the component", async () => {
@@ -151,11 +201,146 @@ describe("<MyPicks/>", () => {
     });
 
     describe("<SingleGroup/>", () => {
-      // it("renders the component", async () => {
-      //   renderWithProvider(<PointsSystemTable />);
-      //
-      //   await getTestIdTag("points-system-table");
-      // });
+      beforeEach(() => {
+        userWithPicks.groupPicks = userGroupPicksExpected;
+
+        userHasPicksSetup_stage1();
+      });
+
+      it("renders the component", async () => {
+        renderWithProvider(<SingleGroup groupLetter="A" />);
+
+        await getTestIdTag("my-picks-single-group-A");
+      });
+
+      it("header audit", async () => {
+        renderWithProvider(<SingleGroup groupLetter="A" />);
+
+        const header = await getTestIdTag("mpsg-header-A");
+
+        expect(header.textContent).toEqual("Group A");
+      });
+
+      describe("<AstrixColumn/>", () => {
+        it("thirdPlaceAdvancing === true", async () => {
+          renderWithProvider(<SingleGroup groupLetter="A" />);
+
+          await getTestIdTagForAll("mpsg-astrix-A");
+
+          const row1 = await getTestIdTagForAll("mpsg-astrix-text-A-1");
+          const row2 = await getTestIdTagForAll("mpsg-astrix-text-A-2");
+          const row3 = await getTestIdTagForAll("mpsg-astrix-text-A-3");
+          const row4 = await getTestIdTagForAll("mpsg-astrix-text-A-4");
+
+          row1.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+
+          row2.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+
+          row3.forEach((div) => {
+            expect(div.textContent).toEqual("*");
+          });
+
+          row4.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+        });
+
+        it("thirdPlaceAdvancing === false", async () => {
+          renderWithProvider(<SingleGroup groupLetter="B" />);
+
+          await getTestIdTagForAll("mpsg-astrix-B");
+
+          const row1 = await getTestIdTagForAll("mpsg-astrix-text-B-1");
+          const row2 = await getTestIdTagForAll("mpsg-astrix-text-B-2");
+          const row3 = await getTestIdTagForAll("mpsg-astrix-text-B-3");
+          const row4 = await getTestIdTagForAll("mpsg-astrix-text-B-4");
+
+          row1.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+
+          row2.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+
+          row3.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+
+          row4.forEach((div) => {
+            expect(div.textContent).toEqual("");
+          });
+        });
+      });
+
+      describe("<RankColumn/>", () => {
+        it("renders", async () => {
+          renderWithProvider(<SingleGroup groupLetter="A" />);
+
+          await getTestIdTag("mpsg-rank-A");
+        });
+      });
+
+      describe("<PredictionColumn/>", () => {
+        it("renders with accurate team name and flag url data", async () => {
+          renderWithProvider(<SingleGroup groupLetter="A" />);
+
+          await getTestIdTag("mpsg-predictions-A");
+
+          const groupPicks = userGroupPicksExpected.find(
+            (groupPicks) => groupPicks.group === "A",
+          );
+
+          const team1Expected = groupPicks && groupPicks[1];
+          const team2Expected = groupPicks && groupPicks[2];
+          const team3Expected = groupPicks && groupPicks[3];
+          const team4Expected = groupPicks && groupPicks[4];
+
+          const teamRow1 = await getTestIdTag("mpsg-team-row-A-1");
+          const teamRow1Children = teamRow1.children;
+
+          const teamRow2 = await getTestIdTag("mpsg-team-row-A-2");
+          const teamRow2Children = teamRow2.children;
+
+          const teamRow3 = await getTestIdTag("mpsg-team-row-A-3");
+          const teamRow3Children = teamRow3.children;
+
+          const teamRow4 = await getTestIdTag("mpsg-team-row-A-4");
+          const teamRow4Children = teamRow4.children;
+
+          expect(teamRow1Children[0]).toHaveAttribute(
+            "src",
+            `flag-url-${team1Expected}`,
+          );
+
+          expect(teamRow1Children[1].textContent).toEqual(team1Expected);
+
+          expect(teamRow2Children[0]).toHaveAttribute(
+            "src",
+            `flag-url-${team2Expected}`,
+          );
+
+          expect(teamRow2Children[1].textContent).toEqual(team2Expected);
+
+          expect(teamRow3Children[0]).toHaveAttribute(
+            "src",
+            `flag-url-${team3Expected}`,
+          );
+
+          expect(teamRow3Children[1].textContent).toEqual(team3Expected);
+
+          expect(teamRow4Children[0]).toHaveAttribute(
+            "src",
+            `flag-url-${team4Expected}`,
+          );
+
+          expect(teamRow4Children[1].textContent).toEqual(team4Expected);
+        });
+      });
     });
   });
 
@@ -235,14 +420,14 @@ describe("<MyPicks/>", () => {
         });
       });
 
-      describe("<MyGroupPicksData/>", () => {
-        // it("renders the component", async () => {
-        //   updateTourneyStage(1);
-        //
-        //   renderWithProvider(<PointsSystemTable />);
-        //
-        //   await getTestIdTag("points-system-table-mobile");
-        // });
+      describe("<SingleGroup/>", () => {
+        it("renders the component", async () => {
+          userHasPicksSetup_stage1();
+
+          renderWithProvider(<SingleGroup groupLetter="A" />);
+
+          await getTestIdTag("my-picks-single-group-A-mobile");
+        });
       });
     });
   });

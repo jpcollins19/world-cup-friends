@@ -18,7 +18,9 @@ type SingleGroupProps = {
 export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
   groupLetter,
 }) => {
-  const testId = getPageTestId("my-picks-single-group");
+  const testId = getPageTestId(`my-picks-single-group-${groupLetter}`);
+
+  const groupHeaderTestId = getPageTestId(`mpsg-header-${groupLetter}`);
 
   const headerClass = `text-base pb-2 h-7`;
 
@@ -36,19 +38,31 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
 
   const usersGroupPicks = useGetUserGroupPicks(groupLetter);
 
+  // const test = groupLetter === "A";
+
   const AstrixColumn: React.FunctionComponent = () => {
     const userHas3rdPlaceTeamAdvancing =
       useUserHas3rdPlaceTeamAdvancing(groupLetter);
 
+    const astrixTestId = getPageTestId(`mpsg-astrix-${groupLetter}`);
+
     return (
-      <div className={`${columnCass} mx-1`}>
+      <div data-testid={astrixTestId} className={`${columnCass} mx-1`}>
         <div className={`${tw.whiteTextSm} ${headerClass}`}></div>
 
         {mapOverTeamsInAGroup.map((rank, idx) => {
           const text = rank === 3 && userHas3rdPlaceTeamAdvancing ? "*" : "";
 
+          const astrixTextTestId = getPageTestId(
+            `mpsg-astrix-text-${groupLetter}-${rank}`,
+          );
+
           return (
-            <div key={rank} className={`${astrixRowClass} ${rankRowClass}`}>
+            <div
+              key={rank}
+              data-testid={astrixTextTestId}
+              className={`${astrixRowClass} ${rankRowClass}`}
+            >
               {text}
             </div>
           );
@@ -58,8 +72,10 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
   };
 
   const RankColumn: React.FunctionComponent = () => {
+    const rankTestId = getPageTestId(`mpsg-rank-${groupLetter}`);
+
     return (
-      <div className={`${columnCass} mr-1`}>
+      <div data-testid={rankTestId} className={`${columnCass} mr-1`}>
         <div className={`${tw.whiteTextSm} ${headerClass}`}>Rank</div>
 
         {mapOverTeamsInAGroup.map((rank) => (
@@ -72,25 +88,36 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
   };
 
   const PredictionColumn: React.FunctionComponent = () => {
+    const predictionsTestId = getPageTestId(`mpsg-predictions-${groupLetter}`);
+
     return (
-      <div className={`${columnCass} ${predictionColumnClass}`}>
+      <div
+        data-testid={predictionsTestId}
+        className={`${columnCass} ${predictionColumnClass}`}
+      >
         <div className={`${tw.whiteTextSm} ${headerClass} text-center`}>
           Prediction
         </div>
 
-        {usersGroupPicks.map((team: TeamSchema) => (
-          <div key={team.id} className={`${rowClass} ${predictionRowClass}`}>
-            <div className={tw.flexBoth}>
-              <img
-                src={team.flag}
-                className="min-w-10 max-w-10 h-5 mr-2"
-                alt=""
-              ></img>
+        {usersGroupPicks.map((team: TeamSchema, idx: number) => {
+          const teamRowTestId = getPageTestId(
+            `mpsg-team-row-${groupLetter}-${idx + 1}`,
+          );
 
-              <div>{team.name}</div>
+          return (
+            <div key={team.id} className={`${rowClass} ${predictionRowClass}`}>
+              <div data-testid={teamRowTestId} className={tw.flexBoth}>
+                <img
+                  src={team.flag}
+                  className="min-w-10 max-w-10 h-5 mr-2"
+                  alt=""
+                ></img>
+
+                <div>{team.name}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   };
@@ -100,7 +127,10 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
       data-testid={testId}
       className={`${tw.flexBoth} ${tw.shrinkTextBase} p-5 flex-col`}
     >
-      <div className={`${tw.whiteTextSm} text-2xl pb-2`}>
+      <div
+        data-testid={groupHeaderTestId}
+        className={`${tw.whiteTextSm} text-2xl pb-2`}
+      >
         Group {groupLetter}
       </div>
 
