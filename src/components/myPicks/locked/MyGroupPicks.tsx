@@ -11,7 +11,7 @@ export const MyGroupPicks: React.FunctionComponent = () => {
   const userGroupPicksSubmitted = useUserGroupPicksSubmitted();
 
   return userGroupPicksSubmitted ? (
-    <div data-testid={testId} className="h-3/4">
+    <div data-testid={testId} className="h-3/4 pr-44">
       <PointsSystemTable />
 
       <div

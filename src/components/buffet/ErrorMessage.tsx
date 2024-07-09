@@ -5,10 +5,12 @@ import { useIsMobile } from "../../hooks";
 
 type ErrorMessageProps = {
   text: string;
+  showErrorBackground?: boolean;
 };
 
 export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
   text,
+  showErrorBackground = false,
 }) => {
   const isMobile = useIsMobile();
 
@@ -19,8 +21,15 @@ export const ErrorMessage: React.FunctionComponent<ErrorMessageProps> = ({
   const testId = getPageTestId("error-message");
   const textTestId = getPageTestId("error-message-text");
 
+  const errorBackgroundClass = showErrorBackground
+    ? `${tw.errorMessageBackground} p-4 rounded`
+    : "";
+
   return (
-    <div data-testid={testId} className={`${tw.flexBoth}  my-4`}>
+    <div
+      data-testid={testId}
+      className={`${tw.flexBoth} ${errorBackgroundClass} my-4`}
+    >
       <Error style={{ fontSize }} />
       <div data-testid={textTestId} className={`${textSizeClass} ml-2`}>
         {text}

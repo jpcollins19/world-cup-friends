@@ -104,6 +104,10 @@ describe("<EditMyPicks/>", () => {
   // user is sent to correct editing page (edit groupPicks vs. editKoPicks)
   // top text is accurate
 
+  ////////EditGroupPicks
+  // submit button is disabled until it shouldnt be
+  // nextOne
+
   it("renders the component", async () => {
     updateTourneyStage(1);
 

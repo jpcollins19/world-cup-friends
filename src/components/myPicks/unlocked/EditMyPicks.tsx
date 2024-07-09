@@ -1,55 +1,17 @@
 import * as React from "react";
-import {
-  loadingDefault,
-  getPageTestId,
-  tDispatch,
-  tw,
-  routes,
-  loadUsers,
-  geti18n,
-  groupLetters,
-} from "../../../store";
-import { LinkButton, Loading } from "../../buffet";
-import { useGetAuth, useUserGroupPicksSubmitted } from "../../../hooks";
-// import MyGroupPicks from "./MyGroupPicks";
-// import SingleGroup from "./SingleGroup";
+import { loadingDefault } from "../../../store";
+import { Loading } from "../../buffet";
+import { useFindTourneyStage } from "../../../hooks";
+import EditGroupPicks from "./EditGroupPicks";
 
 export const EditMyPicks: React.FunctionComponent = () => {
-  const dispatch = tDispatch();
-
-  React.useEffect(() => {
-    (async () => {
-      await dispatch(loadUsers());
-    })();
-  }, []);
-
-  const pageTestId = getPageTestId("edit-my-picks-page");
-  const userNameTestId = getPageTestId("my-picks-user-name");
-
-  const user = useGetAuth();
-
-  const userGroupPicksSubmitted = useUserGroupPicksSubmitted();
-
-  const editPicksButtonText = userGroupPicksSubmitted
-    ? geti18n("adjustGroupPicks")
-    : geti18n("selectGroupPicks");
+  const tourneyStage = useFindTourneyStage();
 
   return loadingDefault() ? (
     <Loading />
-  ) : (
-    <div data-testid={pageTestId} className={tw.cursorArrow}>
-      <div
-        data-testid={userNameTestId}
-        className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkText2XLg} pt-5`}
-      >
-        {user.name} - edit picks
-      </div>
-
-      <div className={`${tw.flexBoth}`}>
-        <LinkButton route={routes.myPicksEdit} text={editPicksButtonText} />
-      </div>
-    </div>
-  );
+  ) : tourneyStage === 1 ? (
+    <EditGroupPicks />
+  ) : null;
 };
 
 export default EditMyPicks;

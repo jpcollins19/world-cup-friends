@@ -10,6 +10,7 @@ import {
   geti18n,
 } from "../../store";
 import { Loading, LinkText } from "../buffet";
+import { useIsUserLoggedIn } from "../../hooks";
 
 export const Rules: React.FunctionComponent = () => {
   const testId = getPageTestId("rules-page");
@@ -21,13 +22,17 @@ export const Rules: React.FunctionComponent = () => {
 
   const signInProps = { route: routes.signIn, text: geti18n("signIn") };
 
+  const isUserLoggedIn = useIsUserLoggedIn();
+
   return loadingDefault() ? (
     <Loading />
   ) : (
     <div data-testid={testId} className="h-full flex flex-col pl-10 pr-96">
-      <div className="absolute right-10 top-5 text-2xl">
-        <LinkText input={signInProps} />
-      </div>
+      {!isUserLoggedIn && (
+        <div className="absolute right-10 top-5 text-2xl">
+          <LinkText input={signInProps} />
+        </div>
+      )}
 
       <div className={stageClass}>Stage 1:</div>
 

@@ -11,6 +11,7 @@ import {
 import { LinkButton, Loading } from "../../buffet";
 import { useGetAuth, useUserGroupPicksSubmitted } from "../../../hooks";
 import MyGroupPicks from "./MyGroupPicks";
+import UserTotalPointsBreakdown from "./UserTotalPointsBreakdown";
 
 export const MyPicks: React.FunctionComponent = () => {
   const dispatch = tDispatch();
@@ -35,6 +36,8 @@ export const MyPicks: React.FunctionComponent = () => {
     ? geti18n("adjustGroupPicks")
     : geti18n("selectGroupPicks");
 
+  const paddingClass = userGroupPicksSubmitted ? "pr-44" : "";
+
   return loadingDefault() ? (
     <Loading />
   ) : (
@@ -45,14 +48,16 @@ export const MyPicks: React.FunctionComponent = () => {
     >
       <div
         data-testid={userNameTestId}
-        className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkText2XLg} pt-5`}
+        className={`${tw.flexBoth} ${tw.whiteTextMed} ${tw.shrinkText2XLg} ${paddingClass} pt-5`}
       >
         {user.name}
       </div>
 
-      <div className={`${tw.flexBoth}`}>
+      <div className={`${tw.flexBoth} ${paddingClass}`}>
         <LinkButton route={routes.myPicksEdit} text={editPicksButtonText} />
       </div>
+
+      <UserTotalPointsBreakdown />
 
       <MyGroupPicks />
     </div>

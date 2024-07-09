@@ -12,13 +12,11 @@ import {
   _loadTeams,
   _loadUsers,
   groupLetters,
-  mapOverTeamsInAGroup,
   routes,
   setAuth,
   UserSchema,
 } from "../../../store";
 import {
-  getDataFromStore,
   updateStore,
   updateTourneyStage,
 } from "../../../hooks/__tests__ /hookUtils";
@@ -36,6 +34,7 @@ import MyPicks from "../../myPicks/locked/MyPicks";
 import MyGroupPicks from "../../myPicks/locked/MyGroupPicks";
 import PointsSystemTable from "../../myPicks/locked/PointsSystemTable";
 import SingleGroup from "../../myPicks/locked/SingleGroup";
+import UserTotalPointsBreakdown from "../../myPicks/locked/UserTotalPointsBreakdown";
 
 jest.mock("axios");
 
@@ -75,6 +74,8 @@ describe("<MyPicks/>", () => {
     groups: teams,
     userGroupPicks: [userPicksForPool],
   });
+
+  const userTotalPointsBreakdownTestId = "user-total-pts-breakdown";
 
   const myGroupPicksTestId = "my-group-picks";
 
@@ -150,6 +151,26 @@ describe("<MyPicks/>", () => {
       expect(editPicksButton.textContent).toEqual("Adjust Group Picks");
 
       await getTestIdTag(myGroupPicksTestId);
+    });
+
+    describe("<UserTotalPointsBreakdown/>", () => {
+      it("returns null when user has not submitted their picks", async () => {
+        userHasNoPicksSetup_stage1();
+
+        renderWithProvider(<UserTotalPointsBreakdown />);
+
+        const groupPicks = await queryTestIdTag(userTotalPointsBreakdownTestId);
+
+        expect(groupPicks).toBeFalsy();
+      });
+
+      it("when user has submitted their picks, should render the component", async () => {
+        userHasPicksSetup_stage1();
+
+        renderWithProvider(<UserTotalPointsBreakdown />);
+
+        await getTestIdTag(userTotalPointsBreakdownTestId);
+      });
     });
 
     describe("<MyGroupPicks/>", () => {

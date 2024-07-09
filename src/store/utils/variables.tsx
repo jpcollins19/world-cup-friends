@@ -55,6 +55,10 @@ export const tw = {
   whiteTextSm: "text-shadow-sm text-white", //1.5px shadow
 };
 
+export const lightGreyGradientBackground = `bg-gradient-to-bl from-gray-200 via-neutral-400 to-gray-200`;
+
+export const darkGreyGradientBackground = `bg-gradient-to-bl from-gray-400 via-neutral-500 to-gray-400`;
+
 export const navbarBackground = `bg-gradient-to-br from-gray-700 via-gray-800 to-gray-700`;
 
 export const navbarMenuListClass = `${tw.flexA} ${tw.whiteTextSm} hover:${tw.elevate} hover:bg-sky-400 hover:shadow-routesHover w-full py-2`;

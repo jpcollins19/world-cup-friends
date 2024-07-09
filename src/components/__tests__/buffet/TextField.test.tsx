@@ -69,7 +69,7 @@ describe("<TextField/>", () => {
 
   describe("showHelperText & isRequired", () => {
     describe("when showHelperText is true", () => {
-      it("defaults to true and renders the span label", async () => {
+      it("defaults to true and renders the span label with padding-top on inputText", async () => {
         const component = <TextField label={email} onChange={onChange()} />;
 
         renderWithFormik(component, initialValues, onSubmit);
@@ -78,6 +78,10 @@ describe("<TextField/>", () => {
 
         expect(span).toBeTruthy();
         expect(span.textContent).toEqual("Email*");
+
+        const textField = await getTestIdTag("text-field-input-email");
+
+        expect(textField).toHaveClass("pt-3");
       });
 
       it("isRequired defaults to true and requiredSymbol renders", async () => {
@@ -107,7 +111,7 @@ describe("<TextField/>", () => {
     });
 
     describe("when showHelperText is false", () => {
-      it("span label does not render", async () => {
+      it("span label does not render and inputText has no padding-top", async () => {
         const component = (
           <TextField
             label={email}
@@ -121,6 +125,10 @@ describe("<TextField/>", () => {
         const span = await queryTestIdTag(spanLabelTestId);
 
         expect(span).toBeFalsy();
+
+        const textField = await getTestIdTag("text-field-input-email");
+
+        expect(textField).not.toHaveClass("pt-3");
       });
 
       it("requiredSymbol does not render", async () => {
@@ -412,6 +420,84 @@ describe("<TextField/>", () => {
               type={pw}
               onChange={onChange()}
               width="large"
+            />
+          );
+
+          renderWithFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    const textFieldContClassWidthSmall = "w-1/12";
+
+    const widthSmallTesting = {
+      comp: [
+        {
+          testId: textFieldContClass,
+          result: `${textFieldContClassBaseInfo} ${textFieldContClassWidthSmall}`,
+        },
+        {
+          testId: inputClass,
+          result: `${inputClassBaseInfo} ${inputClassHeightMed}`,
+        },
+        {
+          testId: spanClass,
+          result: `${spanClassBaseInfo} text-xs`,
+        },
+      ],
+      mobile: [
+        {
+          testId: `${textFieldContClass}-mobile`,
+          result: `${textFieldContClassBaseInfo} ${textFieldContClassWidthSmall}`,
+        },
+        {
+          testId: `${inputClass}-mobile`,
+          result: `${inputClassBaseInfo} h-20 text-3xl`,
+        },
+        {
+          testId: `${spanClass}-mobile`,
+          result: `${spanClassBaseInfo} text-xl`,
+        },
+      ],
+    };
+
+    describe("widthSmall - comp", () => {
+      widthSmallTesting.comp.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(false);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              width="small"
+            />
+          );
+
+          renderWithFormik(component, initialValues, onSubmit);
+
+          const testId = await getTestIdTag(test.testId);
+
+          expect(testId).toHaveClass(test.result);
+        });
+      });
+    });
+
+    describe("widthLarge - mobile", () => {
+      widthSmallTesting.mobile.forEach((test) => {
+        it(`${test.testId}`, async () => {
+          mockWindowMobileView(true);
+
+          const component = (
+            <TextField
+              label={pw}
+              type={pw}
+              onChange={onChange()}
+              width="small"
             />
           );
 

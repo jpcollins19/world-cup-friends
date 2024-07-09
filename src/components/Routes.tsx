@@ -52,7 +52,7 @@ const Routes = () => {
     path: routes.createAccount,
     component: CreateAccount,
   };
-  const rulesRoute = { path: routes.rules, component: Rules };
+  // const rulesRoute = { path: routes.rules, component: Rules };
   const leaderboardRoute = { path: routes.leaderboard, component: Leaderboard };
   const poolPicksRoute = { path: routes.poolPicks, component: PoolPicks };
   const groupDetailsRoute = {
@@ -72,7 +72,7 @@ const Routes = () => {
     preSignInRoute,
     signInRoute,
     createAccountRoute,
-    rulesRoute,
+    // rulesRoute,
   ];
 
   const authRoutes = [
@@ -121,6 +121,8 @@ const Routes = () => {
             component={route.component}
           />
         ))}
+
+      <Route exact path={routes.rules} component={Rules} />
 
       <Route path={routes.noMatch}>
         <NoMatch />

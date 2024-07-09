@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
+  lightGreyGradientBackground,
   loadTeams,
   loadTourneyStage,
   loadUsers,
@@ -44,7 +45,7 @@ const App = () => {
   return (
     <div
       // data-testid={testId}
-      className="flex bg-gradient-to-bl from-gray-200 via-neutral-400 to-gray-200 h-screen w-screen"
+      className={`${lightGreyGradientBackground} flex h-screen w-screen`}
     >
       <Router>
         <UserProfileChevron />

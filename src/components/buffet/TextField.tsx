@@ -43,9 +43,15 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
 
   const isMobile = useIsMobile();
 
+  const smallTextFieldNeeded = width === "small";
+
   const largeTextFieldNeeded = width === "large";
 
-  const textFieldContClass = largeTextFieldNeeded ? "w-11/12" : "w-7/12";
+  const textFieldContClass = smallTextFieldNeeded
+    ? "w-1/12"
+    : largeTextFieldNeeded
+      ? "w-11/12"
+      : "w-7/12";
 
   const shortTextFieldNeeded = height === "short";
 
@@ -92,13 +98,15 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
     );
   };
 
+  const paddingInputClass = showHelperText ? "pt-3" : "";
+
   const inputAttributes: InputAttributes = {
     "data-testid": inputTestId,
     type: type ?? "text",
     name: label,
     autoComplete: "on",
     onChange,
-    className: `${tw.elevate} m-1 pt-3 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center ${inputClass}`,
+    className: `${tw.elevate} ${paddingInputClass} m-1 w-full bg-gray-200 rounded-md border-2 border-black focus:outline-none text-center ${inputClass}`,
   };
 
   function useFormikContextWithType<T>(schemaType: T) {
