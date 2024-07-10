@@ -3,12 +3,12 @@ import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile, useIsUserLoggedIn } from "../../hooks";
 import { calcPayoutSchema, GroupPicksResult } from "./functionSchemas";
 import { GroupPicksState } from "../group_picks_store";
-import {
-  UserGroupPicksSchema,
-  UserSingleGroupPickSchema,
-} from "../users_store";
 import { groupLetters, mapOverTeamsInAGroup } from "./variables";
 import { TeamSchema } from "../teams_store";
+import {
+  UserGroupPlacementsSchema,
+  UserSingleGroupPlacementsSchema,
+} from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 export const geti18n = (str: i18nOptionsTypes): string => {
   return en[str];
@@ -190,8 +190,8 @@ export const getUserGroupPicks = (
   userId: string,
   poolGroupPicks: GroupPicksState,
   teams: TeamSchema[],
-): UserGroupPicksSchema => {
-  const result: UserGroupPicksSchema = [];
+): UserGroupPlacementsSchema => {
+  const result: UserGroupPlacementsSchema = [];
 
   const userPicks = poolGroupPicks.filter(
     (groupPick) => groupPick.userUuid === userId,
@@ -231,7 +231,7 @@ export const getUserGroupPicks = (
       } as GroupPicksResult,
     );
 
-    result.push(groupPicksResult as UserSingleGroupPickSchema);
+    result.push(groupPicksResult as UserSingleGroupPlacementsSchema);
   });
 
   return result;

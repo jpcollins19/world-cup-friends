@@ -9,6 +9,7 @@ import {
   geti18n,
   groupLetters,
   authenticate,
+  UserGroupPicksSchema,
 } from "../../../store";
 import {
   Button,
@@ -55,7 +56,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
     }
   };
 
-  const formik = useFormik<SignInSchema>({
+  const formik = useFormik<UserGroupPicksSchema>({
     initialValues: {
       email: "",
       password: "",
@@ -70,6 +71,22 @@ export const EditGroupPicks: React.FunctionComponent = () => {
   const onChange = (ev: any) => {
     setFieldValue("lastUpdated", ev.target.value);
   };
+
+  // const validTiebreaker = Number(tiebreaker) % 1 === 0;
+  // const tiebreakerAsArray = tiebreaker?.split("");
+  //
+  // if (
+  //     !validTiebreaker ||
+  //     tiebreaker === "" ||
+  //     tiebreakerAsArray?.includes(" ") ||
+  //     tiebreaker === "0" ||
+  //     tiebreaker === null
+  // ) {
+  //   setMasterError(true);
+  //   setMasterErrorText("Invalid Tiebreaker Below");
+  //
+  //   return;
+  // }
 
   return (
     <div data-testid={testId} className="min-h-screen">
@@ -97,7 +114,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
           <div className={`${tw.flexBoth} text-xl`}>
             <div className="text-xl"> {geti18n("inputTiebreakerText")}</div>
             <TextField
-              label="lastUpdated"
+              label="tiebreaker"
               onChange={onChange}
               showHelperText={false}
               height="short"

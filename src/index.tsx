@@ -26,3 +26,5 @@ root.render(
 //     </Provider>
 //   </React.StrictMode>,
 // );
+export { UserGroupPlacementsSchema } from "./components/myPicks/unlocked/GroupPicksSchema";
+export { UserSingleGroupPlacementsSchema } from "./components/myPicks/unlocked/GroupPicksSchema";

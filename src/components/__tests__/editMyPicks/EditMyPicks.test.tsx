@@ -105,8 +105,25 @@ describe("<EditMyPicks/>", () => {
   // top text is accurate
 
   ////////EditGroupPicks
-  // submit button is disabled until it shouldnt be
+
+  ///// user not does have picks
+  // tiebreaker input defaults to nothing
   // nextOne
+  // nextOne
+
+  ///// user has picks
+  // tiebreaker input defaults to user tiebreaker
+  // nextOne
+  // nextOne
+
+  ///// submitting
+  // submit button is disabled until it shouldnt be
+  ///tiebreaker error states
+  //is a number
+  //is not empty ("")
+  //includes a space
+  //is not 0
+  // is not null
 
   it("renders the component", async () => {
     updateTourneyStage(1);

@@ -6,8 +6,6 @@ import {
   UserSchema,
   _loadUsers,
   groupLetters,
-  UserGroupPicksSchema,
-  UserSingleGroupPickSchema,
   _loadGroupPicks,
   _loadTeams,
 } from "../../store";
@@ -29,6 +27,10 @@ import {
   updateTourneyStage,
 } from "./hookUtils";
 import { useUserHas3rdPlaceTeamAdvancing } from "../";
+import {
+  UserGroupPlacementsSchema,
+  UserSingleGroupPlacementsSchema,
+} from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();

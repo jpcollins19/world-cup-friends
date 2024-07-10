@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getUserGroupPicks } from "./utils";
+import { UserSingleGroupPlacementsSchema } from "../components/myPicks/unlocked/GroupPicksSchema";
 
 const LOAD_USERS = "LOAD_USERS";
 
@@ -33,21 +34,10 @@ export type UserSchema = {
   name: string;
   tiebreaker?: number | null;
   emailNotifications: boolean;
-  groupPicks: UserSingleGroupPickSchema[] | [];
+  groupPicks: UserSingleGroupPlacementsSchema[] | [];
   createdAt: string;
   updatedAt: string;
 };
-
-export type UserSingleGroupPickSchema = {
-  group: string;
-  1: string;
-  2: string;
-  3: string;
-  4: string;
-  thirdPlaceToAdvanceToKo: boolean;
-};
-
-export type UserGroupPicksSchema = Array<UserSingleGroupPickSchema>;
 
 export interface UsersState extends Array<UserSchema> {}
 

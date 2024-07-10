@@ -7,11 +7,7 @@ import {
   tourneyStartDate,
 } from "../utils";
 import { mockWindowMobileView } from "../../components/testingUtils";
-import {
-  UserGroupPicksSchema,
-  UserSchema,
-  UserSingleGroupPickSchema,
-} from "../users_store";
+import { UserSchema } from "../users_store";
 import {
   createAllGroups,
   createGroup,
@@ -21,6 +17,10 @@ import {
   createUserGroupPicks,
   UserSingleGroupPickSetupSchema,
 } from "../../hooks/fixtures";
+import {
+  UserGroupPlacementsSchema,
+  UserSingleGroupPlacementsSchema,
+} from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 describe("geti18n", () => {
   const testsToRun = [
@@ -409,16 +409,17 @@ describe("getUserGroupPicks", () => {
           it(`group: ${letter}`, () => {
             const userUuid = test.user.userId;
 
-            const result: UserGroupPicksSchema = funcs.getUserGroupPicks(
+            const result: UserGroupPlacementsSchema = funcs.getUserGroupPicks(
               userUuid,
               groupPicksResult,
               teams,
             );
 
-            const userPicksTestSetup: UserSingleGroupPickSchema | undefined =
-              test.user.groupPicks.find(
-                (groupPick) => groupPick.group === letter,
-              );
+            const userPicksTestSetup:
+              | UserSingleGroupPlacementsSchema
+              | undefined = test.user.groupPicks.find(
+              (groupPick) => groupPick.group === letter,
+            );
 
             if (userPicksTestSetup) {
               const userPickTestSetupTeamName1 = userPicksTestSetup["1"];
@@ -476,8 +477,8 @@ describe("getUserGroupPicks", () => {
       userGroupPicks: user1GroupPicks,
     });
 
-    const user2GroupPicksResult: UserSingleGroupPickSchema[] =
-      [] as UserSingleGroupPickSchema[];
+    const user2GroupPicksResult: UserSingleGroupPlacementsSchema[] =
+      [] as UserSingleGroupPlacementsSchema[];
 
     const user1TestInfo: CreateGroupPicksSchema = {
       userId: user1.id,
@@ -497,7 +498,7 @@ describe("getUserGroupPicks", () => {
     it(`returns an empty array`, () => {
       const userUuid = user2.id;
 
-      const result: UserGroupPicksSchema = funcs.getUserGroupPicks(
+      const result: UserGroupPlacementsSchema = funcs.getUserGroupPicks(
         userUuid,
         groupPicksResult,
         teams,

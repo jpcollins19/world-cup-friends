@@ -1,4 +1,4 @@
-import { UserGroupPicksSchema } from "../../store";
+import { UserGroupPlacementsSchema } from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 export interface TeamDataSchema {
   name: string;
@@ -12,7 +12,7 @@ export type UserSingleGroupPickSetupSchema = {
 
 export type CreateGroupPicksSchema = {
   userId: string;
-  groupPicks: UserGroupPicksSchema;
+  groupPicks: UserGroupPlacementsSchema;
 };
 
 // interface GroupInfo {

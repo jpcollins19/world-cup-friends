@@ -1,9 +1,10 @@
-import { TeamSchema, UserSchema, UserSingleGroupPickSchema } from "../../store";
+import { TeamSchema, UserSchema } from "../../store";
 import {
   generateRandomGroupOrder,
   getFakerInfo,
   UserSingleGroupPickSetupSchema,
 } from "./";
+import { UserSingleGroupPlacementsSchema } from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 export const createUser = ({
   tiebreaker = undefined,
@@ -35,7 +36,7 @@ export const createUserGroupPicks = ({
 }: {
   groups?: TeamSchema[];
   userGroupPicks?: UserSingleGroupPickSetupSchema[];
-} = {}): UserSingleGroupPickSchema[] => {
+} = {}): UserSingleGroupPlacementsSchema[] => {
   return userGroupPicks.map((userGroupPick: UserSingleGroupPickSetupSchema) => {
     const teamsInGroup = groups.filter(
       (group) => group.group === userGroupPick.group,
