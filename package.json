@@ -38,6 +38,7 @@
     "pg": "^8.11.3",
     "postcss-loader": "^8.1.0",
     "react-hot-toast": "^2.4.0",
+    "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "redux-mock-store": "^1.5.4",
     "sequelize": "^6.37.0",

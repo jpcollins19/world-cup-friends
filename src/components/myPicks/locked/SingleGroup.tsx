@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   getPageTestId,
+  createFlagImageTag,
   mapOverTeamsInAGroup,
   navbarBackground,
   TeamSchema,
@@ -99,7 +100,7 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
           Prediction
         </div>
 
-        {usersGroupPicks.map((team: TeamSchema, idx: number) => {
+        {usersGroupPicks?.map((team: TeamSchema, idx: number) => {
           const teamRowTestId = getPageTestId(
             `mpsg-team-row-${groupLetter}-${idx + 1}`,
           );
@@ -107,11 +108,7 @@ export const SingleGroup: React.FunctionComponent<SingleGroupProps> = ({
           return (
             <div key={team.id} className={`${rowClass} ${predictionRowClass}`}>
               <div data-testid={teamRowTestId} className={tw.flexBoth}>
-                <img
-                  src={team.flag}
-                  className="min-w-10 max-w-10 h-5 mr-2"
-                  alt=""
-                ></img>
+                {createFlagImageTag(team)}
 
                 <div>{team.name}</div>
               </div>

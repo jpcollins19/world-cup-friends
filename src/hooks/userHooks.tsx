@@ -106,7 +106,7 @@ export const useGetUserGroupPicks = (groupLetter: string): any => {
   );
 
   return !userGroupPicks
-    ? []
+    ? null
     : Object.values(userGroupPicks)
         .slice(0, 4)
         .map((teamName) => {

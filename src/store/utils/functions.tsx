@@ -3,7 +3,7 @@ import { en, i18nOptionsTypes } from "./i18n";
 import { useIsMobile, useIsUserLoggedIn } from "../../hooks";
 import { calcPayoutSchema, GroupPicksResult } from "./functionSchemas";
 import { GroupPicksState } from "../group_picks_store";
-import { groupLetters, mapOverTeamsInAGroup } from "./variables";
+import { groupLetters, mapOverTeamsInAGroup, tw } from "./variables";
 import { TeamSchema } from "../teams_store";
 import {
   UserGroupPlacementsSchema,
@@ -235,4 +235,27 @@ export const getUserGroupPicks = (
   });
 
   return result;
+};
+
+export const createFlagImageTag = (team: TeamSchema) => {
+  return (
+    <img src={team.flag} className="min-w-10 max-w-10 h-5 mr-2" alt=""></img>
+  );
+};
+
+export const convertTeamDropdown = (team: TeamSchema) => {
+  // return {
+  //   value: team.name,
+  //   label: team.name,
+  // };
+
+  return {
+    value: team,
+    label: (
+      <div className={`${tw.flexA} h-9`}>
+        {createFlagImageTag(team)}
+        <div className="team-name-in-dropdown">{team.name}</div>
+      </div>
+    ),
+  };
 };

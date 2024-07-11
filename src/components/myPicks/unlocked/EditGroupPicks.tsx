@@ -23,6 +23,7 @@ import {
 import {
   useFindTourneyStage,
   useGetAuth,
+  useGetTeamsForGroupDropdown,
   useUserGroupPicksSubmitted,
 } from "../../../hooks";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -31,6 +32,9 @@ import {
   UserGroupPicksSchema,
   UserGroupPlacementsSchema,
 } from "./GroupPicksSchema";
+import Dropdown from "../../buffet/Dropdown";
+import { useGetTeams } from "../../../hooks/teamHooks";
+import EditSingleGroup from "./EditSingleGroup";
 // import MyGroupPicks from "./MyGroupPicks";
 // import SingleGroup from "./SingleGroup";
 
@@ -59,24 +63,21 @@ export const EditGroupPicks: React.FunctionComponent = () => {
       console.log("values", values);
 
       await dispatch(updateUserGroupPicks(history, user.id, values.tiebreaker));
-      //await dispatch(updateUserGroupPicks(history, values.tiebreaker));
     } catch (err: any) {
       console.log("ERROR:", err.message);
 
       setErrorMessage(err.message);
 
       setShowErrorMessage(true);
-
-      // resetForm({ values: { email: "", password: "" } });
-      // setInvalidCredentials(true);
     }
   };
 
   const formik = useFormik<UserGroupPicksSchema>({
     initialValues: {
       // groupPicks: [],
-      tiebreaker: "",
+      tiebreaker: user.tiebreaker ? user.tiebreaker.toString() : "",
     },
+
     onSubmit: onSubmit,
     // validationSchema: useGroupPicksSchema(),
   });
@@ -89,6 +90,13 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
     setFieldValue("tiebreaker", ev.target.value);
   };
+
+  // const teams = useSelector((state) => state.teams)
+  //   .filter((team) => team.group === group)
+  //   .sort((a, b) => a.groupFinishingPosition - b.groupFinishingPosition)
+  //   .map((team) => {
+  //     return convertTeamDropdown(team);
+  //   });
 
   return (
     <div data-testid={testId} className="min-h-screen">
@@ -123,7 +131,6 @@ export const EditGroupPicks: React.FunctionComponent = () => {
               height="short"
               width="small"
               showValue={true}
-              // schema="tiebreaker"
             />
           </div>
 
@@ -131,6 +138,12 @@ export const EditGroupPicks: React.FunctionComponent = () => {
             {showErrorMessage && (
               <ErrorMessage text={errorMessage} showErrorBackground={true} />
             )}
+          </div>
+
+          <div className={`${tw.flexBoth} ${tw.shrinkTextBase} flex-wrap pb-5`}>
+            {groupLetters.map((groupLetter) => (
+              <EditSingleGroup key={groupLetter} groupLetter={groupLetter} />
+            ))}
           </div>
         </Form>
       </FormikProvider>

@@ -1,4 +1,5 @@
 export * from "./Button";
+export * from "./Dropdown";
 export * from "./ErrorMessage";
 export * from "./isMobileProps";
 export * from "./LinkButton";
