@@ -1,6 +1,11 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import { Provider } from "react-redux";
-import store, { AuthState, LastUpdatedSchema, UserSchema } from "../../store";
+import store, {
+  AuthState,
+  geti18n,
+  LastUpdatedSchema,
+  UserSchema,
+} from "../../store";
 import * as React from "react";
 import { BrowserRouter as Router, MemoryRouter } from "react-router-dom";
 import {
@@ -135,6 +140,10 @@ const mockReturnedValue = (hookToMock: any, value: any) => {
   const hook = hookToMock as jest.MockedFunction<any>;
 
   hook.mockReturnValue(value);
+};
+
+export const mockGeti18n = (string: string) => {
+  mockReturnedValue(geti18n, string);
 };
 
 export const mockUseIsMobile = (boolean: boolean) => {

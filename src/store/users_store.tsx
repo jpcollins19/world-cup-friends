@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserGroupPicks } from "./utils";
+import { geti18n, getUserGroupPicks, routes } from "./utils";
 import { UserSingleGroupPlacementsSchema } from "../components/myPicks/unlocked/GroupPicksSchema";
 
 const LOAD_USERS = "LOAD_USERS";
@@ -24,6 +24,60 @@ export const loadUsers = () => {
     });
 
     dispatch(_loadUsers(users));
+  };
+};
+
+const getUserTiebreaker = async (userId: string) => {
+  const users = (await axios.get("/api/users")).data;
+
+  return users.find((user: UserSchema) => user.id === userId)?.tiebreaker;
+};
+
+export const updateUserGroupPicks = (
+  history: any,
+  userId: string,
+  tiebreaker: string,
+) => {
+  return async (dispatch: any) => {
+    console.log("buttons", typeof tiebreaker);
+
+    const tiebreakerIsInteger = Number(tiebreaker) % 1 === 0;
+    const tiebreakerAsArray = tiebreaker.split("");
+
+    const invalidTiebreaker =
+      !tiebreakerIsInteger ||
+      tiebreaker === "" ||
+      tiebreakerAsArray?.includes(" ") ||
+      tiebreaker === "0";
+
+    if (invalidTiebreaker) {
+      throw Error(geti18n("errorTiebreaker"));
+    }
+
+    const currentTiebreaker = await getUserTiebreaker(userId);
+
+    const tiebreakerAsNumber = Number(tiebreaker);
+
+    const userToSubmit = { id: userId, tiebreaker: tiebreakerAsNumber };
+
+    if (currentTiebreaker !== tiebreakerAsNumber) {
+      console.log("byah");
+
+      await axios.put(`/api/users/${userId}`, userToSubmit);
+    }
+
+    ////////////////////////////// groupPicks updates //////////////////////////////
+    //run all audit points that currently happen in euro pool and return an error if applicable
+    ////audit to verify if a groupPick exists for the user using their userUuid
+    //if it doesnt exist, do a post request for each pick - ask chatGpt for a post request example using your current get format
+
+    //if it does exist, see if anything changed for the group pick.
+    // if nothing changed, move onto next pick
+    // if it did change, do a put request for the pick
+
+    // dispatch(_loadUsers(users));
+
+    history.push(routes.myPicks);
   };
 };
 

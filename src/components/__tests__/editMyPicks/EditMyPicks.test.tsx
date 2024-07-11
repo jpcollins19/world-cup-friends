@@ -119,11 +119,7 @@ describe("<EditMyPicks/>", () => {
   ///// submitting
   // submit button is disabled until it shouldnt be
   ///tiebreaker error states
-  //is a number
-  //is not empty ("")
-  //includes a space
-  //is not 0
-  // is not null
+  //verify the error comes through for jsut one error state - when tiebreaker === '0'
 
   it("renders the component", async () => {
     updateTourneyStage(1);
@@ -199,3 +195,68 @@ describe("<EditMyPicks/>", () => {
     });
   });
 });
+
+// import React from 'react';
+// import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+// import '@testing-library/jest-dom/extend-expect';
+// import { EditGroupPicks } from './EditGroupPicks'; // Adjust the path as necessary
+// import { updateUserGroupPicks } from '../../../store';
+// import { Provider } from 'react-redux';
+// import configureStore from 'redux-mock-store';
+// import thunk from 'redux-thunk';
+//
+// jest.mock('../../../store', () => ({
+//   updateUserGroupPicks: jest.fn(),
+//   tDispatch: jest.fn(),
+//   geti18n: jest.fn((key) => key),
+//   getPageTestId: jest.fn((id) => id),
+//   routes: {
+//     myPicks: '/mypicks'
+//   },
+// }));
+//
+// const middlewares = [thunk];
+// const mockStore = configureStore(middlewares);
+//
+// describe('EditGroupPicks Component', () => {
+//   let store;
+//
+//   beforeEach(() => {
+//     store = mockStore({
+//       auth: { user: { id: 'user1' } },
+//       // Add other initial state if necessary
+//     });
+//
+//     updateUserGroupPicks.mockClear();
+//   });
+//
+//   it('should dispatch updateUserGroupPicks on submit with valid tiebreaker', async () => {
+//     render(
+//         <Provider store={store}>
+//           <EditGroupPicks />
+//         </Provider>
+//     );
+//
+//     fireEvent.change(screen.getByLabelText('tiebreaker'), { target: { value: '5' } });
+//     fireEvent.click(screen.getByText('submit'));
+//
+//     await waitFor(() => {
+//       expect(updateUserGroupPicks).toHaveBeenCalledWith(expect.anything(), 'user1', '5');
+//     });
+//   });
+//
+//   it('should show error message for invalid tiebreaker', async () => {
+//     render(
+//         <Provider store={store}>
+//           <EditGroupPicks />
+//         </Provider>
+//     );
+//
+//     fireEvent.change(screen.getByLabelText('tiebreaker'), { target: { value: '5.5' } });
+//     fireEvent.click(screen.getByText('submit'));
+//
+//     await waitFor(() => {
+//       expect(screen.getByText('errorTiebreaker')).toBeInTheDocument();
+//     });
+//   });
+// });

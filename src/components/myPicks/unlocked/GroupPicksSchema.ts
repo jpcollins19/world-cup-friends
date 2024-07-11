@@ -9,14 +9,19 @@ export type UserSingleGroupPlacementsSchema = {
   thirdPlaceToAdvanceToKo: boolean;
 };
 export type UserGroupPlacementsSchema = Array<UserSingleGroupPlacementsSchema>;
+
+// export type TiebreakerSchema = {
+//   tiebreaker: number | null;
+// };
+
 export type UserGroupPicksSchema = {
-  groups: UserGroupPlacementsSchema;
-  tiebreaker: number;
+  // groupPicks: UserGroupPlacementsSchema;
+  tiebreaker: string;
 };
 
-export const useSignInSchema = () => {
-  return Yup.object().shape({
-    email: Yup.string().min(1).required(),
-    password: Yup.string().min(1).required(),
-  });
-};
+// export const useGroupPicksSchema = () => {
+//   return Yup.object().shape({
+//     tiebreaker: Yup.string().min(1).required(),
+//     password: Yup.string().min(1).required(),
+//   });
+// };

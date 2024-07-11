@@ -16,6 +16,7 @@ export const en = {
   emailNotificationsOptOut: "Opt me out of email notifications",
   emailNotificationExplanation:
     "Email notifications can be sent out to you each time the website is updated!",
+  errorTiebreaker: "Invalid Tiebreaker",
   forgotPassword: "Forgot Password",
   inputTiebreakerText: "Tiebreaker: total number of goals scored:",
   invalidEmail: "Invalid Email Address",
@@ -50,6 +51,7 @@ export type i18nOptionsTypes =
   | "emailNotificationExplanation"
   | "emailNotificationsOptIn"
   | "emailNotificationsOptOut"
+  | "errorTiebreaker"
   | "forgotPassword"
   | "inputTiebreakerText"
   | "invalidEmail"

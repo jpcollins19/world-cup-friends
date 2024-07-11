@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
 import {
   loadingDefault,
   getPageTestId,
@@ -9,7 +10,7 @@ import {
   geti18n,
   groupLetters,
   authenticate,
-  UserGroupPicksSchema,
+  updateUserGroupPicks,
 } from "../../../store";
 import {
   Button,
@@ -26,11 +27,16 @@ import {
 } from "../../../hooks";
 import { Form, FormikProvider, useFormik } from "formik";
 import { SignInSchema, useSignInSchema } from "../../signIn/SignInSchema";
+import {
+  UserGroupPicksSchema,
+  UserGroupPlacementsSchema,
+} from "./GroupPicksSchema";
 // import MyGroupPicks from "./MyGroupPicks";
 // import SingleGroup from "./SingleGroup";
 
 export const EditGroupPicks: React.FunctionComponent = () => {
   const dispatch = tDispatch();
+  const history = useHistory();
 
   // React.useEffect(() => {
   //   (async () => {
@@ -38,19 +44,29 @@ export const EditGroupPicks: React.FunctionComponent = () => {
   //   })();
   // }, []);
 
-  const [errorMessage, setErrorMessage] = React.useState(
-    "Invalid Tiebreaker Below",
-  );
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [showErrorMessage, setShowErrorMessage] = React.useState(false);
 
   const testId = getPageTestId("edit-group-picks");
 
   const headerText = geti18n("editGroupPicksHeader");
   const subHeaderText = geti18n("editGroupPicksSubHeader");
 
+  const user = useGetAuth();
+
   const onSubmit = async () => {
     try {
-      // await dispatch(authenticate(values.email, values.password, history));
+      console.log("values", values);
+
+      await dispatch(updateUserGroupPicks(history, user.id, values.tiebreaker));
+      //await dispatch(updateUserGroupPicks(history, values.tiebreaker));
     } catch (err: any) {
+      console.log("ERROR:", err.message);
+
+      setErrorMessage(err.message);
+
+      setShowErrorMessage(true);
+
       // resetForm({ values: { email: "", password: "" } });
       // setInvalidCredentials(true);
     }
@@ -58,35 +74,21 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
   const formik = useFormik<UserGroupPicksSchema>({
     initialValues: {
-      email: "",
-      password: "",
+      // groupPicks: [],
+      tiebreaker: "",
     },
     onSubmit: onSubmit,
-    validationSchema: useSignInSchema(),
+    // validationSchema: useGroupPicksSchema(),
   });
 
   const { handleSubmit, values, setFieldValue, resetForm, isValid, dirty } =
     formik;
 
   const onChange = (ev: any) => {
-    setFieldValue("lastUpdated", ev.target.value);
-  };
+    setShowErrorMessage(false);
 
-  // const validTiebreaker = Number(tiebreaker) % 1 === 0;
-  // const tiebreakerAsArray = tiebreaker?.split("");
-  //
-  // if (
-  //     !validTiebreaker ||
-  //     tiebreaker === "" ||
-  //     tiebreakerAsArray?.includes(" ") ||
-  //     tiebreaker === "0" ||
-  //     tiebreaker === null
-  // ) {
-  //   setMasterError(true);
-  //   setMasterErrorText("Invalid Tiebreaker Below");
-  //
-  //   return;
-  // }
+    setFieldValue("tiebreaker", ev.target.value);
+  };
 
   return (
     <div data-testid={testId} className="min-h-screen">
@@ -103,13 +105,14 @@ export const EditGroupPicks: React.FunctionComponent = () => {
           id="submit-group-picks"
           className={`${tw.flexA} ${tw.bPurple} pt-3 flex-col`}
         >
-          <Button
-            form="sign-in"
-            text={geti18n("submit")}
-            disabled={!isValid || !dirty}
-          />
-
-          <ErrorMessage text={errorMessage} showErrorBackground={true} />
+          <div className="min-h-24">
+            <Button
+              form="submit-group-picks"
+              text={geti18n("submit")}
+              // disabled={!isValid || !dirty}
+              disabled={!dirty}
+            />
+          </div>
 
           <div className={`${tw.flexBoth} text-xl`}>
             <div className="text-xl"> {geti18n("inputTiebreakerText")}</div>
@@ -120,8 +123,14 @@ export const EditGroupPicks: React.FunctionComponent = () => {
               height="short"
               width="small"
               showValue={true}
-              schema="lastUpdated"
+              // schema="tiebreaker"
             />
+          </div>
+
+          <div className="min-h-24">
+            {showErrorMessage && (
+              <ErrorMessage text={errorMessage} showErrorBackground={true} />
+            )}
           </div>
         </Form>
       </FormikProvider>
