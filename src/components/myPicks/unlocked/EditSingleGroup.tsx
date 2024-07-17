@@ -13,10 +13,12 @@ import {
 import { Dropdown } from "../../buffet";
 
 type SingleGroupProps = {
+  onChange: any;
   groupLetter: string;
 };
 
 export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
+  onChange,
   groupLetter,
 }) => {
   const testId = getPageTestId(`edit-single-group-${groupLetter}`);
@@ -80,8 +82,7 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
                 }
                 options={groupTeams}
                 width="14"
-                //set={(value) => onChange(group, idxRank + 1, value.value.name)}
-                set={() => console.log("set")}
+                set={(value) => onChange(groupLetter, value.value, idx + 1)}
               />
             </div>
           );

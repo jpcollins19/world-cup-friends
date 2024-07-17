@@ -15,7 +15,10 @@ export type UserGroupPlacementsSchema = Array<UserSingleGroupPlacementsSchema>;
 // };
 
 export type UserGroupPicksSchema = {
-  // groupPicks: UserGroupPlacementsSchema;
+  A1: string;
+  A2: string;
+  A3: string;
+  A4: string;
   tiebreaker: string;
 };
 

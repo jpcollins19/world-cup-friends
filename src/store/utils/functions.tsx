@@ -1,6 +1,10 @@
 import * as React from "react";
 import { en, i18nOptionsTypes } from "./i18n";
-import { useIsMobile, useIsUserLoggedIn } from "../../hooks";
+import {
+  useGetUserGroupPicks,
+  useIsMobile,
+  useIsUserLoggedIn,
+} from "../../hooks";
 import { calcPayoutSchema, GroupPicksResult } from "./functionSchemas";
 import { GroupPicksState } from "../group_picks_store";
 import { groupLetters, mapOverTeamsInAGroup, tw } from "./variables";
@@ -258,4 +262,17 @@ export const convertTeamDropdown = (team: TeamSchema) => {
       </div>
     ),
   };
+};
+
+export const getUserGroupPlacementPick = (groupPlacement: string) => {
+  const groupLetter = groupPlacement[0];
+  const placement = Number(groupPlacement[1]);
+
+  const usersGroupPicks = useGetUserGroupPicks(groupLetter);
+
+  if (!usersGroupPicks) {
+    return "";
+  }
+
+  return usersGroupPicks[placement - 1].id; //teamId
 };

@@ -11,6 +11,7 @@ import {
   groupLetters,
   authenticate,
   updateUserGroupPicks,
+  getUserGroupPlacementPick,
 } from "../../../store";
 import {
   Button,
@@ -24,6 +25,7 @@ import {
   useFindTourneyStage,
   useGetAuth,
   useGetTeamsForGroupDropdown,
+  useGetUserGroupPicks,
   useUserGroupPicksSubmitted,
 } from "../../../hooks";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -44,7 +46,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
   // React.useEffect(() => {
   //   (async () => {
-  //     await dispatch(loadUsers());
+  //     await loadUserGroupPicks();
   //   })();
   // }, []);
 
@@ -74,7 +76,10 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
   const formik = useFormik<UserGroupPicksSchema>({
     initialValues: {
-      // groupPicks: [],
+      A1: getUserGroupPlacementPick("A1"),
+      A2: getUserGroupPlacementPick("A2"),
+      A3: getUserGroupPlacementPick("A3"),
+      A4: getUserGroupPlacementPick("A4"),
       tiebreaker: user.tiebreaker ? user.tiebreaker.toString() : "",
     },
 
@@ -85,18 +90,20 @@ export const EditGroupPicks: React.FunctionComponent = () => {
   const { handleSubmit, values, setFieldValue, resetForm, isValid, dirty } =
     formik;
 
-  const onChange = (ev: any) => {
-    setShowErrorMessage(false);
-
+  const adjustTieBreaker = (ev: any) => {
     setFieldValue("tiebreaker", ev.target.value);
   };
 
-  // const teams = useSelector((state) => state.teams)
-  //   .filter((team) => team.group === group)
-  //   .sort((a, b) => a.groupFinishingPosition - b.groupFinishingPosition)
-  //   .map((team) => {
-  //     return convertTeamDropdown(team);
-  //   });
+  const onChange = (groupLetter: string, ev: any, placement: number) => {
+    console.log("values", values);
+    console.log("groupLetter", groupLetter);
+    console.log("ev.target.value", ev);
+    console.log("placement", placement);
+
+    // setShowErrorMessage(false);
+
+    // setFieldValue("tiebreaker", ev.target.value);
+  };
 
   return (
     <div data-testid={testId} className="min-h-screen">
@@ -126,7 +133,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
             <div className="text-xl"> {geti18n("inputTiebreakerText")}</div>
             <TextField
               label="tiebreaker"
-              onChange={onChange}
+              onChange={adjustTieBreaker}
               showHelperText={false}
               height="short"
               width="small"
@@ -142,7 +149,11 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
           <div className={`${tw.flexBoth} ${tw.shrinkTextBase} flex-wrap pb-5`}>
             {groupLetters.map((groupLetter) => (
-              <EditSingleGroup key={groupLetter} groupLetter={groupLetter} />
+              <EditSingleGroup
+                key={groupLetter}
+                onChange={onChange}
+                groupLetter={groupLetter}
+              />
             ))}
           </div>
         </Form>
