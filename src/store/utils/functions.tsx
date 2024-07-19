@@ -274,5 +274,7 @@ export const getUserGroupPlacementPick = (groupPlacement: string) => {
     return "";
   }
 
-  return usersGroupPicks[placement - 1].id; //teamId
+  const team = usersGroupPicks[placement - 1]; //TeamSchema
+
+  return convertTeamDropdown(team);
 };

@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { TeamSchema } from "../../../store";
 
 export type UserSingleGroupPlacementsSchema = {
   group: string;
@@ -15,10 +16,11 @@ export type UserGroupPlacementsSchema = Array<UserSingleGroupPlacementsSchema>;
 // };
 
 export type UserGroupPicksSchema = {
-  A1: string;
-  A2: string;
-  A3: string;
-  A4: string;
+  userUuid: string;
+  A1: any;
+  A2: any;
+  A3: any;
+  A4: any;
   tiebreaker: string;
 };
 

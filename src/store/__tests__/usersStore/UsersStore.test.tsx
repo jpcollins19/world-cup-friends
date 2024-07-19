@@ -1,9 +1,15 @@
 import * as React from "react";
 import "@testing-library/react-hooks";
 import axios from "axios";
-import { updateUserGroupPicks, UserSchema } from "../../../store";
+import {
+  getUserGroupPlacementPick,
+  groupPickPlacements,
+  updateUserGroupPicks,
+  UserSchema,
+} from "../../../store";
 import { mockGeti18n } from "../../../components/testingUtils";
 import { createUser } from "../../../hooks/fixtures";
+import { UserGroupPicksSchema } from "../../../components/myPicks/unlocked/GroupPicksSchema";
 
 jest.mock("axios");
 
@@ -36,8 +42,17 @@ describe("UsersStore", () => {
       history = { push: jest.fn() };
     });
 
-    const getThunk = (userId: string, tiebreaker: string) => {
-      return updateUserGroupPicks(history, userId, tiebreaker);
+    const getThunk = (groupPicks: UserGroupPicksSchema) => {
+      return updateUserGroupPicks(history, groupPicks);
+    };
+
+    const groupPicks = {
+      userUuid: userWithPicks.id,
+      A1: "teamUuid",
+      A2: "teamUuid",
+      A3: "teamUuid",
+      A4: "teamUuid",
+      tiebreaker: "5.5",
     };
 
     describe("error states", () => {
@@ -48,9 +63,8 @@ describe("UsersStore", () => {
 
         it("when tiebreaker is not an integer", async () => {
           const userId = userWithPicks.id;
-          const tiebreaker = "5.5";
 
-          const thunk = getThunk(userId, tiebreaker);
+          const thunk = getThunk(groupPicks);
 
           await expect(thunk(dispatch)).rejects.toThrow("Invalid Tiebreaker");
 
@@ -59,9 +73,10 @@ describe("UsersStore", () => {
 
         it("when tiebreaker is empty", async () => {
           const userId = userWithPicks.id;
-          const tiebreaker = "";
 
-          const thunk = getThunk(userId, tiebreaker);
+          groupPicks.tiebreaker = "";
+
+          const thunk = getThunk(groupPicks);
 
           await expect(thunk(dispatch)).rejects.toThrow("Invalid Tiebreaker");
 
@@ -70,9 +85,10 @@ describe("UsersStore", () => {
 
         it("when tiebreaker has a space", async () => {
           const userId = userWithPicks.id;
-          const tiebreaker = "5 ";
 
-          const thunk = getThunk(userId, tiebreaker);
+          groupPicks.tiebreaker = "5 ";
+
+          const thunk = getThunk(groupPicks);
 
           await expect(thunk(dispatch)).rejects.toThrow("Invalid Tiebreaker");
 
@@ -81,9 +97,10 @@ describe("UsersStore", () => {
 
         it("when tiebreaker is 0", async () => {
           const userId = userWithPicks.id;
-          const tiebreaker = "0";
 
-          const thunk = getThunk(userId, tiebreaker);
+          groupPicks.tiebreaker = "0";
+
+          const thunk = getThunk(groupPicks);
 
           await expect(thunk(dispatch)).rejects.toThrow("Invalid Tiebreaker");
 
@@ -99,13 +116,16 @@ describe("UsersStore", () => {
 
       const userId = userWithPicks.id;
 
-      const tiebreaker = "102";
+      groupPicks.tiebreaker = "102";
 
-      const thunk = getThunk(userId, tiebreaker);
+      const thunk = getThunk(groupPicks);
 
       await thunk(dispatch);
 
-      const userToSubmit = { id: userId, tiebreaker: Number(tiebreaker) };
+      const userToSubmit = {
+        id: userId,
+        tiebreaker: Number(groupPicks.tiebreaker),
+      };
 
       expect(axios.put).toBeCalledWith(`/api/users/${userId}`, userToSubmit);
     });
@@ -117,9 +137,9 @@ describe("UsersStore", () => {
 
       const userId = userWithPicks.id;
 
-      const tiebreaker = "101";
+      groupPicks.tiebreaker = "101";
 
-      const thunk = getThunk(userId, tiebreaker);
+      const thunk = getThunk(groupPicks);
 
       await thunk(dispatch);
 

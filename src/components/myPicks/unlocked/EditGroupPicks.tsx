@@ -12,6 +12,9 @@ import {
   authenticate,
   updateUserGroupPicks,
   getUserGroupPlacementPick,
+  TeamSchema,
+  groupPickPlacements,
+  convertTeamDropdown,
 } from "../../../store";
 import {
   Button,
@@ -64,7 +67,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
     try {
       console.log("values", values);
 
-      await dispatch(updateUserGroupPicks(history, user.id, values.tiebreaker));
+      await dispatch(updateUserGroupPicks(history, values));
     } catch (err: any) {
       console.log("ERROR:", err.message);
 
@@ -76,10 +79,15 @@ export const EditGroupPicks: React.FunctionComponent = () => {
 
   const formik = useFormik<UserGroupPicksSchema>({
     initialValues: {
-      A1: getUserGroupPlacementPick("A1"),
-      A2: getUserGroupPlacementPick("A2"),
-      A3: getUserGroupPlacementPick("A3"),
-      A4: getUserGroupPlacementPick("A4"),
+      userUuid: user.id,
+      A1: getUserGroupPlacementPick(groupPickPlacements.A1),
+      A2: getUserGroupPlacementPick(groupPickPlacements.A2),
+      A3: getUserGroupPlacementPick(groupPickPlacements.A3),
+      A4: getUserGroupPlacementPick(groupPickPlacements.A4),
+      // A1: getUserGroupPlacementPick(groupPickPlacements.A1),
+      // A2: getUserGroupPlacementPick(groupPickPlacements.A2),
+      // A3: getUserGroupPlacementPick(groupPickPlacements.A3),
+      // A4: getUserGroupPlacementPick(groupPickPlacements.A4),
       tiebreaker: user.tiebreaker ? user.tiebreaker.toString() : "",
     },
 
@@ -94,15 +102,16 @@ export const EditGroupPicks: React.FunctionComponent = () => {
     setFieldValue("tiebreaker", ev.target.value);
   };
 
-  const onChange = (groupLetter: string, ev: any, placement: number) => {
-    console.log("values", values);
-    console.log("groupLetter", groupLetter);
-    console.log("ev.target.value", ev);
-    console.log("placement", placement);
+  const onChange = (
+    groupLetter: string,
+    team: TeamSchema,
+    placement: number,
+  ) => {
+    const groupPlacement = `${groupLetter}${placement}`;
 
     // setShowErrorMessage(false);
 
-    // setFieldValue("tiebreaker", ev.target.value);
+    setFieldValue(groupPlacement, convertTeamDropdown(team));
   };
 
   return (
@@ -148,13 +157,15 @@ export const EditGroupPicks: React.FunctionComponent = () => {
           </div>
 
           <div className={`${tw.flexBoth} ${tw.shrinkTextBase} flex-wrap pb-5`}>
-            {groupLetters.map((groupLetter) => (
-              <EditSingleGroup
-                key={groupLetter}
-                onChange={onChange}
-                groupLetter={groupLetter}
-              />
-            ))}
+            {/*{groupLetters.map((groupLetter) => (*/}
+            {/*  <EditSingleGroup*/}
+            {/*    key={groupLetter}*/}
+            {/*    onChange={onChange}*/}
+            {/*    groupLetter={groupLetter}*/}
+            {/*  />*/}
+            {/*))}*/}
+
+            <EditSingleGroup key={""} onChange={onChange} groupLetter={"A"} />
           </div>
         </Form>
       </FormikProvider>

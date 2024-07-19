@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useFormikContext } from "formik";
 import {
   convertTeamDropdown,
   getPageTestId,
@@ -11,6 +12,7 @@ import {
   useGetUserGroupPicks,
 } from "../../../hooks";
 import { Dropdown } from "../../buffet";
+import { UserGroupPicksSchema } from "./GroupPicksSchema";
 
 type SingleGroupProps = {
   onChange: any;
@@ -54,6 +56,8 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
   const PredictionColumn: React.FunctionComponent = () => {
     const predictionsTestId = getPageTestId(`esg-predictions-${groupLetter}`);
 
+    const { values } = useFormikContext<UserGroupPicksSchema>();
+
     return (
       <div data-testid={predictionsTestId} className={columnCass}>
         <div className={`${tw.whiteTextSm} ${headerClass} text-center`}>
@@ -61,11 +65,21 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
         </div>
 
         {groupTeams.map((team: any, idx: number) => {
+          const placement = idx + 1;
+
           const dropdownRowTestId = getPageTestId(
-            `esg-dropdown-row-${groupLetter}-${idx + 1}`,
+            `esg-dropdown-row-${groupLetter}-${placement}`,
           );
 
           const userHasAPick = usersGroupPicks?.length;
+
+          const key = `${groupLetter}${placement}`;
+
+          const teamPick = convertTeamDropdown(values[key]);
+
+          // console.log("team", team);
+          //
+          // console.log("byahValues", values);
 
           return (
             <div
@@ -75,11 +89,12 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
             >
               <Dropdown
                 placeholder={userHasAPick ? null : "Select Team"}
-                defaultValue={
-                  userHasAPick
-                    ? convertTeamDropdown(usersGroupPicks[idx])
-                    : null
-                }
+                defaultValue={userHasAPick ? teamPick.value : null}
+                // defaultValue={
+                //   userHasAPick
+                //     ? convertTeamDropdown(usersGroupPicks[idx])
+                //     : null
+                // }
                 options={groupTeams}
                 width="14"
                 set={(value) => onChange(groupLetter, value.value, idx + 1)}
