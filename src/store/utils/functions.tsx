@@ -270,6 +270,8 @@ export const getUserGroupPlacementPick = (groupPlacement: string) => {
 
   const usersGroupPicks = useGetUserGroupPicks(groupLetter);
 
+  console.log("usersGroupPicks", usersGroupPicks);
+
   if (!usersGroupPicks) {
     return "";
   }
@@ -277,4 +279,20 @@ export const getUserGroupPlacementPick = (groupPlacement: string) => {
   const team = usersGroupPicks[placement - 1]; //TeamSchema
 
   return convertTeamDropdown(team);
+};
+
+export const getUserGroupThirdPlaceToAdvanceBoolean = (
+  groupPlacement: string,
+): boolean => {
+  const groupLetter = groupPlacement[0];
+
+  const usersGroupPicks = useGetUserGroupPicks(groupLetter);
+
+  if (!usersGroupPicks) {
+    return false;
+  }
+
+  const team = usersGroupPicks[2]; //TeamSchema
+
+  return team.thirdPlaceToAdvanceToKo;
 };

@@ -15,6 +15,7 @@ import {
   TeamSchema,
   groupPickPlacements,
   convertTeamDropdown,
+  getUserGroupThirdPlaceToAdvanceBoolean,
 } from "../../../store";
 import {
   Button,
@@ -33,10 +34,7 @@ import {
 } from "../../../hooks";
 import { Form, FormikProvider, useFormik } from "formik";
 import { SignInSchema, useSignInSchema } from "../../signIn/SignInSchema";
-import {
-  UserGroupPicksSchema,
-  UserGroupPlacementsSchema,
-} from "./GroupPicksSchema";
+import { UserGroupPicksSchema } from "./GroupPicksSchema";
 import Dropdown from "../../buffet/Dropdown";
 import { useGetTeams } from "../../../hooks/teamHooks";
 import EditSingleGroup from "./EditSingleGroup";
@@ -84,6 +82,9 @@ export const EditGroupPicks: React.FunctionComponent = () => {
       A2: getUserGroupPlacementPick(groupPickPlacements.A2),
       A3: getUserGroupPlacementPick(groupPickPlacements.A3),
       A4: getUserGroupPlacementPick(groupPickPlacements.A4),
+      A3AdvanceToKo: getUserGroupThirdPlaceToAdvanceBoolean(
+        groupPickPlacements.A3,
+      ),
       // A1: getUserGroupPlacementPick(groupPickPlacements.A1),
       // A2: getUserGroupPlacementPick(groupPickPlacements.A2),
       // A3: getUserGroupPlacementPick(groupPickPlacements.A3),
@@ -102,7 +103,7 @@ export const EditGroupPicks: React.FunctionComponent = () => {
     setFieldValue("tiebreaker", ev.target.value);
   };
 
-  const onChange = (
+  const onDropdownChange = (
     groupLetter: string,
     team: TeamSchema,
     placement: number,
@@ -165,7 +166,10 @@ export const EditGroupPicks: React.FunctionComponent = () => {
             {/*  />*/}
             {/*))}*/}
 
-            <EditSingleGroup key={""} onChange={onChange} groupLetter={"A"} />
+            <EditSingleGroup
+              onDropdownChange={onDropdownChange}
+              groupLetter={"A"}
+            />
           </div>
         </Form>
       </FormikProvider>

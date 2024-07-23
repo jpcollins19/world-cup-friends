@@ -2,23 +2,16 @@ import * as funcs from "../utils";
 import {
   calcPayoutSchema,
   getUserGroupPicks,
-  getUserGroupPlacementPick,
   groupLetters,
   routes,
   tourneyStartDate,
 } from "../utils";
-import {
-  mockUseGetAuth,
-  mockWindowMobileView,
-} from "../../components/testingUtils";
-import { _loadUsers, UserSchema } from "../users_store";
+import { mockWindowMobileView } from "../../components/testingUtils";
+import { UserSchema } from "../users_store";
 import {
   createAllGroups,
-  createGroup,
   createGroupPicks_Pool,
   CreateGroupPicksSchema,
-  createSingleGroupResult,
-  createTeam,
   createUser,
   createUserGroupPicks,
   usa,
@@ -28,10 +21,6 @@ import {
   UserGroupPlacementsSchema,
   UserSingleGroupPlacementsSchema,
 } from "../../components/myPicks/unlocked/GroupPicksSchema";
-import { updateStore } from "../../hooks/__tests__ /hookUtils";
-import { setAuth } from "../auth_store";
-import { TeamSchema } from "../teams_store";
-import { _loadGroupPicks } from "../group_picks_store";
 
 describe("geti18n", () => {
   const testsToRun = [

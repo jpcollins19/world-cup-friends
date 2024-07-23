@@ -5,7 +5,10 @@ import {
   findTeamsInGroup,
   getFakerInfo,
 } from "./";
-import { GroupPicksState, PickSchema } from "../../store/group_picks_store";
+import {
+  GroupPicksState,
+  GroupPickSchema,
+} from "../../store/group_picks_store";
 
 export const createGroup = ({
   groupLetter = undefined,
@@ -89,7 +92,7 @@ export const createSingleGroupResult = ({
   groupLetter?: string;
   groupPlacement?: number;
   thirdPlaceToAdvanceToKo?: boolean;
-} = {}): PickSchema => {
+} = {}): GroupPickSchema => {
   return {
     id: getFakerInfo("uuid"),
     userUuid,

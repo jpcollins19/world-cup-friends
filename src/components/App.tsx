@@ -2,6 +2,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
   lightGreyGradientBackground,
+  loadGroupPicks,
   loadTeams,
   loadTourneyStage,
   loadUsers,
@@ -25,6 +26,7 @@ const App = () => {
       await dispatch(loadUsers());
       await dispatch(loadTourneyStage());
       await dispatch(loadTeams());
+      await dispatch(loadGroupPicks());
     })();
   }, []);
 

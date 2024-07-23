@@ -27,10 +27,6 @@ import {
   updateTourneyStage,
 } from "./hookUtils";
 import { useUserHas3rdPlaceTeamAdvancing } from "../";
-import {
-  UserGroupPlacementsSchema,
-  UserSingleGroupPlacementsSchema,
-} from "../../components/myPicks/unlocked/GroupPicksSchema";
 
 beforeAll(() => {
   ignoreReactDOMRenderError();

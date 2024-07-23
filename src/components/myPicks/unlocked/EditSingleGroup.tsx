@@ -15,12 +15,12 @@ import { Dropdown } from "../../buffet";
 import { UserGroupPicksSchema } from "./GroupPicksSchema";
 
 type SingleGroupProps = {
-  onChange: any;
+  onDropdownChange: any;
   groupLetter: string;
 };
 
 export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
-  onChange,
+  onDropdownChange,
   groupLetter,
 }) => {
   const testId = getPageTestId(`edit-single-group-${groupLetter}`);
@@ -36,6 +36,8 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
   const usersGroupPicks = useGetUserGroupPicks(groupLetter);
 
   const groupTeams = useGetTeamsForGroupDropdown("A");
+
+  const { values } = useFormikContext<UserGroupPicksSchema>();
 
   const RankColumn: React.FunctionComponent = () => {
     const rankTestId = getPageTestId(`esg-rank-${groupLetter}`);
@@ -55,8 +57,6 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
 
   const PredictionColumn: React.FunctionComponent = () => {
     const predictionsTestId = getPageTestId(`esg-predictions-${groupLetter}`);
-
-    const { values } = useFormikContext<UserGroupPicksSchema>();
 
     return (
       <div data-testid={predictionsTestId} className={columnCass}>
@@ -97,7 +97,9 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
                 // }
                 options={groupTeams}
                 width="14"
-                set={(value) => onChange(groupLetter, value.value, idx + 1)}
+                set={(value) =>
+                  onDropdownChange(groupLetter, value.value, idx + 1)
+                }
               />
             </div>
           );
@@ -118,18 +120,25 @@ export const EditSingleGroup: React.FunctionComponent<SingleGroupProps> = ({
       >
         <div className={`${tw.whiteTextSm} ${headerClass}`}></div>
 
-        {mapOverTeamsInAGroup.map((rank) =>
-          rank === 3 ? (
-            <input
-              key={rank}
-              type="checkbox"
-              //defaultChecked={userSelectedThirdPlaceToAdvance}
-              //onChange={() => onChange(group, "thirdPlaceAdvanceToKO")}
-            ></input>
-          ) : (
-            <div key={rank} className="px-3 h-10 mb-1"></div>
-          ),
-        )}
+        {mapOverTeamsInAGroup.map((rank) => {
+          if (rank === 3) {
+            const key = `${groupLetter}3AdvanceToKo`;
+
+            const userSelectedThirdPlaceToAdvance = values[key];
+
+            return (
+              <input
+                key={rank}
+                type="checkbox"
+                defaultChecked={userSelectedThirdPlaceToAdvance}
+                name="thirdPlaceAdvanceToKO"
+                //onChange={() => onChange(group, "thirdPlaceAdvanceToKO")}
+              ></input>
+            );
+          } else {
+            return <div key={rank} className="px-3 h-10 mb-1"></div>;
+          }
+        })}
       </div>
     );
   };

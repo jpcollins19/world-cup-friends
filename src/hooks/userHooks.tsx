@@ -105,13 +105,23 @@ export const useGetUserGroupPicks = (groupLetter: string): any => {
     (groupPick) => groupPick.group === groupLetter,
   );
 
-  return !userGroupPicks
+  const groupPicks = !userGroupPicks
     ? null
     : Object.values(userGroupPicks)
         .slice(0, 4)
         .map((teamName) => {
           return teams.find((team) => team.name === teamName);
         });
+
+  if (groupPicks) {
+    groupPicks.forEach((pick: any, idx: number) => {
+      if (idx === 2) {
+        pick.thirdPlaceToAdvanceToKo = userGroupPicks?.thirdPlaceToAdvanceToKo;
+      }
+    });
+  }
+
+  return groupPicks;
 };
 
 export const useUserHas3rdPlaceTeamAdvancing = (

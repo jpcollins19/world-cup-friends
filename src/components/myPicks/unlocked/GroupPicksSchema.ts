@@ -15,12 +15,17 @@ export type UserGroupPlacementsSchema = Array<UserSingleGroupPlacementsSchema>;
 //   tiebreaker: number | null;
 // };
 
+type Group = "A";
+
+export type AdvanceToKoKeys = `${Group}3AdvanceToKo`;
+
 export type UserGroupPicksSchema = {
   userUuid: string;
   A1: any;
   A2: any;
   A3: any;
   A4: any;
+  A3AdvanceToKo: boolean;
   tiebreaker: string;
 };
 
